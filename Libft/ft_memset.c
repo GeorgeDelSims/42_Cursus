@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:33:47 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/09 15:30:58 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/09 17:33:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	*memmove(void *dst, const void	*src, size_t len)
 		}
 	}
 }
-
 
 /*
 int main() 
