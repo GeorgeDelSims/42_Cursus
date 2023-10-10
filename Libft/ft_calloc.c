@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 09:07:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:08:19 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/10 13:29:42 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/10 14:48:17 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void	*src, size_t len)
+void	*ft_calloc(size_t count, size_t size)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
+	size_t	n;
+	void	*s;
 
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	if (s < d && s + len > d)
+	if (count == 0 || size == 0)
 	{
-		i = len;
-		while (i > 0)
-		{
-			d[i - 1] = s[i - 1];
-			i--;
-		}
+		count = 1;
+		size = 1;
 	}
+	n = count * size;
+	s = (void *)malloc(n);
+	if (s == NULL)
+		return (NULL);
 	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			d[i] = s[i];
-			i++;
-		}
-	}
+		ft_bzero(s, n);
+	return (n);
 }

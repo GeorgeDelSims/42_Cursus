@@ -6,11 +6,13 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:07:21 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 09:07:29 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/10 13:29:27 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*memcpy(void *restrict	dst, const void *restrict	src, size_t	n)
+#include "libft.h"
+
+void	*ft_memcpy(void *restrict	dst, const void *restrict	src, size_t	n)
 {
 	unsigned char		*d;
 	const unsigned char	*s;

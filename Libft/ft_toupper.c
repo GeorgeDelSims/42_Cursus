@@ -6,9 +6,11 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:10:23 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 09:10:31 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/10 13:01:31 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_toupper(unsigned char c)
 {

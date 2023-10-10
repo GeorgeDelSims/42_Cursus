@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:05:15 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 09:11:25 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/10 12:12:15 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -27,8 +27,9 @@ int	ft_isdigit(unsigned char c)
 		return (0);
 }
 */
+#include "libft.h"
 
-int	ft_isalnum(unsigned char c)
+int	ft_isalnum(int c)
 {
 	if (ft_isalpha(c) == 1 || ft_isdigit(c) == 1)
 		return (1);

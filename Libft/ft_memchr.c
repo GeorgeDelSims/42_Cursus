@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 09:07:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:08:19 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/10 09:12:50 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/10 13:06:48 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	*ft_memmove(void *dst, const void	*src, size_t len)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
 	size_t				i;
+	const unsigned char	*us;
 
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	if (s < d && s + len > d)
+	us = (const unsigned char *)s;
+	i = 0;
+	while (us[i] != '\0' && i < n)
 	{
-		i = len;
-		while (i > 0)
-		{
-			d[i - 1] = s[i - 1];
-			i--;
-		}
+		if (us[i] == (unsigned char)c)
+			return ((void *)&us[i]);
+		i++;
 	}
-	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			d[i] = s[i];
-			i++;
-		}
-	}
+	return (0);
 }
+/*
+int	main()
+{
+	const char *s = "dsfsd42A4352";
+	int	c = 65;
+	size_t n = 15;
+	void	*ptr;
+	
+	ptr = ft_memchr(s, c, n);
+	printf("%c\n", *(char *)ptr);	
+	return(0);
+}*/

@@ -6,11 +6,13 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:09:43 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 09:09:53 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/10 12:11:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(unsigned char c)
+#include "libft.h"
+
+int	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
 		return (1);

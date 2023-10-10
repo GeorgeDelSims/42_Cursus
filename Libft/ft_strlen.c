@@ -6,10 +6,11 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:30:44 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/09 17:33:13 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/10 13:11:25 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
+#include "libft.h"
 
 int	ft_strlen(const char *s)
 {
@@ -21,6 +22,7 @@ int	ft_strlen(const char *s)
 	return (res);
 }
 
+/*
 size_t	ft_strlcpy(char	*dst, const char	*src, size_t	dstsize)
 {
 	size_t	i;
@@ -65,7 +67,7 @@ size_t	ft_strlcat(char *restrict	dst, const char	*src, size_t	dstsize)
 	else
 		return (0);
 }
-/*
+
 int	main()
 {
 	const char	*src = "Hello this is the source string12345";
