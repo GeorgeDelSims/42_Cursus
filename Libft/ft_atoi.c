@@ -1,50 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 17:42:07 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 09:02:53 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/10 08:57:10 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/10 08:57:27 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-char	*ft_strchr(const char *s, int c)
+int	ft_atoi(char	*str)
 {
-	char	uc;
+	int		result;
+	int		counter;
 
-	uc = (char)c;
-	while (*s != '\0')
+	result = 0;
+	counter = 0;
+	while (*str <= 32)
+		str++;
+	while (*str == '-' || *str == '+')
 	{
-		if (*s == uc)
-			return ((char *)s);
-		s++;
+		if (*str == '-')
+			counter++;
+		str++;
 	}
-	return (0);
-}
-
-char	*ft_strrchr(const char *s, int c)
-{
-	int	i;
-
-	i = ft_strlen(s);
-	while (i != 0)
+	while (*str >= '0' && *str <= '9')
 	{
-		if (s[i] == (char)c)
-			return ((char *)s);
+		result = result * 10 + (*str - '0');
+		str++;
 	}
+	if (counter % 2 == 1)
+		result *= -1;
+	return (result);
 }
-/*
-int main()
-{
-	const char	*str = "HelloabcdAaa";
-	int	c = 65;
-	char	*ptr;
-	
-	ptr = ft_strrchr(str, c);
-	printf("%c\n", *ptr);
-	return (0);
-}*/

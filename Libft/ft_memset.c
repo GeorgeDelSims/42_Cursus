@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:33:47 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/09 17:33:36 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/10 09:08:22 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_memset(void *b, int c, size_t len)
 	}
 }
 
+/*
 void	ft_bzero(void	*s, size_t	n)
 {
 	ft_memset(s, 0, n);
@@ -77,7 +78,7 @@ void	*memmove(void *dst, const void	*src, size_t len)
 	}
 }
 
-/*
+
 int main() 
 { 
     char str[50] = "blablabla 42424242 blablabla"; 
