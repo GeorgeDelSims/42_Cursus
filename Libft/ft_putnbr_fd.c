@@ -6,13 +6,13 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 10:49:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/11 11:08:59 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 16:18:56 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd);
+void	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)
 		write(fd, "-2147483648", 11);
@@ -20,13 +20,13 @@ void	ft_putnbr_fd(int n, int fd);
 	{
 		if (n < 0)
 		{
-			write(fd, '-', 1);
+			write(fd, "-", 1);
 			n = (-1) * n;
 		}
 		if (n < 10)
 		{
 			n += '0';
-			write(fd, n, 1);
+			write(fd, &n, 1);
 		}
 		if (n > 9)
 		{

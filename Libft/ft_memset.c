@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:33:47 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 12:59:17 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 16:05:43 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_memset(void *b, int c, size_t len)
 {
-	int				i;
+	size_t			i;
 	unsigned char	*ptr;
 	unsigned char	uc;
 

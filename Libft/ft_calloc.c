@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:29:42 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 14:53:01 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 16:22:13 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	else
 		ft_bzero(s, n);
-	return (n);
+	return (s);
 }

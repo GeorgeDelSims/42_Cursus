@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:07:21 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:29:27 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 16:23:37 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ void	*ft_memcpy(void *restrict	dst, const void *restrict	src, size_t	n)
 		d[i] = s[i];
 		i++;
 	}
+	return (d);
 }

@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 07:55:29 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/11 08:24:40 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 15:54:57 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 /*
 char	basic_func(unsigned int index, char c)
 {
-	if (index % 5 == 0)
+	if (index % 2 == 0)
 		c = '0';
 	return (c);
 }

@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:25:05 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/11 10:06:01 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 16:07:18 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	basic_func(unsigned int index, char *s)
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	size_t	i;
+	int		i;
 	int		len;
 
 	i = 0;
