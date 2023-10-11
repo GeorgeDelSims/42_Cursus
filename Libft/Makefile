@@ -10,12 +10,10 @@ OBJECTS = $(SOURCES:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(NAME)
+all: $(NAME) clean
 		
-$(NAME) : $(OBJECTS)
-
-%.0: %.c
-	$(CC) -c $(CFLAGS) $?
+$(NAME): $(OBJECTS)
+	ar rcs $(NAME) $(OBJECTS)
 	
 clean:
 	rm -f $(OBJECTS)
@@ -23,4 +21,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-recompile: fclean all
+re: fclean all
+
+.PHONY: all clean fclean re

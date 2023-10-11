@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:12:07 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:12:30 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 19:13:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,37 @@ size_t	ft_strlcat(char *restrict	dst, const char	*src, size_t	dstsize)
 {
 	size_t	i;
 	size_t	j;
+	size_t	srcsize;
+	size_t	d_size;
 
+	i = 0;
+	srcsize = ft_strlen(src);
+	d_size = ft_strlen(dst);
 	if (dstsize > 0)
 	{
-		i = 0;
 		while (dst[i] != '\0' && i < dstsize)
 			i++;
 		j = 0;
-		while (src[j] != '\0' && i < dstsize)
+		while (src[j] != '\0' && i < dstsize - 1)
 		{
 			dst[i] = src[j];
 			j++;
 			i++;
 		}
 		dst[i] = '\0';
-		return (ft_strlen(dst) + ft_strlen(src));
 	}
-	else
-		return (0);
+	return (srcsize + d_size);		
 }
+/*
+int	main()
+{
+	const char	*src = "AA";
+	char		dst[54] = "BB";
+	size_t		dstsize = 4;
+
+	printf("source string: %s\n", src);
+	printf("dest string: %s\n", dst);
+	printf("ft_strlcat result: %zu\n", ft_strlcat(dst, src, dstsize));
+	printf("dest string after strlcat function: %s\n", dst);
+	return (0);
+}*/

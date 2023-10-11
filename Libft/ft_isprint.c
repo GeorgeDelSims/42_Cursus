@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:25:04 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:23:13 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 19:17:13 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 
 int	ft_isprint(int c)
 {
-	if (c >= 40 && c <= 176)
+	if (c >= 33 && c <= 126)
 		return (1);
 	else
 		return (0);
 }
+/*
+int main()
+{
+	printf("%d\n", ft_isprint(' '));
+	return (0);
+}*/
