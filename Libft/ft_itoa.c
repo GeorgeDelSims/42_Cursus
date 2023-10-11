@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:22:50 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 19:37:50 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/11 11:17:04 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ int	ft_get_size(int n)
 	return (size);
 }
 
+char	*ft_loop(char *res, int size, long int num)
+{
+	while (size--)
+	{
+		res[size] = (num % 10) + '0';
+		num = num / 10;
+	}
+	return (res);
+}
 
 char	*ft_itoa(int n)
 {
@@ -47,11 +56,7 @@ char	*ft_itoa(int n)
 	res = (char *)malloc(size + 1);
 	if (res == NULL)
 		return (NULL);
-	while (size--)
-	{
-		res[size] = (num % 10) + '0';
-		num = num / 10;
-	}
+	res = ft_loop(res, size, num);
 	if (n < 0)
 		*res = '-';
 	return (res);
