@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:05:11 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/12 12:01:55 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 12:38:02 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strdup(const char *s1)
 	ft_strlcpy(dest, s1, i);
 	return (dest);
 }
-
+/*
 int	main()
 {
 	char	*src = "hello tings";
@@ -32,4 +32,4 @@ int	main()
 	printf("source address : %p\n", &src);
 	printf("dest address : %p\n", ft_strdup(src));	
 	return (0);	
-}
+}*/
