@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:12:07 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/11 19:13:36 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 08:48:09 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ size_t	ft_strlcat(char *restrict	dst, const char	*src, size_t	dstsize)
 	i = 0;
 	srcsize = ft_strlen(src);
 	d_size = ft_strlen(dst);
-	if (dstsize > 0)
+	if (dstsize > d_size)
 	{
 		while (dst[i] != '\0' && i < dstsize)
 			i++;
@@ -35,9 +35,12 @@ size_t	ft_strlcat(char *restrict	dst, const char	*src, size_t	dstsize)
 			i++;
 		}
 		dst[i] = '\0';
+		return (srcsize + d_size);
 	}
-	return (srcsize + d_size);		
+	else
+		return (srcsize + dstsize);
 }
+
 /*
 int	main()
 {

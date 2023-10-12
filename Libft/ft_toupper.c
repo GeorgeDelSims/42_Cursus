@@ -6,13 +6,13 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:10:23 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:01:31 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 11:04:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(unsigned char c)
+int	ft_toupper(int c)
 {
 	if (c >= 97 && c <= 122)
 		c -= 32;

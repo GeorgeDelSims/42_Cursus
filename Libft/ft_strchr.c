@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:42:07 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:15:47 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 08:46:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,27 @@
 char	*ft_strchr(const char *s, int c)
 {
 	char	uc;
+	int		i;
 
 	uc = (char)c;
-	while (*s != '\0')
+	if (uc == '\0')
 	{
-		if (*s == uc)
-			return ((char *)s);
-		s++;
+		i = ft_strlen(s);
+		return ((char *)&s[i]);
 	}
-	return (0);
+	else
+	{
+		i = 0;
+		while (s[i] != '\0')
+		{
+			if (s[i] == uc)
+				return ((char *)&s[i]);
+			i++;
+		}
+		return (NULL);
+	}
 }
+
 /*
 char	*ft_strrchr(const char *s, int c)
 {
@@ -39,13 +50,15 @@ char	*ft_strrchr(const char *s, int c)
 	}
 }
 
+
 int main()
 {
-	const char	*str = "HelloabcdAaa";
-	int	c = 65;
+	const char	*str = "Hell";
+	int	c = 'l' ;
 	char	*ptr;
 	
-	ptr = ft_strrchr(str, c);
+	ptr = ft_strchr(str, c);
 	printf("%c\n", *ptr);
+
 	return (0);
 }*/

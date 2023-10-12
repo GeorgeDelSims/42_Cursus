@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:12:50 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 13:06:48 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 09:50:01 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 
 	us = (const unsigned char *)s;
 	i = 0;
-	while (us[i] != '\0' && i < n)
+	while (i < n)
 	{
 		if (us[i] == (unsigned char)c)
 			return ((void *)&us[i]);
@@ -31,12 +31,13 @@ void	*ft_memchr(const void *s, int c, size_t n)
 /*
 int	main()
 {
-	const char *s = "dsfsd42A4352";
-	int	c = 65;
+	const char *s = "abcd";
+	int	c = 0;
 	size_t n = 15;
 	void	*ptr;
 	
 	ptr = ft_memchr(s, c, n);
 	printf("%c\n", *(char *)ptr);	
+	printf("%p\n", &*(char *)ptr);
 	return(0);
 }*/
