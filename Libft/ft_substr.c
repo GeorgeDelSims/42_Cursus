@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:53:21 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 15:06:59 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 15:14:46 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,34 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char			*substr;
 	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
-	substr = (char *)malloc((len + 1) * sizeof(char));
-	while (s[start] != '\0' && i < len)
+	j = 0;
+	substr = (char *)malloc((len + 2) * sizeof(char));
+	if (substr == NULL)
+		return (NULL);
+	while (s[i])
 	{
-		substr[i] = s[start];
+		if (i >= start && j < len)
+		{
+				substr[j] = s[i];
+				j++;
+		}
 		i++;
-		start++;
 	}
+	substr[j] = '\0';
 	return (substr);
 }
 /*
 int main()
 {
-	const char *s = "string example for the long ting";
-	unsigned int	start = 12;
-	size_t	len = 4;
+	const char		*s = "hoola";
+	char			*result;
+	unsigned int	start = 3;
+	size_t			len = 6;
 
-	printf("%s\n", ft_substr(s, start, len));
+	result = ft_substr(s, start, len);
+	printf("%s\n", result);
 	return (0);
 }*/

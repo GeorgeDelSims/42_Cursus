@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:05:11 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/12 12:38:02 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 12:59:12 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s1)
 	while (s1[i] != '\0')
 		i++;
 	dest = (char *)malloc((i + 1) * sizeof(char));
-	ft_strlcpy(dest, s1, i);
+	ft_strlcpy(dest, s1, i + 1);
 	return (dest);
 }
 /*

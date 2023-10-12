@@ -6,14 +6,14 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:57:10 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/12 12:55:41 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/12 13:04:51 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
 
-int	conditions(const char	c)
+int	conditions(const char c)
 {
 	if (c == '-' || c == '+')
 		return (2);
