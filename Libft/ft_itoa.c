@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:22:50 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/11 16:59:40 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/13 13:02:44 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,39 @@ int	ft_get_size(int n)
 	size--;
 	return (size);
 }
+/*
+char	*ft_itoa(int n)
+{
+	int			len;
+	char		*res;
+	const char	*digits = "0123456789";
+
+	len = ft_get_size(n);
+	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (0);
+	res[len] = 0;
+	if (n == 0)
+		res[0] = '0';
+	if (n < 0)
+		res[0] = '-';
+	while (n)
+	{
+		if (n > 0)
+			res[--len] = digits[n % 10];
+		else
+			res[--len] = digits[n % 10 * -1];
+		n /= 10;
+	}
+	return (res);
+}
+
+int	main()
+{
+	printf("%s\n", ft_itoa(-423983));
+	return (0);
+}
+*/
 
 char	*ft_loop(char *res, int size, long int num)
 {
@@ -56,6 +89,7 @@ char	*ft_itoa(int n)
 	res = (char *)malloc(size + 1);
 	if (res == NULL)
 		return (NULL);
+	res[size] = '\0';
 	res = ft_loop(res, size, num);
 	if (n < 0)
 		*res = '-';
@@ -64,8 +98,8 @@ char	*ft_itoa(int n)
 /*
 int	main()
 {
-	int	n = -52405430;
+	int	i = -54378;
 
-	printf("%s\n", ft_itoa(n));
+	printf("%s\n", ft_itoa(i));
 	return (0);
 }*/
