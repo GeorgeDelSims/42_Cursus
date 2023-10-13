@@ -1,48 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 10:49:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/13 14:13:11 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/13 16:58:00 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/13 18:24:26 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_lstsize(t_list *lst)
 {
-	char	c;
-
-	if (n == -2147483648)
-		write(fd, "-2147483648", 11);
-	else
+	t_list	*current;
+	int		counter;
+	
+	counter = 0;
+	current = lst;
+	while (current != NULL)
 	{
-		if (n < 0)
-		{
-			write(fd, "-", 1);
-			n = (-1) * n;
-		}
-		if (n < 10)
-		{
-			c = (char)n + '0';
-			ft_putchar_fd(c, fd);
-		}
-		if (n > 9)
-		{
-			ft_putnbr_fd(n / 10, fd);
-			ft_putnbr_fd(n % 10, fd);
-		}
+		current = current->next;
+		counter++;
 	}
+	return (counter);
 }
-/*
-int main()
-{
-	int n = 567;
 
-	ft_putnbr_fd(n, 1);
-	write(1, "\n", 1);
+int	main()
+{
+	t_list	lst;
+
+	lst.content = (void*)2;
+	lst.next = malloc(sizeof(lst));
+	lst.next->content = (void*)4;
+	lst.next->next = malloc(sizeof(lst));
+	lst.next->next->content = (void*)8;
+	lst.next->next->next = NULL;
+	
+	printf("%d\n", ft_lstsize(&lst));
 	return (0);
-}*/
+}
