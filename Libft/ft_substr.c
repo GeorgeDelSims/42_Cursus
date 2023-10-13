@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:53:21 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/12 15:14:46 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/13 10:39:48 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 
 	i = 0;
 	j = 0;
-	substr = (char *)malloc((len + 2) * sizeof(char));
+	substr = (char *)malloc((len + 1) * sizeof(char));
 	if (substr == NULL)
 		return (NULL);
 	while (s[i])
@@ -38,10 +38,10 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 /*
 int main()
 {
-	const char		*s = "hoola";
+	const char		*s = "hoolaaaaaaaaaaaaaaaaa";
 	char			*result;
 	unsigned int	start = 3;
-	size_t			len = 6;
+	size_t			len = 3;
 
 	result = ft_substr(s, start, len);
 	printf("%s\n", result);

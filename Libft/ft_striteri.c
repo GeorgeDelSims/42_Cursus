@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 08:25:05 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/12 14:59:55 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/13 10:22:07 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	basic_func(unsigned int index, char *s)
 	else
 		s[index] = s[index] + 5;
 }
-
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {

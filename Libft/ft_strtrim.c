@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 15:23:10 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/10 16:14:35 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/13 08:08:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	i = 0;
 	while (i < len && ft_isin(s1[i], set) == 1)
 		i++;
-	while (len > 0 && ft_isin(s1[len - 1], set) == 1)
+	while (len > 0 && ft_isin(s1[len - 1], set) == 1 && len > i)
 		len--;
 	newstr = (char *)malloc((len - i) + 1);
 	if (newstr == NULL)
@@ -55,8 +55,8 @@ char	*ft_strtrim(const char *s1, const char *set)
 /*
 int	main()
 {
-	const char	*s1 = " y3jhi    jkyfgd45y  ";
-	const char	*set = "y ";
+	const char	*s1 = "          ";
+	const char	*set = " ";
 	
 	printf("%s\n", ft_strtrim(s1, set));
 	return (0);
