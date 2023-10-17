@@ -1,46 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 15:30:58 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/17 15:44:10 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/17 10:23:39 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/17 15:34:00 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-//adds node to the front of linked list 
-//returns Void 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
+	t_list	*curr;
+
 	if (!lst || !new)
 		return ;
-	new->next = *lst;
-	*lst = new;
+	curr = *lst;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	while (curr->next)
+		curr = curr->next;
+	curr->next = new;
+	new->next = NULL;
 }
 /*
-int	main(void)
+int	main()
 {
-	t_list *lst = ft_lstnew("World"); // Create a new node with content "World"
+	t_list	*lst = ft_lstnew("First One");
+	
 	if (!lst)
-		return (1); // Handle allocation failure if needed
+		return (1);
 
-	// Add nodes to the front of the list
-	ft_lstadd_front(&lst, ft_lstnew("Hello"));
-	ft_lstadd_front(&lst, ft_lstnew("Goodbye"));
+	ft_lstadd_back(&lst, ft_lstnew("Second"));
+	ft_lstadd_back(&lst, ft_lstnew("Third"));
 
-	// Print the contents of the list
-	printf("Contents of the list:\n");
 	while (lst)
 	{
 		printf("%s\n", (char *)lst->content);
 		lst = lst->next;
 	}
-
-	// Don't forget to free the list when you're done
 	ft_lstclear(&lst, &free);
-
 	return (0);
 }*/

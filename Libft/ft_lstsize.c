@@ -6,17 +6,19 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:58:00 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/13 18:24:26 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/17 14:05:19 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//Gets length of linked list 
+//returns size / length (integer)
 int	ft_lstsize(t_list *lst)
 {
 	t_list	*current;
 	int		counter;
-	
+
 	counter = 0;
 	current = lst;
 	while (current != NULL)
@@ -27,6 +29,7 @@ int	ft_lstsize(t_list *lst)
 	return (counter);
 }
 
+/*
 int	main()
 {
 	t_list	lst;
@@ -40,4 +43,4 @@ int	main()
 	
 	printf("%d\n", ft_lstsize(&lst));
 	return (0);
-}
+}*/

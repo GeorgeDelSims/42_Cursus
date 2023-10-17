@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 09:07:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/17 13:20:47 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/17 10:39:47 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/17 14:42:26 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void	*src, size_t len)
+// Clears a linked list by deleting all nodes with del function
+// returns void
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
+	t_list	*tmp;
+	t_list	*current;
 
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	if (s < d && s + len > d)
+	if (!lst || !del)
+		return ;
+	current = *lst;
+	while (current != NULL)
 	{
-		i = len;
-		while (i > 0)
-		{
-			d[i - 1] = s[i - 1];
-			i--;
-		}
+		tmp = current->next;
+		(*del)(current->content);
+		free(current);
+		current = tmp;
 	}
-	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			d[i] = s[i];
-			i++;
-		}
-	}
-	return (dst);
+	*lst = NULL;
 }
