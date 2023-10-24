@@ -6,46 +6,51 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:00:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 11:25:52 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 15:04:17 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-// Defines whether character is a cspdiux% case
+// Defines whether character is a cspdiuxX% case
 int	ft_char(char c)
 {
-	char	*s;
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd'
+			|| c == 'i' || c == 'u' || c == 'x'	|| c == 'X')
+		return (1);
+	else
+		return (0);
+}
 
-	s = "cspdiuxX%";
-	while (*s)
-	{
-		if (c == *s)
-			return (1);
-		s++;
-	}
-	return (0);
+int	ft_printchar_normal(char c)
+{
+	write(1, &c, 1);
+	return (1);
 }
 
 int	ft_process_args(va_list args, const char format)
 {
+	int	charcount;
+
+	charcount = 0;
 	if (format == 'c' || format == '%')
 	{	
 		ft_printchar(va_arg(args, int));
-		return (1);
+		charcount += 1;
 	}
 	else if (format == 's')
-		return (ft_printstr(va_arg(args, char *)));
+		charcount += ft_printstr(va_arg(args, char *));
 	else if (format == 'p')
-		return (ft_printptr(va_arg(args, unsigned long long)));
+		charcount += ft_printptr(va_arg(args, unsigned long long));
 	else if (format == 'd' || format == 'i')
-		return (ft_printint(va_arg(args, int)));
+		charcount += ft_printint(va_arg(args, int));
 	else if (format == 'x')
-		return (ft_printhex(va_arg(args, unsigned int)));
+		charcount += ft_printhex(va_arg(args, unsigned int));
 	else if (format == 'X')
-		return (ft_printhexupper(va_arg(args, unsigned int)));
-	else
-		return (0);
+		charcount += ft_printhexupper(va_arg(args, unsigned int));
+	else if (format == 'u')
+		charcount += ft_printunsigned(va_arg(args, unsigned int));
+	return (charcount);
 }
 
 // Printf function with variadic input
@@ -60,17 +65,16 @@ int	ft_printf(const char *s, ...)
 	va_start(args, s);
 	while (s[i])
 	{
-		while (s[i] != '%')
+		if (s[i] == '%')
 		{
-			ft_printchar(s[i]);
-			i++;
-			charcount++;
-		}
-		if (s[i] == '%' && ft_char(s[i + 1]) == 1)
-		{
-			charcount += ft_process_args(args, s[i]);
+			if (s[i + 1] == '%')
+				charcount += ft_printchar_normal('%');
+			else if (ft_char(s[i + 1]) == 1)
+				charcount += ft_process_args(args, s[i + 1]);
 			i++;
 		}
+		else
+			write(1, &s[i], 1);
 		i++;
 	}
 	va_end(args);

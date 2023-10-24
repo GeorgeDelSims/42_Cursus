@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 09:40:25 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 11:10:10 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 14:48:48 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_printstr(char	*s)
 	i = 0;
 	while (s[i])
 	{
-		ft_printchar(s[i]);
+		write(1, &s[i], 1);
 		i++;
 	}
 	return (i);
@@ -38,6 +38,7 @@ int	ft_printint(int num)
 	char	*str;
 
 	str = ft_itoa(num);
+//	printf("%s", str);
 	ft_printstr(str);
 	return (ft_countint(num));
 }
@@ -56,13 +57,14 @@ void	ft_putunsigned(unsigned int num)
 	if (num < 0)
 		return ;
 	if (num < 10)
-		ft_printchar(num + '0');
+		ft_printchar(num);
 	if (num > 9)
 	{
 		ft_putunsigned(num / 10);
 		ft_putunsigned(num % 10);
 	}
 }
+
 /*
 int	main()
 {
