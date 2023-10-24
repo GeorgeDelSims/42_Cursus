@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:06:57 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 14:10:06 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 17:51:20 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_printchar_hexupper(unsigned int num)
 	char	c;
 
 	if (num < 10)
-		ft_printchar((int)num);
+		ft_printchar_rec((int)num);
 	else if (num > 9)
 	{
 		c = num - 10 + 'A';
@@ -49,10 +49,10 @@ void	ft_puthexupper(unsigned int num)
 
 void	ft_printchar_hex(unsigned int num)
 {
-	char	c;
+	unsigned char	c;
 
-	if (num < 10)
-		ft_printchar((int)num);
+	if (num <= 9)
+		ft_printchar_rec((unsigned int)num);
 	else if (num > 9)
 	{
 		c = num - 10 + 'a';

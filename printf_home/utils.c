@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 09:40:25 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 16:22:17 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 17:39:09 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ int	ft_printchar(int num)
 	return (1);
 }
 
-void	ft_printchar_rec(int num)
+// printchar pour les fonctions recursives (hex & autres)
+void	ft_printchar_rec(unsigned int num)
 {
-	char	c;
+	unsigned char	c;
 
-	c = (char)num;
+	c = num + '0';
 	write(1, &c, 1);
 }
 
@@ -34,6 +35,8 @@ int	ft_printstr(char	*s)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (write(1, "(null)", 6));
 	while (s[i])
 	{
 		write(1, &s[i], 1);

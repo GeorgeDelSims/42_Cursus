@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 09:46:52 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 14:10:20 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 17:56:12 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	ft_countint(int num)
 	return (i);
 }
 
-int	ft_countint_hex(unsigned int num)
+int	ft_countint_hex(unsigned long long num)
 {
 	int	i;
 
 	i = 1;
-	while (num > 16)
+	while (num >= 16)
 	{
 		num /= 16;
 		i++;
@@ -59,17 +59,18 @@ void	ft_puthex(unsigned int num)
 int	ft_printptr(unsigned long long num)
 {
 	int	res;
-
-	res = ft_countint_hex((int)num);
+	
+	res = write(1, "0x", 2);
+	res += ft_countint_hex((unsigned long long)num);
 	ft_putptr(num);
 	return (res);
 }
 
 void	ft_putptr(unsigned long long num)
 {
-	if (num <= 16)
+	if (num < 16)
 		ft_printchar_hex((unsigned int)num);
-	if (num > 16)
+	if (num >= 16)
 	{
 		ft_putptr(num / 16);
 		ft_putptr(num % 16);
