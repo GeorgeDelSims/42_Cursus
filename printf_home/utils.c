@@ -6,17 +6,26 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 09:40:25 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 14:48:48 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 16:22:17 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_printchar(int num)
+int	ft_printchar(int num)
 {
 	char	c;
 
-	c = num + '0';
+	c = (char)num;
+	write(1, &c, 1);
+	return (1);
+}
+
+void	ft_printchar_rec(int num)
+{
+	char	c;
+
+	c = (char)num;
 	write(1, &c, 1);
 }
 
@@ -57,7 +66,7 @@ void	ft_putunsigned(unsigned int num)
 	if (num < 0)
 		return ;
 	if (num < 10)
-		ft_printchar(num);
+		ft_printchar_rec(num + 48);
 	if (num > 9)
 	{
 		ft_putunsigned(num / 10);

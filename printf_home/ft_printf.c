@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:00:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 15:04:17 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 16:17:55 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,13 @@ int	ft_char(char c)
 		return (0);
 }
 
-int	ft_printchar_normal(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
-
 int	ft_process_args(va_list args, const char format)
 {
 	int	charcount;
 
 	charcount = 0;
 	if (format == 'c' || format == '%')
-	{	
-		ft_printchar(va_arg(args, int));
-		charcount += 1;
-	}
+		charcount += ft_printchar(va_arg(args, int));
 	else if (format == 's')
 		charcount += ft_printstr(va_arg(args, char *));
 	else if (format == 'p')
@@ -68,13 +59,13 @@ int	ft_printf(const char *s, ...)
 		if (s[i] == '%')
 		{
 			if (s[i + 1] == '%')
-				charcount += ft_printchar_normal('%');
+				charcount += ft_printchar(37);
 			else if (ft_char(s[i + 1]) == 1)
 				charcount += ft_process_args(args, s[i + 1]);
 			i++;
 		}
 		else
-			write(1, &s[i], 1);
+			charcount += ft_printchar((int)s[i]);
 		i++;
 	}
 	va_end(args);

@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:33:07 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 14:56:56 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/24 15:55:46 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <stdio.h>
 # include <stdarg.h>
 
-void	ft_printchar(int num);
-int		ft_printchar_normal(char c);
+int		ft_printchar(int num);
+void	ft_printchar_rec(int num);
 int		ft_printstr(char *s);
 int		ft_printint(int num);
 int		ft_printunsigned(unsigned int num);
