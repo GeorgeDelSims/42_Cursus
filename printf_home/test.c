@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 14:35:41 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/18 17:27:54 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/24 11:20:16 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/24 11:21:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-#include "libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdarg>
-
-#endif
+int	main()
+{
+	ft_printf("Hello %d", 42);
+	return (0);
+}

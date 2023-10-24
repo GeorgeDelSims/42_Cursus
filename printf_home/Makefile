@@ -1,21 +1,33 @@
 NAME = libftprintf.a
 SOURCES = \
+		  utils.c	ft_printf.c	utils2.c	utils3.c	test.c
 
-OBJECTS = $(SOURCES:..c=.o)
+OBJECTS = $(SOURCES:.c=.o)
 
-cc = gcc
-CFLAGS = -Wall -Wextra - Werror
+LIBFT_DIR = libft
+
+c = gcc
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	ar rcs $(NAME) $(OBJECTS)
+$(NAME):	$(OBJECTS)
+			make -C $(LIBFT_DIR)
+			cp libft/libft.a .
+			mv libft.a $(NAME)
+			ar rcs $(NAME) $(OBJECTS)
+
+.PHONY: libft
+libft:
+	$(MAKE) - C $(LIBFT_DIR)
 
 clean:
 	rm -f $(OBJECTS)
 
-fclean:
-	clean all
+fclean: clean
+	rm -f $(NAME)
 
-PHONY: all clean fclean re
+re: fclean all
+
+.PHONY: all clean fclean re
 
