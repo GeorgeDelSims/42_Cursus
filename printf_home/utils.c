@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 09:40:25 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/25 10:44:01 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/25 11:48:17 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_printint(int num)
 {
 	char	*str;
 	int		charcount;
-	
+
 	if (num == -2147483648)
 	{
 		ft_printstr("-2147483648");
@@ -63,7 +63,7 @@ int	ft_printunsigned(unsigned int num)
 	if (num == 0)
 		return (ft_putchar('0'));
 	if (num > 9)
-		counter += ft_printunsigned(num / 10);	
+		counter += ft_printunsigned(num / 10);
 	ft_putchar((char)(num % 10 + 48));
 	counter++;
 	return (counter);

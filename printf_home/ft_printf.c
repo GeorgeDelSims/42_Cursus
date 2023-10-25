@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:00:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/25 11:17:34 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/25 11:50:56 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 // Defines whether character is a cspdiuxX% case
 int	ft_char(char c)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd'
-			|| c == 'i' || c == 'u' || c == 'x'	|| c == 'X')
-		return (1);
-	else
-		return (0);
+	char	*str;
+
+	str = "cspdiuxX";
+	while (*str)
+	{
+		if (c == *str)
+			return (1);
+		str++;
+	}
+	return (0);
 }
 
 int	ft_process_args(va_list args, const char format)

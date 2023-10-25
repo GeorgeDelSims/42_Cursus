@@ -1,17 +1,18 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 16:06:57 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/25 10:41:23 by gsims            ###   ########.fr       */
+/*   Created: 2023/10/25 11:52:24 by gsims             #+#    #+#             */
+/*   Updated: 2023/10/25 11:52:28 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
 
+/*
 int	main()
 {
 	int	charcount;
@@ -22,10 +23,6 @@ int	main()
 	printf("\n");
 	printf("%d\n", printf(" %p ", (void*)16));
 	printf("\n");
-//	charcount += ft_printchar_normal('%');
 	printf("charcount number: %d\n", charcount);
-//	printf("ft_printint test: %d\n", ft_printint(42));
-//	printf("ft_printchar test: \n");
-//	ft_printchar(4);
 	return (0);
-}
+}*/
