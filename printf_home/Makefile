@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 SOURCES = \
-		  utils.c	ft_printf.c	utils2.c	utils3.c
+		  utils.c    ft_printf.c    utils2.c    utils3.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -16,7 +16,7 @@ all: $(NAME)
 
 $(NAME):	$(OBJECTS)
 			make -C $(LIBFT_DIR)
-			cp libft/libft.a .
+			cp libft/libft.a
 			mv libft.a $(NAME)
 			ar rcs $(NAME) $(OBJECTS)
 
@@ -26,16 +26,17 @@ test: $(TEST_OBJECT) $(NAME)
 $(TEST_OBJECT): $(TEST_SOURCE)
 	$(CC) $(CFLAGS) -c $(TEST_SOURCE)
 
+
+.PHONY: libft
 libft:
 	$(MAKE) - C $(LIBFT_DIR)
 
 clean:
 	rm -f $(OBJECTS)
 
-fclean: clean
+fclean:	clean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
-
+.PHONY: all clean fclean re
