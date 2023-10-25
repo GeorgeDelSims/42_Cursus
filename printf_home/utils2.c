@@ -6,45 +6,24 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:06:57 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 17:51:20 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/25 10:41:23 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_printchar_hexupper(unsigned int num)
+int ft_putchar(int c)
 {
-	char	c;
-
-	if (num < 10)
-		ft_printchar_rec((int)num);
-	else if (num > 9)
-	{
-		c = num - 10 + 'A';
-		write(1, &c, 1);
-	}	
+	write(1, &c, 1);
+	return (1);
 }
 
-int	ft_printhexupper(unsigned int num)
+void	ft_printchar_rec(unsigned int num)
 {
-	int	res;
+	unsigned char	c;
 
-	res = ft_countint((int)num);
-	ft_puthexupper(num);
-	return (res);
-}
-
-void	ft_puthexupper(unsigned int num)
-{
-	if (num < 0)
-		return ;
-	if (num <= 16)
-		ft_printchar_hexupper(num);
-	if (num > 16)
-	{
-		ft_puthexupper(num / 16);
-		ft_puthexupper(num % 16);
-	}
+	c = num + '0';
+	write(1, &c, 1);
 }
 
 void	ft_printchar_hex(unsigned int num)
@@ -60,11 +39,20 @@ void	ft_printchar_hex(unsigned int num)
 	}	
 }
 
-int	ft_printhex(unsigned int num)
+int	ft_printhexa(unsigned int num, char c)
 {
-	int	res;
+	int		counter;
+	char	*base;
 
-	res = ft_countint_hex((int)num);
-	ft_puthex(num);
-	return (res);
+	counter = 0;
+	if (c == 'X')
+		base = "0123456789ABCDEF";
+	else if (c == 'x')
+		base = "0123456789abcdef";
+	if (num == 0)
+		return (ft_putchar('0'));
+	if (num > 15)
+		counter += ft_printhexa(num / 16, c);
+	counter += ft_putchar((char)base[num % 16]);
+	return (counter);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:00:37 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/24 17:54:37 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/25 11:17:34 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	ft_process_args(va_list args, const char format)
 	else if (format == 'd' || format == 'i')
 		charcount += ft_printint(va_arg(args, int));
 	else if (format == 'x')
-		charcount += ft_printhex(va_arg(args, unsigned int));
+		charcount += ft_printhexa(va_arg(args, unsigned int), 'x');
 	else if (format == 'X')
-		charcount += ft_printhexupper(va_arg(args, unsigned int));
+		charcount += ft_printhexa(va_arg(args, unsigned int), 'X');
 	else if (format == 'u')
 		charcount += ft_printunsigned(va_arg(args, unsigned int));
 	return (charcount);

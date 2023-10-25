@@ -26,8 +26,6 @@ test: $(TEST_OBJECT) $(NAME)
 $(TEST_OBJECT): $(TEST_SOURCE)
 	$(CC) $(CFLAGS) -c $(TEST_SOURCE)
 
-
-.PHONY: libft
 libft:
 	$(MAKE) - C $(LIBFT_DIR)
 
@@ -39,5 +37,5 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft
 
