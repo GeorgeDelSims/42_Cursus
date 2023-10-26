@@ -6,11 +6,36 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:20:16 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/26 17:15:31 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/26 18:02:57 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+//strchr function
+char	*ft_strchr(const char *s, int c)
+{
+	char	uc;
+	int		i;
+
+	uc = (char)c;
+	if (uc == '\0')
+	{
+		i = ft_strlen(s);
+		return ((char *)&s[i]);
+	}
+	else
+	{
+		i = 0;
+		while (s[i] != '\0')
+		{
+			if (s[i] == uc)
+				return ((char *)&s[i]);
+			i++;
+		}
+		return (NULL);
+	}
+}
 
 //Stringlcat function
 size_t	ft_strlcat(char *restrict	dst, const char	*src, size_t	dstsize)
@@ -102,7 +127,7 @@ char    *ft_line(char *buffer)
 }
 
 //opens & reads from the text file (if read() has made it to the end of a file it returns 0)
-char    *read_file(int fd, char *stash)
+char    *read_file(int fd, char **stash)
 {
     int     read_len;
     char    *buffer;
@@ -115,21 +140,23 @@ char    *read_file(int fd, char *stash)
     read_len = 1;
     while (read_len > 0)
     {
-        read_len += read(fd, buffer, BUFFER_SIZE);
-        //need a function that concatenates buffer on to the back of stash
-        //check to see if there is a '\n' character in the buffer, in which case escape the loop and re-initialise the stash with the current buffer
-        
+        read_len = read(fd, buffer, BUFFER_SIZE);
+        //need a function that concatenates buffer onto the stash array
+        //check to see if there is a '\n' character in the buffer, in which case escape the loop
+        if (ft_strchr(stash, 10) == 10)
+            break ;
+        //free the buffer 
     }
     if (read_len == -1)
         return (NULL);
     buffer[read_len] = '\0';
-    return (buffer);
+    return (stash);
 }
 
 //check for errors in input, imp
 char    *get_next_line(int fd)
 {
-    static char stash;
+    static char **stash;
     char        *line;
     size_t      line_len;
 
