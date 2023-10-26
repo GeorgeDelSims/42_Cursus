@@ -6,13 +6,42 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:20:16 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/26 14:37:49 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/26 17:15:31 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-//Determines the size of a line 
+//Stringlcat function
+size_t	ft_strlcat(char *restrict	dst, const char	*src, size_t	dstsize)
+{
+	size_t	i;
+	size_t	j;
+	size_t	srcsize;
+	size_t	d_size;
+
+	i = 0;
+	srcsize = ft_strlen(src);
+	d_size = ft_strlen(dst);
+	if (dstsize > d_size)
+	{
+		while (dst[i] != '\0' && i < dstsize)
+			i++;
+		j = 0;
+		while (src[j] != '\0' && i < dstsize - 1)
+		{
+			dst[i] = src[j];
+			j++;
+			i++;
+		}
+		dst[i] = '\0';
+		return (srcsize + d_size);
+	}
+	else
+		return (srcsize + dstsize);
+}
+
+//Determines the length of a line 
 int line_len(char *str)
 {
     int i;
@@ -24,9 +53,13 @@ int line_len(char *str)
 }
 
 // Frees the dynamically allocated buffers 
-void    ft_free()
+void    ft_free(char *buffer)
 {
-    
+    while (*buffer != '\n')
+    {
+        free(*buffer);
+        buffer++;
+    }
 }
 
 //moves the buffer pointer to the end of the "current" line (effectively deleting the current line in the dynamic buffer)
@@ -50,51 +83,64 @@ char    *ft_next_line(char *buffer)
 }
 
 //retrieves the current line from the buffer 
-char    *ft_line(char *dyn_buffer)
+char    *ft_line(char *buffer)
 {
     char    *line;
     int     i;
 
     i = 0;
-    line = (char *)malloc(line_len(dyn_buffer) + 1);
+    line = (char *)malloc(line_len(buffer) + 1);
     if (line == NULL)
         return (NULL);
-    while (dyn_buffer[i] && dyn_buffer[i] != '\n')
+    while (buffer[i] && buffer[i] != '\n')
     {
-        line[i] = dyn_buffer[i];
+        line[i] = buffer[i];
         i++;
     }
+    ft_free(buffer);
     return (line);
 }
 
 //opens & reads from the text file (if read() has made it to the end of a file it returns 0)
-char    *read_file(int fd, char *dyn_buffer)
+char    *read_file(int fd, char *stash)
 {
-    size_t  read_len;
-
-    dyn_buffer = (char *)malloc(BUFFER_SIZE + 1);
-    if (dyn_buffer == NULL)
+    int     read_len;
+    char    *buffer;
+    
+    // Need a dynamically allocated buffer to store the characters from read()
+    buffer = (char *)malloc(BUFFER_SIZE + 1);
+    if (buffer == NULL)
         return (NULL);
-    read_len = read(fd, dyn_buffer, BUFFER_SIZE);
-    dyn_buffer[read_len] = '\0';
-    return (dyn_buffer);
+    //read() output is 0 at EOF and -1 in the case of an error
+    read_len = 1;
+    while (read_len > 0)
+    {
+        read_len += read(fd, buffer, BUFFER_SIZE);
+        //need a function that concatenates buffer on to the back of stash
+        //check to see if there is a '\n' character in the buffer, in which case escape the loop and re-initialise the stash with the current buffer
+        
+    }
+    if (read_len == -1)
+        return (NULL);
+    buffer[read_len] = '\0';
+    return (buffer);
 }
 
 //check for errors in input, imp
 char    *get_next_line(int fd)
 {
-    static char buffer;
+    static char stash;
     char        *line;
     size_t      line_len;
 
     //read from file and save to static buffer:
-    buffer = read_file(fd, buffer);
+    stash = read_file(fd, stash);
     
     //retrieve line from static buffer
-    line = ft_line(buffer);
+    line = ft_line(stash);
 
     //re-initialise static buffer & save beginning of next line into static buffer
-    buffer = ft_next_line(buffer);
+    stash = ft_next_line(stash);
 
     //return line
     return (line);
