@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:27:24 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/31 12:01:40 by gsims            ###   ########.fr       */
+/*   Updated: 2023/10/31 15:02:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int	ft_strlen(const char *s)
 	int	res;
 
 	res = 0;
-	while (s[res] != '\0')
-		res++;
+	if(s)
+	{
+		while (s[res] != '\0')
+			res++;
+	}
 	return (res);
 }
 
@@ -47,17 +50,23 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	if (newstr == NULL)
 		return (NULL);
 	i = 0;
-	while (i < len && s1[i] != '\0')
+	if(s1)
 	{
-		newstr[i] = s1[i];
-		i++;
+		while (i < len && s1[i] != '\0')
+		{
+			newstr[i] = s1[i];
+			i++;
+		}
 	}
 	j = 0;
-	while (i < len && s2[j] != '\0')
+	if(s2)
 	{
-		newstr[i] = s2[j];
-		i++;
-		j++;
+		while (i < len && s2[j] != '\0')
+		{
+			newstr[i] = s2[j];
+			i++;
+			j++;
+		}
 	}
 	newstr[i] = '\0';
 	return (newstr);
