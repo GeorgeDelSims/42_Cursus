@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:27:24 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/31 15:02:24 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/01 10:12:59 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	if(s2)
 	{
 		while (i < len && s2[j] != '\0')
-		{
-			newstr[i] = s2[j];
-			i++;
-			j++;
-		}
+			newstr[i++] = s2[j++];
 	}
 	newstr[i] = '\0';
 	return (newstr);

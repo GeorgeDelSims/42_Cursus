@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:20:16 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/31 17:42:39 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/01 10:07:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,24 @@ char    *ft_extract_line(char **stash, int mod)
     line_len = 0;
     if (!mod)
     {
-        while (*stash && (*stash)[line_len] != '\n')
+        while ((*stash)[line_len] != '\n' && (*stash)[line_len] != '\0')
             line_len++;
         line = ft_substr(*stash, 0, line_len);
         rest_len = line_len;
         while ((*stash)[rest_len] != '\0')
+        {
+            if ((*stash)[rest_len] == '\n')
+                break ;
             rest_len++;
-        temp = ft_substr(*stash, line_len + 1, rest_len - line_len);
+        }
+        temp = ft_substr(*stash, line_len + 1, rest_len - line_len - 1);
         *stash = temp;
     }
     else
-        return (*stash);
+    {
+        line = *stash;
+        *stash = NULL;
+    }
     return (line);
 }
 
@@ -47,12 +54,11 @@ char    *read_file(int fd, char *stash, int *p_mod)
     
     buffer[BUFFER_SIZE] = '\0';
     read_line = 1;
-    while (read_line != 0)
+    while ((read_line = read(fd, buffer, BUFFER_SIZE)) > 0)
     {
-        read_line = read(fd, buffer, BUFFER_SIZE);
         if (read_line == -1)
             return (NULL);
-        buffer[BUFFER_SIZE] = '\0';
+        buffer[read_line] = '\0';
         stash = ft_strjoin(stash, buffer);
         if (ft_strchr(buffer , '\n'))
             break ;
@@ -98,14 +104,18 @@ int main()
     }
     while ((line = get_next_line(fd)))
     {   
-        printf("is the segfault here ? \n");
+        //printf("is the segfault here ? \n");
         printf("%s\n", line);
     }
-    /*line = get_next_line(fd);
-    printf("end printf: %s\n", line);
-    line = get_next_line(fd);
-    printf("end printf 2:%s\n", line);
-    line = get_next_line(fd);
-    printf("end printf 3:%s\n", line);*/
+   // line = get_next_line(fd);
+   // printf("end printf: %s\n", line);
+   // line = get_next_line(fd);
+   // printf("end printf 2:%s\n", line);
+   // line = get_next_line(fd);
+   // printf("end printf 3:%s\n", line);
+   // line = get_next_line(fd);
+   // printf("end printf 4:%s\n", line);
+   // line = get_next_line(fd);
+   // printf("end printf 5:%s\n", line);
     return (0);
 }
