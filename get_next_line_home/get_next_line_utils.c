@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:27:24 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/01 10:12:59 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/01 11:14:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,44 @@ int line_len(char *str)
     while (*str != '\n')
         i++;
     return (i);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*dest;
+	int		i;
+
+	i = 0;
+	while (s1[i] != '\0')
+		i++;
+	dest = (char *)malloc((i + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	ft_strlcpy(dest, s1, i + 1);
+	return (dest);
+}
+
+size_t	ft_strlcpy(char	*dst, const char	*src, size_t	dstsize)
+{
+	size_t	i;
+	size_t	srcsize;
+
+	i = 0;
+	srcsize = ft_strlen(src);
+	if (dstsize != 0)
+	{
+		while (i < dstsize - 1)
+		{
+			dst[i] = src[i];
+			if (dst[i] == '\0')
+			{
+				return (srcsize);
+			}
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (srcsize);
 }
 
 //joins / concatenates two strings into a new one with dynamic memory allocation

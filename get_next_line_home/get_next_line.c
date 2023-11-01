@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:20:16 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/01 10:07:08 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/01 11:15:04 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ char    *ft_extract_line(char **stash, int mod)
     {
         while ((*stash)[line_len] != '\n' && (*stash)[line_len] != '\0')
             line_len++;
-        line = ft_substr(*stash, 0, line_len);
+        if (line_len == 0 && (*stash)[line_len] == '\n')
+            line = ft_strdup("");
+        else
+            line = ft_substr(*stash, 0, line_len);
         rest_len = line_len;
         while ((*stash)[rest_len] != '\0')
         {
@@ -41,6 +44,15 @@ char    *ft_extract_line(char **stash, int mod)
     {
         line = *stash;
         *stash = NULL;
+        while (line[line_len])
+        {
+            if (line[line_len] == '\n')
+            {   
+                line[line_len] = '\0';
+                break ;
+            }
+            line_len++;
+        }
     }
     return (line);
 }

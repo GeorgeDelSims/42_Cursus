@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:20:13 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/31 17:42:26 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/01 11:23:55 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 int	    ft_strlen(const char *s);
 int     line_len(char *str);
 char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strdup(const char *s1);
+size_t	ft_strlcpy(char	*dst, const char	*src, size_t	dstsize);
 char	*ft_strchr(const char *s, int c);
 char    *get_next_line(int fd);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
