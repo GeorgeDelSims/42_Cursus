@@ -5,129 +5,127 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 14:20:16 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/01 11:15:04 by gsims            ###   ########.fr       */
+/*   Created: 2023/11/01 11:49:12 by gsims             #+#    #+#             */
+/*   Updated: 2023/11/02 09:59:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-//retrieves the current line from the string in the stash at index fd 
-// replaces stash[fd] with the rest of the string (after the first newline)
-char    *ft_extract_line(char **stash, int mod)
+// Fills the line buffer
+// Reads BUFFER_SIZE characters by iteration
+// checks in each loop if there is data left in the leftover buffer
+// If so it appends new read chars to it
+// if not it duplicates the content of the read buffer to the leftover buffer
+// if  \n is found it breaks from the loop
+static char	*read_and_fill_buffer(int fd, char *leftover, char *buffer)
 {
-    char            *line;
-    char            *temp;
-    unsigned int    line_len;
-    unsigned int    rest_len;
+	ssize_t	read_line;
+	char	*temp;
 
-    line_len = 0;
-    if (!mod)
-    {
-        while ((*stash)[line_len] != '\n' && (*stash)[line_len] != '\0')
-            line_len++;
-        if (line_len == 0 && (*stash)[line_len] == '\n')
-            line = ft_strdup("");
-        else
-            line = ft_substr(*stash, 0, line_len);
-        rest_len = line_len;
-        while ((*stash)[rest_len] != '\0')
-        {
-            if ((*stash)[rest_len] == '\n')
-                break ;
-            rest_len++;
-        }
-        temp = ft_substr(*stash, line_len + 1, rest_len - line_len - 1);
-        *stash = temp;
-    }
-    else
-    {
-        line = *stash;
-        *stash = NULL;
-        while (line[line_len])
-        {
-            if (line[line_len] == '\n')
-            {   
-                line[line_len] = '\0';
-                break ;
-            }
-            line_len++;
-        }
-    }
-    return (line);
+	read_line = 1;
+	while (read_line > 0)
+	{
+		read_line = read(fd, buffer, BUFFER_SIZE);
+		if (read_line == -1)
+		{
+			free(leftover);
+			return (NULL);
+		}
+		else if (read_line == 0)
+			break ;
+		buffer[read_line] = 0;
+		if (!leftover)
+			leftover = ft_strdup("");
+		temp = leftover;
+		leftover = ft_strjoin(temp, buffer);
+		free(temp);
+		temp = NULL;
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	return (leftover);
 }
 
-//opens & reads from the text file (if read() has made it to the end of a file it returns 0)
-// function loops over the file and joins the content into stash until reaching a newline character, in which case it exits the loop. 
-char    *read_file(int fd, char *stash, int *p_mod)
+// reads leftover until \n or \0
+// adds a \0 at the end of buffer
+// returns substring of buffer from end of line to end of buffer
+static char	*extract_line(char *buffer)
 {
-    int     read_line;
-    char    buffer[BUFFER_SIZE + 1];
-    
-    buffer[BUFFER_SIZE] = '\0';
-    read_line = 1;
-    while ((read_line = read(fd, buffer, BUFFER_SIZE)) > 0)
-    {
-        if (read_line == -1)
-            return (NULL);
-        buffer[read_line] = '\0';
-        stash = ft_strjoin(stash, buffer);
-        if (ft_strchr(buffer , '\n'))
-            break ;
-    }
-    if (read_line == 0)
-        *p_mod = true;
-    if (!stash || *stash == '\n')
-    {
-        free(stash);
-        return (NULL);
-    }
-    return (stash);
+	unsigned int	i;
+	char			*remaining_text;
+
+	i = 0;
+	if (buffer[0] == 0)
+		return (NULL);
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	remaining_text = ft_substr(buffer, i, ft_strlen(buffer));
+	if (*remaining_text == 0)
+	{
+		free(remaining_text);
+		remaining_text = NULL;
+	}
+	buffer[i] = '\0';
+	return (remaining_text);
 }
 
-//check for errors in input, imp
-char    *get_next_line(int fd)
+// Makes checks about fd
+// Calls read_and_fill_buffer to get value of line variable
+// free the buffer
+// call extract_line function and store remaining value in static variable
+// return line
+char	*get_next_line(int fd)
 {
-    static char *stash;
-    char        *line;
-    int         mod;
-    
-    mod = false;
-    if (fd < 0 || BUFFER_SIZE <= 0)
-	    return (0);
-    stash = read_file(fd, stash, &mod);
-    if (!stash)
-        return (NULL);
-    line = ft_extract_line(&stash, mod);
-    return (line);
-}
+	char		*line;
+	char		*buffer;
+	static char	*leftover;
 
-//Main test function
-int main()
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(buffer);
+		free(leftover);
+		buffer = NULL;
+		leftover = NULL;
+		return (NULL);
+	}
+	if (!buffer)
+		return (NULL);
+	line = read_and_fill_buffer(fd, leftover, buffer);
+	free(buffer);
+	buffer = NULL;
+	if (!line)
+		return (NULL);
+	leftover = extract_line(line);
+	return (line);
+}
+/*
+int	main(void)
 {
-    int  fd;
-    char *line;
+	int     fd;
+	char    *line;
 
-    fd = open("test.txt", O_RDONLY);
-    if (fd == -1)
-    {
-        printf("Error\n");
-        return (0);   
-    }
-    while ((line = get_next_line(fd)))
-    {   
-        //printf("is the segfault here ? \n");
-        printf("%s\n", line);
-    }
-   // line = get_next_line(fd);
-   // printf("end printf: %s\n", line);
-   // line = get_next_line(fd);
-   // printf("end printf 2:%s\n", line);
-   // line = get_next_line(fd);
-   // printf("end printf 3:%s\n", line);
-   // line = get_next_line(fd);
-   // printf("end printf 4:%s\n", line);
-   // line = get_next_line(fd);
-   // printf("end printf 5:%s\n", line);
-    return (0);
-}
+	fd = open("test.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error\n");
+		return (0);
+	}
+	// while()
+	// line = get_next_line(fd);
+	// printf("%s", line);
+	// line = get_next_line(fd);
+	// printf("%s", line);
+	// line = get_next_line(fd);
+	// printf("%s", line);
+
+
+	//line = get_next_line(fd);
+	//printf("end printf 5:%s\n", line);
+	while ((line = get_next_line(fd)))
+		printf("%s", line);
+	return (0);
+}*/

@@ -1,87 +1,115 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 14:20:16 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/31 10:59:51 by gsims            ###   ########.fr       */
+/*   Created: 2023/11/02 08:59:28 by gsims             #+#    #+#             */
+/*   Updated: 2023/11/02 14:03:14 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-
-//retrieves the current line from the string in the stash at index fd 
-// replaces stash[fd] with the rest of the string (after the first newline)
-char    *ft_extract_line(int fd, char **stash)
+static char	*read_and_fill_buffer(int fd, char *leftover, char *buffer)
 {
-    char    *line;
-    char    *temp;
-    int     line_len;
-    int     ext_len;
+	ssize_t	read_line;
+	char	*temp;
 
-    line_len = 0;
-    while (stash[fd] && stash[fd][line_len] != '\n')
-        line_len++;
-    line = (char *)malloc(line_len + 1);
-    if (line == NULL)
-        return (NULL);
-    line = ft_substr(stash[fd], 0, line_len);
-    ext_len = line_len;
-    while (stash[fd][ext_len] != '\0')
-        ext_len++;
-    temp = ft_substr(stash[fd], line_len, ext_len);
-    free(stash[fd]);
-    stash[fd] = temp;
-    free(temp);
-    return (line);
+	read_line = 1;
+	while (read_line > 0)
+	{
+		read_line = read(fd, buffer, BUFFER_SIZE);
+		if (read_line == -1)
+		{
+			free(leftover);
+			return (NULL);
+		}
+		else if (read_line == 0)
+			break ;
+		buffer[read_line] = 0;
+		if (!leftover)
+			leftover = ft_strdup("");
+		temp = leftover;
+		leftover = ft_strjoin(temp, buffer);
+		free(temp);
+		temp = NULL;
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	return (leftover);
 }
 
-//opens & reads from the text file (if read() has made it to the end of a file it returns 0)
-// function loops over the file and joins the content into stash (at index fd) until reaching a newline character, in which case it exits the loop. 
-char    *read_file(int fd, char **stash)
+// reads leftover until \n or \0
+// adds a \0 at the end of buffer
+// returns substring of buffer from end of line to end of buffer
+static char	*extract_line(char *buffer)
 {
-    int     read_line;
-    char    *temp;
-    char    buffer[BUFFER_SIZE];
-    
-    read_line = 1;
-    while (read_line != 0)
-    {
-        read_line = read(fd, buffer, BUFFER_SIZE);
-        if (read_line == -1)
-            return (NULL);
-        if (!(stash[fd]))
-            stash[fd] = "";
-        temp = stash[fd];
-        stash[fd] = ft_strjoin(temp, buffer);
-        free(temp);
-        if (ft_strchr(buffer , '\n'))
-            break ;
-    }
-    return (stash[fd]);
+	unsigned int	i;
+	char			*remaining_text;
+
+	i = 0;
+	if (buffer[0] == 0)
+		return (NULL);
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	remaining_text = ft_substr(buffer, i, ft_strlen(buffer));
+	if (*remaining_text == 0)
+	{
+		free(remaining_text);
+		remaining_text = NULL;
+	}
+	buffer[i] = '\0';
+	return (remaining_text);
 }
 
-//check for errors in input, imp
-char    *get_next_line(int fd)
+// Makes checks about fd
+// Calls read_and_fill_buffer to get value of line variable
+// free the buffer
+// call extract_line function and store remaining value in static variable
+// return line
+char	*get_next_line(int fd)
 {
-    static char **stash;
-    char        *line;
-    size_t      line_len;
+	char		*line;
+	char		*buffer;
+	static char	*leftover[1024];
 
-    //read from file and save to static buffer:
-    stash[fd] = read_file(fd, buffer, stash);
-    //retrieve line from static buffer
-    line = ft_line(fd, stash[fd]);
-    //return line
-    return (line);
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(buffer);
+		free(leftover[fd]);
+		buffer = NULL;
+		leftover[fd] = NULL;
+		return (NULL);
+	}
+	if (!buffer)
+		return (NULL);
+	line = read_and_fill_buffer(fd, leftover[fd], buffer);
+	free(buffer);
+	buffer = NULL;
+	if (!line)
+		return (NULL);
+	leftover[fd] = extract_line(line);
+	return (line);
 }
+	/*
+	int	main(void)
+	{
+		int     fd;
+		int     fd2;
+		char    *line;
+		char    *line2;
 
-//Main test function
-int main()
-{
-   
-   return (0);
-}
+		fd = open("test.txt", O_RDONLY);
+		fd2 = open("test2.txt", O_RDONLY);
+		while ((line = get_next_line(fd)) && (line2 = get_next_line(fd2)))
+		{
+			printf("%s", line);
+			printf("%s", line2);
+		}
+		return (0);
+	}*/

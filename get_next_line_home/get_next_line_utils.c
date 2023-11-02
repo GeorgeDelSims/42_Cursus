@@ -5,108 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 14:27:24 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/01 11:14:24 by gsims            ###   ########.fr       */
+/*   Created: 2023/11/01 11:50:26 by gsims             #+#    #+#             */
+/*   Updated: 2023/11/02 13:52:18 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-//Determines the length of a string
+// returns length of given string
 int	ft_strlen(const char *s)
 {
 	int	res;
 
 	res = 0;
-	if(s)
-	{
-		while (s[res] != '\0')
-			res++;
-	}
+	while (s[res] != '\0')
+		res++;
 	return (res);
 }
 
-//Determines the length of a line 
-int line_len(char *str)
-{
-    int i;
-    
-    i = 0;
-    while (*str != '\n')
-        i++;
-    return (i);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*dest;
-	int		i;
-
-	i = 0;
-	while (s1[i] != '\0')
-		i++;
-	dest = (char *)malloc((i + 1) * sizeof(char));
-	if (dest == NULL)
-		return (NULL);
-	ft_strlcpy(dest, s1, i + 1);
-	return (dest);
-}
-
-size_t	ft_strlcpy(char	*dst, const char	*src, size_t	dstsize)
-{
-	size_t	i;
-	size_t	srcsize;
-
-	i = 0;
-	srcsize = ft_strlen(src);
-	if (dstsize != 0)
-	{
-		while (i < dstsize - 1)
-		{
-			dst[i] = src[i];
-			if (dst[i] == '\0')
-			{
-				return (srcsize);
-			}
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return (srcsize);
-}
-
-//joins / concatenates two strings into a new one with dynamic memory allocation
-char	*ft_strjoin(const char *s1, const char *s2)
-{
-	char	*newstr;
-	int		i;
-	int		j;
-	int		len;
-
-	len = ft_strlen(s1) + ft_strlen(s2);
-	newstr = (char *)malloc((len + 1) * sizeof(char));
-	if (newstr == NULL)
-		return (NULL);
-	i = 0;
-	if(s1)
-	{
-		while (i < len && s1[i] != '\0')
-		{
-			newstr[i] = s1[i];
-			i++;
-		}
-	}
-	j = 0;
-	if(s2)
-	{
-		while (i < len && s2[j] != '\0')
-			newstr[i++] = s2[j++];
-	}
-	newstr[i] = '\0';
-	return (newstr);
-}
-
-//strchr function
+// returns first occurence of character c in string s
 char	*ft_strchr(const char *s, int c)
 {
 	char	uc;
@@ -131,42 +48,77 @@ char	*ft_strchr(const char *s, int c)
 	}
 }
 
-// Function helper for ft_substr
-static int	getlen(const char *s, unsigned int start, size_t len)
+// duplicates string and allocates memory for duplicate
+char	*ft_strdup(char *s1)
 {
-	unsigned int	s_len;
-
-	s_len = (unsigned int)ft_strlen(s);
-	if (start >= s_len)
-		return (0);
-	if (s_len - start < len)
-		return (s_len - start);
-	else
-		return (len);
-}
-
-//substring from string s (starting at index start and of length len)
-//returns substring
-char	*ft_substr(const char *s, unsigned int start, size_t len)
-{
-	char			*substr;
+	char			*dest;
 	unsigned int	i;
-	unsigned int	j;
 
-	i = 0;
-	j = 0;
-	substr = (char *)malloc((getlen(s, start, len) + 1) * sizeof(char));
-	if (substr == NULL)
+	dest = (char *)malloc(ft_strlen(s1) + 1);
+	if (!dest)
 		return (NULL);
-	while (s[i])
+	i = 0;
+	while (s1[i])
 	{
-		if (i >= start && j < len)
-		{
-				substr[j] = s[i];
-				j++;
-		}
+		dest[i] = s1[i];
 		i++;
 	}
-	substr[j] = '\0';
-	return (substr);
+	dest[i] = '\0';
+	return (dest);
+}
+
+// finds substring of string s based on index & len
+// and dynamically allocates memory for it
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*str;
+
+	if (!s)
+		return (NULL);
+	if (start > (unsigned int)ft_strlen(s))
+		return (malloc(1));
+	if (len > (unsigned int)ft_strlen(s + start))
+		len = (unsigned int)ft_strlen(s + start);
+	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}
+
+// concatenates two strings
+// dynamically allocates memory for the resulting long string.
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	char	*newstr;
+	int		i;
+	int		j;
+	int		len;
+
+	len = ft_strlen(s1) + ft_strlen(s2);
+	newstr = (char *)malloc((len + 1) * sizeof(char));
+	if (newstr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len && s1[i] != '\0')
+	{
+		newstr[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (i < len && s2[j] != '\0')
+	{
+		newstr[i] = s2[j];
+		i++;
+		j++;
+	}
+	newstr[i] = '\0';
+	return (newstr);
 }
