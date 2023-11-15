@@ -6,7 +6,7 @@
 /*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 16:37:35 by gsims             #+#    #+#             */
-/*   Updated: 2023/10/18 17:13:28 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/15 10:33:58 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -14,6 +14,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <stdarg.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE (2)
+# endif
 
 int		ft_isalnum(int c);
 int		ft_isdigit(int c);
@@ -63,5 +69,21 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void*));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*));
+int		ft_printchar(unsigned int num);
+void	ft_printchar_rec(unsigned int num);
+int		ft_putchar(int c);
+int		ft_printstr(char *s);
+int		ft_printint(int num);
+int		ft_printunsigned(unsigned int num);
+void	ft_putunsigned(unsigned int num);
+int		ft_printhexa(unsigned int num, char c);
+void	ft_printchar_hex(unsigned int num);
+int		ft_printptr(unsigned long long num);
+void	ft_putptr(unsigned long long num);
+int		ft_char(char c);
+int		ft_printf(const char *s, ...);
+int		ft_countint(int num);
+int		ft_countint_hex(unsigned long long num);
+char	*get_next_line(int fd);
 
 #endif

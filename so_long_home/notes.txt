@@ -1,0 +1,7 @@
+error arg amount
+create structure called game
+malloc the structure 
+mlx_init()
+image size has to be homogenous (64x64)
+turn the .png to .xpm
+2d images
