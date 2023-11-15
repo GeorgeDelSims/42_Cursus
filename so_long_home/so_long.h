@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/15 09:31:06 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/15 11:41:32 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <mlx.h>
+# include "mlx/mlx.h"
+
+int	main();
 
 #endif
