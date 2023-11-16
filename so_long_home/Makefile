@@ -7,7 +7,7 @@ OBJECTS = $(SOURCES:.c=.o)
 CC = gcc
 
 %.o: %.c
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+	$(CC) -Wall -Wextra -Imlx -c $< -o $@
 
 all: $(NAME)
 
