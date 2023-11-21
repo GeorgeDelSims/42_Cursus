@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:31:12 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/21 14:58:20 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/21 16:15:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,58 @@ typedef struct	s_data {
 
 }			t_data;
 
-char	**read_map(char filepath)
-{
-	int	fd;
+// Get width and height in order to malloc a char** for the map 
 
+int	get_width(char *filepath)
+{
+	int		fd;
+	int		width;
+	char	buffer[BUFFER_SIZE];
+	
 	fd = open(filepath, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
+	while 
+	
 }
+
+int	get_width()
+{
+	
+}
+
+
+char	**read_map(char *filepath)
+{
+	int		fd;
+	char	*line;
+	int		i;
+	int		j;
+	char	**map;
+	int		nb_line;
+
+	
+	fd = open(filepath, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	i = 0;
+	nb_line = 0;
+	while (line = get_next_line(fd))
+	{
+		j = 0;
+		map = (char **)malloc((nb_line + 1) * sizeof(char *));
+		if(!map)
+			return NULL;
+		while (i != nb_line + 1)
+		{
+			map[i] = line;
+		}
+		i++;
+	}
+	
+}
+
+//Draw map from the char** 
 
 void	ft_draw_map(t_data *data)
 {
