@@ -17,9 +17,6 @@ $(NAME):	$(OBJECTS)
 			@mv libft.a $(NAME)
 			ar -rcs $(NAME) $(OBJECTS)
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
 clean:
 	rm -f $(OBJECTS)
 	$(MAKE) -C $(LIBFT) clean

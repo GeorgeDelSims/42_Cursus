@@ -8,7 +8,7 @@ turn the .png to .xpm
 
 Keycodes:
 ESC == 53
-a == 5 
+a == 0
 w == 13
 s == 1
 d = 2
