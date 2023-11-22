@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-// Locates character c in string s, returns c or NULL
+// Locates character c in string s, returns a pointer to c or NULL if c is not in s.
 char	*ft_strchr(const char *s, int c)
 {
 	char	uc;
