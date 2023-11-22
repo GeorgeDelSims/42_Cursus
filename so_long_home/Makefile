@@ -1,24 +1,31 @@
 NAME = so_long
 
-SOURCES = main.c
+SOURCES = main.c utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
-LIBFT  = libft
+LIBFT  = ./libft
+
+MLX = ./mlx
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Imlx
+CFLAGS = -Wall -Wextra -Werror -I$(MLX)
 
-MAKE = ar -rcs
+MAKE = make
 
 %.o: %.c
-	$(CC) -Wall -Wextra -Imlx -c $< -o $@
+	$(CC) -Wall -Wextra -I$(MLX) -I$(LIBFT) -c $< -o $@
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CC) $(OBJECTS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+$(NAME): $(LIBFT)/libft.a $(MLX)/libmlx.a $(OBJECTS)
+	$(CC) $(OBJECTS) -L$(MLX) -lmlx -L$(LIBFT) -lft -framework OpenGL -framework AppKit -o $(NAME)
+
+$(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
+
+$(MLX)/libmlx.a:
+	$(MAKE) -C $(MLX)
 
 clean:
 	rm -f $(OBJECTS)
