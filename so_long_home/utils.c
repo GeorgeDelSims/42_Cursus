@@ -6,14 +6,13 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/22 15:48:53 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/11/22 20:35:51 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// Get width and height in order to malloc a char** for the map 
-
+// Get width in order to malloc a char** for the map 
 size_t	get_width(int fd)
 {
     int		bytesread;
@@ -39,6 +38,7 @@ size_t	get_width(int fd)
     return (width);
 }
 
+// Count the number of characters in a buffer
 static size_t	ft_countchar_buff(char *str, char c)
 {
 	size_t	count;
@@ -55,6 +55,7 @@ static size_t	ft_countchar_buff(char *str, char c)
 	return (count);
 }
 
+// Get height in order to malloc a char** for the map
 size_t	get_height(int fd)
 {
 	int		bytesread;
