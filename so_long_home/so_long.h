@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/22 14:43:04 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/11/22 15:49:39 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 
-size_t  get_width(char *filepath);
+size_t  get_width(int fd);
+size_t  get_height(int fd);
 
 #endif

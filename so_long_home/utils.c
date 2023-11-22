@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/22 14:42:23 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/11/22 15:48:53 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 
 // Get width and height in order to malloc a char** for the map 
 
-size_t	get_width(char *filepath)
+size_t	get_width(int fd)
 {
-    int		fd;
     int		bytesread;
     size_t	width;
     char	buffer[BUFFER_SIZE];
     char	*newline_pos;
 
-    fd = open(filepath, O_RDONLY);
-    if (fd < 0)
-        return (0);
     width = 0;
     while ((bytesread = read(fd, buffer, BUFFER_SIZE)) > 0)
     {
@@ -41,4 +37,37 @@ size_t	get_width(char *filepath)
 	}
     close(fd);
     return (width);
+}
+
+static size_t	ft_countchar_buff(char *str, char c)
+{
+	size_t	count;
+	int		i;
+	
+	i = 0;
+	count = 0;
+	while (i < BUFFER_SIZE)
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+size_t	get_height(int fd)
+{
+	int		bytesread;
+	size_t	height;
+	char	buffer[BUFFER_SIZE];
+	
+	height = 0;
+	while ((bytesread = read(fd, buffer, BUFFER_SIZE)) > 0)
+	{
+		if (bytesread <= 0)
+			return (0);
+		height += ft_countchar_buff(buffer, '\n');
+	}
+	close(fd);
+	return (height);
 }
