@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <marvin@42lausanne.ch>               +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 16:37:35 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/15 10:33:58 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/23 13:23:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
@@ -17,9 +18,9 @@
 # include <stdarg.h>
 # include <fcntl.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE (2)
-# endif
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 4
+#endif
 
 int		ft_isalnum(int c);
 int		ft_isdigit(int c);

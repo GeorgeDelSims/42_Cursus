@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/23 12:05:10 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/23 14:34:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ typedef struct s_image {
 typedef struct s_data {
     void    *mlx;
     void	*win;
-	int		x;
-	int		y;
+	size_t	map_height;
+	size_t	map_width;
     t_image wall;
     t_image floor;
     t_image collectible;
@@ -30,104 +30,72 @@ typedef struct s_data {
     t_image player;
 }			t_data;
 
-// Get width in order to malloc a char** for the map 
-size_t	get_width(int fd)
+// Function opens the file, gets the height and width of the map within and closes the file. 
+void    get_dimensions(const char *filepath, size_t *width, size_t *height)
 {
-    int		bytesread;
-    size_t	width;
-    char	buffer[BUFFER_SIZE];
-    char	*newline_pos;
+    int     fd;
+    char    buffer;
+    size_t  line_length;
 
-    width = 0;
-    while ((bytesread = read(fd, buffer, BUFFER_SIZE)) > 0)
+    fd = open(filepath, O_RDONLY);
+    if (fd == -1)
+        return ;
+    line_length = 0;
+    *width = 0;
+    *height = 0;
+    while (read(fd, &buffer, 1) > 0)
     {
-        if (bytesread <= 0)
-            return (0);
-        newline_pos = ft_strchr(buffer, '\n');
-		if (newline_pos)
+        if (buffer == '\n')
         {
-            width += newline_pos - buffer;
-            break ;
+            if (line_length > *width)
+                *width = line_length;
+            line_length = 0;
+            (*height)++;
         }
         else
-            width += bytesread;
-	}
-    return (width);
-}
-
-// Count the number of characters in a buffer
-static size_t	ft_countchar_buff(char *str, char c)
-{
-	size_t	count;
-	int		i;
-	
-	i = 0;
-	count = 0;
-	while (i < BUFFER_SIZE)
-	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-// Get height in order to malloc a char** for the map
-size_t	get_height(int fd)
-{
-	int		bytesread;
-	size_t	height;
-	char	buffer[BUFFER_SIZE];
-	
-	height = 0;
-	while ((bytesread = read(fd, buffer, BUFFER_SIZE)) > 0)
-	{
-		if (bytesread <= 0)
-			return (0);
-		height += ft_countchar_buff(buffer, '\n');
-	}
-	return (height);
-}
-
-// Function to Open the file and get it's fd to give other functions access to the file
-int	get_fd(const char * filepath)
-{
-	int     fd;
-    int     n;
-    char    buf[10];
-	
-	fd = open(filepath, O_RDONLY);
-	if (fd < 0)
-		perror("Error opening file");
-        return (-1);
-    n = read(fd, buf, 10);
-    if (n < 0)
-    {
-        perror("Error reading file");
-        return -1;
+            line_length++;
     }
-    buf[n] = '\0';
-    printf("First 10 characters of file: %s\n", buf);
-	return(fd);
+    // If the file doesn't end with a newline, count the last line
+    if (line_length > 0)
+    {
+        if (line_length > *width)
+            *width = line_length;
+        (*height)++;
+    }
+    close(fd);
+}
+//Function that frees any pointer and returns -1 for error handling
+static int ft_free(void *ptr)
+{
+    free(ptr);
+    return (-1);
 }
 
 // Function to get width and height of the map and allocate memory for it in a char** (this function also closes the .ber file)
-    char    **read_map(int  fd)
+    char    **read_map(const char *filepath, t_data *data)
 {
     char        **map;
     size_t      i;
-    size_t      j;
     char        *line;
+    int         fd;
     
-    map = (char **)malloc((get_height(fd) + 1) * sizeof(char *));
+    // get dimensions and malloc array of pointers
+    get_dimensions(filepath, &data->map_width, &data->map_height);
+    map = (char **)malloc((data->map_height + 1) * sizeof(char *));
     if (!map)
         return (NULL);
+    // Open file again to get fd
+    fd = open(filepath, O_RDONLY);
+    if (fd < 0)
+    {
+        free(map);
+        return (NULL);
+    }
+    // loop over array of pointers and malloc each pointer to the correct size 
     i = 0;
-    line = NULL;
     while ((line = get_next_line(fd)) != NULL)
     {
-        printf("%s\n", line);
-        map[i] = (char *)malloc((get_width(fd) + 1)* sizeof(char));
+        map[i] = (char *)malloc((data->map_width + 1)* sizeof(char));
         if (!map[i])
         {
             while (i > 0)
@@ -139,22 +107,10 @@ int	get_fd(const char * filepath)
             return (NULL);
         }
         map[i] = ft_strdup(line);
-        map[i][get_width(fd)] = '\0';
+        map[i][data->map_width] = '\0';
         i++;
     }
-    printf("Hello\n");
     map[i] = NULL;
-    while (map[i])
-    {
-        j = 0;
-        while (map[i][j])
-        {
-            printf("%d", map[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
     close(fd);
     return (map);
 }
@@ -180,7 +136,6 @@ void    draw_map(char **map, t_data *data)
             if (map[i][j] == '1')
             {
                 mlx_put_image_to_window(data->mlx, data->win, data->wall.img, x, y);
-                printf("x : %i & y : %i \n", x, y);
 //            else if (map[i][j] == 'C')
 //                mlx_put_image_to_window(data->mlx, data->win, data.collectible, x, y);
 //            else if (map[i][j] == 'E')
@@ -203,18 +158,10 @@ void    draw_map(char **map, t_data *data)
 void    init_images(t_data *data)
 {
     data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/grass.xpm", &data->wall.width, &data->wall.height);
-    printf("image : %p\n width : %i\n height : %i\n", data->wall.img, data->wall.width, data->wall.height);
     data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/water1.xpm", &data->floor.width, &data->floor.height);
-    printf("image : %p\n width : %i\n height : %i\n", data->floor.img, data->floor.width, data->floor.height);
    //data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/collectible.xpm", &data->collectible.width, &data->collectible.height);
    //data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/exit.xpm", &data->exit.width, &data->exit.height);
    //data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/player.xpm", &data->player.width, &data->player.height);
-}
-
-static int ft_free(void *ptr)
-{
-    free(ptr);
-    return (-1);
 }
 
 int main()
@@ -222,38 +169,28 @@ int main()
     const char  *filepath = "./map.ber";
     t_data      *data;
     char        **map;
-    int         fd;
     int         i;
     int         j;
     
     data = (t_data *)malloc(sizeof(t_data));
     if (!data)
         return (ft_free(data));
-    fd = get_fd(filepath);
-    printf("fd : %d\n", fd);
-    if (fd < 0)
-        return (ft_free(data));
-	data->x = 32 * get_width(fd);
-    printf("x dimensions : %i\n", data->x);
-	data->y = 32 * get_height(fd);
-    printf("y dimensions : %i\n", data->y);
 	data->mlx = mlx_init();
     if (!data->mlx)
         return (ft_free(data));
-	data->win = mlx_new_window(data->mlx, data->x, data->y, "so_long");
-    if (!data->win)
-        return (ft_free(data));
-    map = read_map(fd);
+    map = read_map(filepath, data);
     if (!map)
         return (ft_free(data));
-    
+    data->win = mlx_new_window(data->mlx, 32 * data->map_width, 32 * data->map_height, "so_long");
+    if (!data->win)
+        return (ft_free(data));
     i = 0;
     while (map[i])
     {
         j = 0;
         while (map[i][j])
         {
-            printf("%d", map[i][j]);
+            printf("%c", map[i][j]);
             j++;
         }
         printf("\n");
