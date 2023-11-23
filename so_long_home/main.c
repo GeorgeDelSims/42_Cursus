@@ -6,64 +6,13 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/23 14:34:24 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/23 16:39:02 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-typedef struct s_image {
-    void    *img;
-    int     width;
-    int     height;
-}			t_image;
 
-typedef struct s_data {
-    void    *mlx;
-    void	*win;
-	size_t	map_height;
-	size_t	map_width;
-    t_image wall;
-    t_image floor;
-    t_image collectible;
-    t_image exit;
-    t_image player;
-}			t_data;
-
-// Function opens the file, gets the height and width of the map within and closes the file. 
-void    get_dimensions(const char *filepath, size_t *width, size_t *height)
-{
-    int     fd;
-    char    buffer;
-    size_t  line_length;
-
-    fd = open(filepath, O_RDONLY);
-    if (fd == -1)
-        return ;
-    line_length = 0;
-    *width = 0;
-    *height = 0;
-    while (read(fd, &buffer, 1) > 0)
-    {
-        if (buffer == '\n')
-        {
-            if (line_length > *width)
-                *width = line_length;
-            line_length = 0;
-            (*height)++;
-        }
-        else
-            line_length++;
-    }
-    // If the file doesn't end with a newline, count the last line
-    if (line_length > 0)
-    {
-        if (line_length > *width)
-            *width = line_length;
-        (*height)++;
-    }
-    close(fd);
-}
 //Function that frees any pointer and returns -1 for error handling
 static int ft_free(void *ptr)
 {
@@ -71,141 +20,125 @@ static int ft_free(void *ptr)
     return (-1);
 }
 
-// Function to get width and height of the map and allocate memory for it in a char** (this function also closes the .ber file)
-    char    **read_map(const char *filepath, t_data *data)
+// Function frees the map iteratively (freeing each char pointer)
+static void ft_free_map(char **map)
 {
-    char        **map;
-    size_t      i;
-    char        *line;
-    int         fd;
-    
-    // get dimensions and malloc array of pointers
-    get_dimensions(filepath, &data->map_width, &data->map_height);
-    map = (char **)malloc((data->map_height + 1) * sizeof(char *));
-    if (!map)
-        return (NULL);
-    // Open file again to get fd
-    fd = open(filepath, O_RDONLY);
-    if (fd < 0)
-    {
-        free(map);
-        return (NULL);
-    }
-    // loop over array of pointers and malloc each pointer to the correct size 
+    int i;
     i = 0;
-    while ((line = get_next_line(fd)) != NULL)
+    while (map[i]) 
     {
-        map[i] = (char *)malloc((data->map_width + 1)* sizeof(char));
-        if (!map[i])
-        {
-            while (i > 0)
-            {
-                i--;
-                free(map[i]);
-            }
-            free(map);
-            return (NULL);
-        }
-        map[i] = ft_strdup(line);
-        map[i][data->map_width] = '\0';
+        free(map[i]);
         i++;
     }
-    map[i] = NULL;
-    close(fd);
+    free(map); 
+}
+
+static char **map_main(char **map, t_data *data)
+{
+    const char  *filepath = "./map.ber";
+
+    map = read_map(filepath, data);
+    if (!map)
+    {
+        free(data);
+        return (NULL);
+    }
+    data->win = mlx_new_window(data->mlx, 32 * data->map_width, 32 * data->map_height, "so_long");
+    if (!data->win)
+    {
+        free(data);
+        return (NULL);
+    }
+    init_images(data); 
+    draw_map(map, data);
     return (map);
 }
 
-// Function to draw the map according to the characters in the .ber file
-void    draw_map(char **map, t_data *data)
+static int	render_next_frame(void *data)
 {
-    mlx_clear_window(data->mlx, data->win);
-    int     i;
-    int     j;
-    int     x;
-    int     y;
-    
-    i = 0;
-    x = 0;
-    y = 0;
-    while (map[i])
+	if (data)
+		return (0);
+	mlx_do_sync(&data);
+	//continuous rendering code
+	return (0);
+}
+
+
+int pos_conditions(size_t width, size_t height, t_data *data)
+{
+    if (width < 0 || width > data->map_width)
+        return (0);
+    else if (height < 0 || height > data->map_height)
+        return (0);
+    else if (data->map[width][height] == '1')
+        return (0);
+    else if (data->map[width][height] == 'E')
     {
-        j = 0;
-        x = 0;
-        while (map[i][j])
-        {
-            if (map[i][j] == '1')
-            {
-                mlx_put_image_to_window(data->mlx, data->win, data->wall.img, x, y);
-//            else if (map[i][j] == 'C')
-//                mlx_put_image_to_window(data->mlx, data->win, data.collectible, x, y);
-//            else if (map[i][j] == 'E')
-//                mlx_put_image_to_window(data->mlx, data->win, data.exit, x, y);
-//            else if (map[i][j] == 'P')
-//                mlx_put_image_to_window(data->mlx, data->win, data.player, x, y);
-            }
-            else if (map[i][j] == '0')
-                mlx_put_image_to_window(data->mlx, data->win, data->floor.img, x, y);
-            j++;
-            x += 32;
-        }
-        i++;
-        y += 32;
+        mlx_destroy_window(data->mlx, data->win);
+        return (1);
     }
+    else if (data->map[width][height] == '0')
+        return (1);
+    else
+        return (0);
 }
 
-// Function to initialize the images
-
-void    init_images(t_data *data)
+// Function that takes keycode and data struct as arguments in order to implement every keypress into an event
+int ft_keypress(int keycode, t_data *data)
 {
-    data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/grass.xpm", &data->wall.width, &data->wall.height);
-    data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/water1.xpm", &data->floor.width, &data->floor.height);
-   //data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/collectible.xpm", &data->collectible.width, &data->collectible.height);
-   //data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/exit.xpm", &data->exit.width, &data->exit.height);
-   //data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/player.xpm", &data->player.width, &data->player.height);
+    // Determine the new position based on the key pressed
+    // Check if the new position is valid (not a wall or outside the map)
+    // If the new position is valid:
+    //   - Redraw the tile at the player's current position
+    //   - Update the player's position in the map
+    //   - Redraw the player at the new position
+    size_t  width;
+    size_t  height;
+    size_t  move;
+    
+    width = data->player_pos.width;
+    height = data->player_pos.height;
+    move = data->pixel_rate;
+    if (keycode == 0) //keycode for a
+        if (pos_conditions(width - move, height, data) == 1)
+    	    data->player_pos.width -= data->pixel_rate;
+    if (keycode == 13) //keycode for w
+        if (pos_conditions(width, height + move, data) == 1)
+            data->player_pos.height += data->pixel_rate;
+    if (keycode == 1) //keycode for s
+        if (pos_conditions(width, height - move, data) == 1)
+    	    data->player_pos.height -= data->pixel_rate;
+    if (keycode == 2) //keycode for d
+        if (pos_conditions(width + move, height, data) == 1)
+            data->player_pos.width += data->pixel_rate;
+    if (keycode == 53) //keycode for ESC
+    	mlx_destroy_window(data->mlx, data->win);
+//    ft_draw_img(data);
+    return (0);
 }
 
+// Main Function 
 int main()
 {
-    const char  *filepath = "./map.ber";
     t_data      *data;
-    char        **map;
-    int         i;
-    int         j;
     
     data = (t_data *)malloc(sizeof(t_data));
     if (!data)
         return (ft_free(data));
 	data->mlx = mlx_init();
+    data->pixel_rate = 32;
     if (!data->mlx)
         return (ft_free(data));
-    map = read_map(filepath, data);
-    if (!map)
-        return (ft_free(data));
-    data->win = mlx_new_window(data->mlx, 32 * data->map_width, 32 * data->map_height, "so_long");
-    if (!data->win)
-        return (ft_free(data));
-    i = 0;
-    while (map[i])
-    {
-        j = 0;
-        while (map[i][j])
-        {
-            printf("%c", map[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
-    init_images(data); 
-    draw_map(map, data);
+    data->map = NULL;
+    data->map = map_main(data->map, data);
+    // set up key press callback
+    mlx_key_hook(data->win, ft_keypress, data);
+   	// loop hook for continuous rendering
+    mlx_loop_hook(data->mlx, render_next_frame, data);
+    // start event loop
     mlx_loop(data->mlx);
-    i = 0;
-    while (map[i]) // free map 
-    {
-        free(map[i]);
-        i++;
-    }
-    free(map);
+    // free map and struct to avoid leaks
+    ft_free_map(data->map);
     free(data);
     return(0);
 }

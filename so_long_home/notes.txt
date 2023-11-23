@@ -294,7 +294,6 @@ int main()
 	// look hook for continuous rendering
 	mlx_loop_hook(data.mlx, render_next_frame, &data);
 	
-	// start event loop
 	mlx_loop(data.mlx);
 	return (0);
 }
