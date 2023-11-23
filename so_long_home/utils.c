@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/22 20:35:51 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/11/23 09:55:25 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ size_t	get_width(int fd)
         else
             width += bytesread;
 	}
-    close(fd);
     return (width);
 }
 
@@ -69,6 +68,5 @@ size_t	get_height(int fd)
 			return (0);
 		height += ft_countchar_buff(buffer, '\n');
 	}
-	close(fd);
 	return (height);
 }

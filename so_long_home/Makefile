@@ -1,6 +1,6 @@
 NAME = so_long
 
-SOURCES = main.c utils.c
+SOURCES = main.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
