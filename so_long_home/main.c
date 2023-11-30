@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/23 16:39:02 by gsims            ###   ########.fr       */
+/*   Updated: 2023/11/30 09:43:34 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ static void ft_free_map(char **map)
     free(map); 
 }
 
-static char **map_main(char **map, t_data *data)
+static char **map_main(char **map, t_data *data, const char  *filepath)
 {
-    const char  *filepath = "./map.ber";
-
     map = read_map(filepath, data);
     if (!map)
     {
@@ -118,10 +116,12 @@ int ft_keypress(int keycode, t_data *data)
 }
 
 // Main Function 
-int main()
+int main(int ac, char *av[])
 {
     t_data      *data;
-    
+
+    if (ac != 2)
+        return (0);
     data = (t_data *)malloc(sizeof(t_data));
     if (!data)
         return (ft_free(data));
@@ -130,7 +130,7 @@ int main()
     if (!data->mlx)
         return (ft_free(data));
     data->map = NULL;
-    data->map = map_main(data->map, data);
+    data->map = map_main(data->map, data, (const char *)av[1]);
     // set up key press callback
     mlx_key_hook(data->win, ft_keypress, data);
    	// loop hook for continuous rendering
