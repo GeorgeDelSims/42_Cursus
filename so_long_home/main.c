@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/30 09:43:34 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/04 13:17:52 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,27 @@ static int	render_next_frame(void *data)
 }
 
 
-int pos_conditions(size_t width, size_t height, t_data *data)
+int pos_conditions(size_t row, size_t col, t_data *data)
 {
-    if (width < 0 || width > data->map_width)
+    if (row < 0 || row > data->map_height)
         return (0);
-    else if (height < 0 || height > data->map_height)
+    else if (col < 0 || col > data->map_width)
         return (0);
-    else if (data->map[width][height] == '1')
+    else if (data->map[row][col] == '1')
         return (0);
-    else if (data->map[width][height] == 'E')
+    else if (data->map[row][col] == 'E')
     {
         mlx_destroy_window(data->mlx, data->win);
         return (1);
     }
-    else if (data->map[width][height] == '0')
+    else if (data->map[row][col] == '0')
         return (1);
     else
         return (0);
 }
 
 // Function that takes keycode and data struct as arguments in order to implement every keypress into an event
-int ft_keypress(int keycode, t_data *data)
+int ft_keypress(int keycode, void *param)
 {
     // Determine the new position based on the key pressed
     // Check if the new position is valid (not a wall or outside the map)
@@ -90,28 +90,54 @@ int ft_keypress(int keycode, t_data *data)
     //   - Redraw the tile at the player's current position
     //   - Update the player's position in the map
     //   - Redraw the player at the new position
-    size_t  width;
-    size_t  height;
-    size_t  move;
+    size_t  row;
+    size_t  col;
+    t_data *data;
     
-    width = data->player_pos.width;
-    height = data->player_pos.height;
-    move = data->pixel_rate;
+    data = (t_data *)param;
+    row = data->player_pos.row;
+    col = data->player_pos.col;
     if (keycode == 0) //keycode for a
-        if (pos_conditions(width - move, height, data) == 1)
-    	    data->player_pos.width -= data->pixel_rate;
+    {
+        printf("first if statement\n");
+        if (pos_conditions(row, col - 1, data) == 1)
+    	{
+            data->map[row][col] = '0';
+            data->map[row][col - 1] = 'P';
+            //data->player_pos.x -= 1;
+            printf("row: %d\n", data->player_pos.row);
+            printf("col: %d\n", data->player_pos.col);
+            printf("reached 'a' condition\n");
+        }
+    }    
     if (keycode == 13) //keycode for w
-        if (pos_conditions(width, height + move, data) == 1)
-            data->player_pos.height += data->pixel_rate;
+        if (pos_conditions(row - 1, col, data) == 1)
+        {
+            data->map[row][col] = '0';
+            data->map[row - 1][col] = 'P';
+            //data->player_pos.y -= 1;
+            printf("row: %d\n", data->player_pos.row);
+            printf("col: %d\n", data->player_pos.col);
+            printf("reached 'w' condition\n");
+        }
     if (keycode == 1) //keycode for s
-        if (pos_conditions(width, height - move, data) == 1)
-    	    data->player_pos.height -= data->pixel_rate;
+        if (pos_conditions(row + 1, col, data) == 1)
+        {
+            data->map[row][col] = '0';
+            data->map[row + 1][col] = 'P';
+        }
     if (keycode == 2) //keycode for d
-        if (pos_conditions(width + move, height, data) == 1)
-            data->player_pos.width += data->pixel_rate;
+        if (pos_conditions(row, col + 1, data) == 1)
+        {
+            data->map[row][col] = '0';
+            data->map[row][col + 1] = 'P';
+        }
     if (keycode == 53) //keycode for ESC
+    {
     	mlx_destroy_window(data->mlx, data->win);
-//    ft_draw_img(data);
+        printf("ESC pressed\n");
+    }
+    draw_map(data->map, data);
     return (0);
 }
 
@@ -132,7 +158,7 @@ int main(int ac, char *av[])
     data->map = NULL;
     data->map = map_main(data->map, data, (const char *)av[1]);
     // set up key press callback
-    mlx_key_hook(data->win, ft_keypress, data);
+    mlx_hook(data->win, 2, 1L<<0, ft_keypress, data);
    	// loop hook for continuous rendering
     mlx_loop_hook(data->mlx, render_next_frame, data);
     // start event loop

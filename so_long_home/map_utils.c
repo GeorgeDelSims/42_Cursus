@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/11/23 15:45:20 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/04 13:16:37 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// Function opens the file, gets the height and width of the map within and closes the file. 
-void    get_dimensions(const char *filepath, size_t *width, size_t *height)
+// Function opens the file, gets the y and x of the map within and closes the file. 
+void    get_dimensions(const char *filepath, size_t *x, size_t *y)
 {
     int     fd;
     char    buffer;
@@ -23,16 +23,16 @@ void    get_dimensions(const char *filepath, size_t *width, size_t *height)
     if (fd == -1)
         return ;
     line_length = 0;
-    *width = 0;
-    *height = 0;
+    *x = 0;
+    *y = 0;
     while (read(fd, &buffer, 1) > 0)
     {
         if (buffer == '\n')
         {
-            if (line_length > *width)
-                *width = line_length;
+            if (line_length > *x)
+                *x = line_length;
             line_length = 0;
-            (*height)++;
+            (*y)++;
         }
         else
             line_length++;
@@ -40,18 +40,18 @@ void    get_dimensions(const char *filepath, size_t *width, size_t *height)
     // If the file doesn't end with a newline, count the last line
     if (line_length > 0)
     {
-        if (line_length > *width)
-            *width = line_length;
-        (*height)++;
+        if (line_length > *x)
+            *x = line_length;
+        (*y)++;
     }
     close(fd);
 }
 
-// Function to get width and height of the map and allocate memory for it in a char** (this function also closes the .ber file)
+// Function to get x and y of the map and allocate memory for it in a char** (this function also closes the .ber file)
 char    **read_map(const char *filepath, t_data *data)
 {
     char        **map;
-    size_t      i;
+    size_t      row;
     char        *line;
     int         fd;
     
@@ -68,25 +68,25 @@ char    **read_map(const char *filepath, t_data *data)
         return (NULL);
     }
     // loop over array of pointers and malloc each pointer to the correct size 
-    i = 0;
+    row = 0;
     while ((line = get_next_line(fd)) != NULL)
     {
-        map[i] = (char *)malloc((data->map_width + 1)* sizeof(char));
-        if (!map[i])
+        map[row] = (char *)malloc((data->map_width + 1)* sizeof(char));
+        if (!map[row])
         {
-            while (i > 0)
+            while (row > 0)
             {
-                i--;
-                free(map[i]);
+                row--;
+                free(map[row]);
             }
             free(map);
             return (NULL);
         }
-        map[i] = ft_strdup(line);
-        map[i][data->map_width] = '\0';
-        i++;
+        map[row] = ft_strdup(line);
+        map[row][data->map_width] = '\0';
+        row++;
     }
-    map[i] = NULL;
+    map[row] = NULL;
     close(fd);
     return (map);
 }
@@ -95,37 +95,35 @@ char    **read_map(const char *filepath, t_data *data)
 void    draw_map(char **map, t_data *data)
 {
     mlx_clear_window(data->mlx, data->win);
-    int     i;
-    int     j;
-    int     x;
-    int     y;
+    int     row;
+    int     col;
     
-    i = 0;
-    x = 0;
-    y = 0;
-    while (map[i])
+    row = 0;
+    while (map[row])
     {
-        j = 0;
-        x = 0;
-        while (map[i][j])
+        col = 0;
+        while (map[row][col])
         {
-            if (map[i][j] == '1')
+            if (map[row][col] == '1')
             {
-                mlx_put_image_to_window(data->mlx, data->win, data->wall.img, x, y);
-//            else if (map[i][j] == 'C')
+                mlx_put_image_to_window(data->mlx, data->win, data->wall.img, col * data->pixel_rate, row * data->pixel_rate);
+//            else if (map[row][col] == 'C')
 //                mlx_put_image_to_window(data->mlx, data->win, data.collectible, x, y);
 			}
-			else if (map[i][j] == 'E')
-                mlx_put_image_to_window(data->mlx, data->win, data->exit.img, x, y);
-            else if (map[i][j] == 'P')
-                mlx_put_image_to_window(data->mlx, data->win, data->player.img, x, y);
-            else if (map[i][j] == '0')
-                mlx_put_image_to_window(data->mlx, data->win, data->floor.img, x, y);
-            j++;
-            x += data->pixel_rate;
+			else if (map[row][col] == 'E')
+                mlx_put_image_to_window(data->mlx, data->win, data->exit.img, col * data->pixel_rate, row * data->pixel_rate);
+            else if (map[row][col] == 'P')
+            {
+                mlx_put_image_to_window(data->mlx, data->win, data->player.img, col * data->pixel_rate, row * data->pixel_rate);
+                data->player_pos.col = col;
+                data->player_pos.row = row;
+                printf("player pos x : %d, y : %d\n", data->player_pos.row, data->player_pos.col);
+            }
+            else if (map[row][col] == '0')
+                mlx_put_image_to_window(data->mlx, data->win, data->floor.img, col * data->pixel_rate, row * data->pixel_rate);
+            col++;
         }
-        i++;
-        y += data->pixel_rate;
+        row++;
     }
 }
 
@@ -133,9 +131,9 @@ void    draw_map(char **map, t_data *data)
 
 void    init_images(t_data *data)
 {
-    data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/grass.xpm", &data->wall.width, &data->wall.height);
-    data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/water1.xpm", &data->floor.width, &data->floor.height);
-   //data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/collectible.xpm", &data->collectible.width, &data->collectible.height);
-	data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/tree.xpm", &data->exit.width, &data->exit.height);
-	data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/KingKong.xpm", &data->player.width, &data->player.height);
+    data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/grass.xpm", &data->wall.row, &data->wall.col);
+    data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/water1.xpm", &data->floor.row, &data->floor.col);
+   //data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/collectible.xpm", &data->collectible.x, &data->collectible.y);
+	data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/tree.xpm", &data->exit.row, &data->exit.col);
+	data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/KingKong.xpm", &data->player.row, &data->player.col);
 }
