@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/04 13:17:52 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/04 15:30:07 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void ft_free_map(char **map)
     free(map); 
 }
 
+// Function regrouping all the map reading and image drawing functions
 static char **map_main(char **map, t_data *data, const char  *filepath)
 {
     map = read_map(filepath, data);
@@ -47,11 +48,21 @@ static char **map_main(char **map, t_data *data, const char  *filepath)
         free(data);
         return (NULL);
     }
-    init_images(data); 
+    //printf("before map is checked\n");
+    //if (check_map(data) == 0)
+    //{
+    //    ft_free_map(map);
+    //    free(data);
+    //    printf("Error\nInvalid map\n");
+    //    return (NULL);
+    //}
+    printf("after map is checked\n");
+    init_images(data);
     draw_map(map, data);
     return (map);
 }
 
+// Function that renders the next frame
 static int	render_next_frame(void *data)
 {
 	if (data)
@@ -61,7 +72,32 @@ static int	render_next_frame(void *data)
 	return (0);
 }
 
+// Function that checks if there are still collectibles on the map
+static int check_map_collect(char **map)
+{
+    int i;
+    int j;
+    int collect;
 
+    i = 0;
+    collect = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] == 'C')
+                collect++;
+            j++;
+        }
+        i++;
+    }
+    if (collect == 0)
+        return (0);
+    return (1);
+}
+
+// Function that checks the conditions of the next position of the player
 int pos_conditions(size_t row, size_t col, t_data *data)
 {
     if (row < 0 || row > data->map_height)
@@ -72,9 +108,16 @@ int pos_conditions(size_t row, size_t col, t_data *data)
         return (0);
     else if (data->map[row][col] == 'E')
     {
-        mlx_destroy_window(data->mlx, data->win);
-        return (1);
+        if (check_map_collect(data->map) == 0)
+        {
+            mlx_destroy_window(data->mlx, data->win);
+            return (1);
+        }
+        else
+            return (0);
     }
+    else if (data->map[row][col] == 'C')
+        return (1);
     else if (data->map[row][col] == '0')
         return (1);
     else
@@ -84,12 +127,6 @@ int pos_conditions(size_t row, size_t col, t_data *data)
 // Function that takes keycode and data struct as arguments in order to implement every keypress into an event
 int ft_keypress(int keycode, void *param)
 {
-    // Determine the new position based on the key pressed
-    // Check if the new position is valid (not a wall or outside the map)
-    // If the new position is valid:
-    //   - Redraw the tile at the player's current position
-    //   - Update the player's position in the map
-    //   - Redraw the player at the new position
     size_t  row;
     size_t  col;
     t_data *data;
@@ -99,15 +136,11 @@ int ft_keypress(int keycode, void *param)
     col = data->player_pos.col;
     if (keycode == 0) //keycode for a
     {
-        printf("first if statement\n");
         if (pos_conditions(row, col - 1, data) == 1)
     	{
             data->map[row][col] = '0';
             data->map[row][col - 1] = 'P';
-            //data->player_pos.x -= 1;
-            printf("row: %d\n", data->player_pos.row);
-            printf("col: %d\n", data->player_pos.col);
-            printf("reached 'a' condition\n");
+            data->count++;
         }
     }    
     if (keycode == 13) //keycode for w
@@ -115,28 +148,25 @@ int ft_keypress(int keycode, void *param)
         {
             data->map[row][col] = '0';
             data->map[row - 1][col] = 'P';
-            //data->player_pos.y -= 1;
-            printf("row: %d\n", data->player_pos.row);
-            printf("col: %d\n", data->player_pos.col);
-            printf("reached 'w' condition\n");
+            data->count++;        
         }
     if (keycode == 1) //keycode for s
         if (pos_conditions(row + 1, col, data) == 1)
         {
             data->map[row][col] = '0';
             data->map[row + 1][col] = 'P';
+            data->count++;       
         }
     if (keycode == 2) //keycode for d
         if (pos_conditions(row, col + 1, data) == 1)
         {
             data->map[row][col] = '0';
             data->map[row][col + 1] = 'P';
+            data->count++;        
         }
     if (keycode == 53) //keycode for ESC
-    {
-    	mlx_destroy_window(data->mlx, data->win);
-        printf("ESC pressed\n");
-    }
+        mlx_destroy_window(data->mlx, data->win);
+    printf("movement count : %d\n", data->count);
     draw_map(data->map, data);
     return (0);
 }
@@ -157,6 +187,7 @@ int main(int ac, char *av[])
         return (ft_free(data));
     data->map = NULL;
     data->map = map_main(data->map, data, (const char *)av[1]);
+    data->count = 0;
     // set up key press callback
     mlx_hook(data->win, 2, 1L<<0, ft_keypress, data);
    	// loop hook for continuous rendering

@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/04 13:14:10 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/04 15:14:50 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data {
     void    *mlx;
     void	*win;
     int     pixel_rate;
+    int     count;
     char    **map;
 	size_t	map_height;
 	size_t	map_width;
@@ -44,6 +45,7 @@ typedef struct s_data {
 void    get_dimensions(const char *filepath, size_t *x, size_t *y);
 char    **read_map(const char *filepath, t_data *data);
 void    draw_map(char **map, t_data *data);
+int     check_map(t_data *data);
 void    init_images(t_data *data);
 
 #endif

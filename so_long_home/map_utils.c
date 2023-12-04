@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/04 13:16:37 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/04 15:21:01 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,53 @@ void    get_dimensions(const char *filepath, size_t *x, size_t *y)
     close(fd);
 }
 
-// Function to get x and y of the map and allocate memory for it in a char** (this function also closes the .ber file)
+// Function to check if a character is in the map
+static int  is_in(char c, t_data *data)
+{
+    size_t i;
+    size_t j;
+
+    i = 0;
+    while (i < data->map_height)
+    {
+        j = 0;
+        while (j < data->map_width)
+        {
+            if (data->map[i][j] == c)
+                return (1);
+            j++;
+        }
+        i++;
+    }
+    return (0);   
+}
+
+// Function to check if the map is valid
+int check_map(t_data *data)
+{
+    size_t i;
+    size_t j;
+
+    i = 0;
+    printf("problem isnt here");
+    if (!is_in('P', data) || !is_in('E', data) || !is_in('C', data) || !is_in('1', data) || !is_in('0', data))
+        return (0);
+    while (i < data->map_height)
+    {
+        j = 0;
+        while (j < data->map_width)
+        {
+            if (data->map[i][j] != '1' && data->map[i][j] != '0' && data->map[i][j] != 'C' && data->map[i][j] != 'E' && data->map[i][j] != 'P')
+                return (0);
+            j++;
+        }
+        i++;
+    }
+    printf("Map is valid\n");
+    return (1);
+}
+
+// Function to get rows and cols of the map and allocate memory for it in a char** (this function also closes the .ber file)
 char    **read_map(const char *filepath, t_data *data)
 {
     char        **map;
@@ -57,8 +103,7 @@ char    **read_map(const char *filepath, t_data *data)
     
     // get dimensions and malloc array of pointers
     get_dimensions(filepath, &data->map_width, &data->map_height);
-    map = (char **)malloc((data->map_height + 1) * sizeof(char *));
-    if (!map)
+    if (!(map = (char **)malloc((data->map_height + 1) * sizeof(char *))))
         return (NULL);
     // Open file again to get fd
     fd = open(filepath, O_RDONLY);
@@ -105,11 +150,9 @@ void    draw_map(char **map, t_data *data)
         while (map[row][col])
         {
             if (map[row][col] == '1')
-            {
                 mlx_put_image_to_window(data->mlx, data->win, data->wall.img, col * data->pixel_rate, row * data->pixel_rate);
-//            else if (map[row][col] == 'C')
-//                mlx_put_image_to_window(data->mlx, data->win, data.collectible, x, y);
-			}
+            else if (map[row][col] == 'C')
+                mlx_put_image_to_window(data->mlx, data->win, data->collectible.img, col * data->pixel_rate, row * data->pixel_rate);
 			else if (map[row][col] == 'E')
                 mlx_put_image_to_window(data->mlx, data->win, data->exit.img, col * data->pixel_rate, row * data->pixel_rate);
             else if (map[row][col] == 'P')
@@ -117,7 +160,6 @@ void    draw_map(char **map, t_data *data)
                 mlx_put_image_to_window(data->mlx, data->win, data->player.img, col * data->pixel_rate, row * data->pixel_rate);
                 data->player_pos.col = col;
                 data->player_pos.row = row;
-                printf("player pos x : %d, y : %d\n", data->player_pos.row, data->player_pos.col);
             }
             else if (map[row][col] == '0')
                 mlx_put_image_to_window(data->mlx, data->win, data->floor.img, col * data->pixel_rate, row * data->pixel_rate);
@@ -128,12 +170,11 @@ void    draw_map(char **map, t_data *data)
 }
 
 // Function to initialize the images
-
 void    init_images(t_data *data)
 {
     data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/grass.xpm", &data->wall.row, &data->wall.col);
     data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/water1.xpm", &data->floor.row, &data->floor.col);
-   //data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/collectible.xpm", &data->collectible.x, &data->collectible.y);
+    data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/broccoli.xpm", &data->collectible.row, &data->collectible.col);
 	data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/tree.xpm", &data->exit.row, &data->exit.col);
 	data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/KingKong.xpm", &data->player.row, &data->player.col);
 }
