@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/05 09:08:21 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 12:05:40 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,11 @@ void    draw_map(char **map, t_data *data);
 void    init_images(t_data *data);
 int     check_map(char **map);
 void    init_images(t_data *data);
+int     ft_free(void *ptr);
+void    ft_free_map(char **map);
+int     handle_close(t_data *data);
+int 	render_next_frame(void *data);
+int     pos_conditions(size_t row, size_t col, t_data *data);
+int     ft_keypress(int keycode, void *param);
 
 #endif

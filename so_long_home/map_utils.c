@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 09:08:43 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 10:23:27 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,6 @@ void    get_dimensions(const char *filepath, size_t *x, size_t *y)
     close(fd);
 }
 
-// Function to check if a character is in the map
-//static int  is_in(char c, t_data *data)
-//{
-//    size_t i;
-//    size_t j;
-//
-//    i = 0;
-//    while (i < data->map_height)
-//    {
-//        j = 0;
-//        while (j < data->map_width)
-//        {
-//            if (data->map[i][j] == c)
-//                return (1);
-//            j++;
-//        }
-//        i++;
-//    }
-//    return (0);   
-//}
 
 // Function to check if the map is valid
 int         check_map(char **map)
