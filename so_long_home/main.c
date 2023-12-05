@@ -6,12 +6,11 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 12:07:09 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 13:01:02 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 // Function regrouping all the map reading and image drawing functions
 static char **map_main(char **map, t_data *data, const char  *filepath)
@@ -22,7 +21,7 @@ static char **map_main(char **map, t_data *data, const char  *filepath)
         free(data);
         return (NULL);
     }
-    data->win = mlx_new_window(data->mlx, 32 * data->map_width, 32 * data->map_height, "so_long");
+    data->win = mlx_new_window(data->mlx, data->pixel_rate * data->map_width, data->pixel_rate * data->map_height, "so_long");
     if (!data->win)
     {
         free(data);
@@ -56,17 +55,11 @@ int main(int ac, char *av[])
     if (!(data->map = map_main(data->map, data, (const char *)av[1])))
         return (ft_free(data));
     data->count = 0;
-    // set up key press callback
-    mlx_hook(data->win, 2, 1L<<0, ft_keypress, data);
-    // Set up window close callback
-    mlx_hook(data->win, 17, 1L<<0, handle_close, data);
-   	// loop hook for continuous rendering
-    mlx_loop_hook(data->mlx, render_next_frame, data);
-    // start event loop
-    mlx_loop(data->mlx);
-    ft_printf("segfault ??? \n");
-    // free map and struct to avoid leaks
-    //ft_free_map(data->map);
-    //ft_free(data);
+    mlx_hook(data->win, 2, 1L<<0, ft_keypress, data); // set up keypress hook
+    mlx_hook(data->win, 17, 1L<<0, handle_close, data); // Set up window close hook
+    mlx_loop_hook(data->mlx, render_next_frame, data); // loop hook for continuous rendering
+    mlx_loop(data->mlx);    // start event loop
+    ft_free_map(data->map); // free map and struct to avoid leaks
+    ft_free(data);
     return (0);
 }

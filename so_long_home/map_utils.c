@@ -6,107 +6,22 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 10:23:27 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 15:36:40 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// Function opens the file, gets the y and x of the map within and closes the file. 
-void    get_dimensions(const char *filepath, size_t *x, size_t *y)
+// Function to malloc the rows in the map and fill them with the characters in the .ber file
+static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
 {
-    int     fd;
-    char    buffer;
-    size_t  line_length;
-
-    fd = open(filepath, O_RDONLY);
-    if (fd == -1)
-        return ;
-    line_length = 0;
-    *x = 0;
-    *y = 0;
-    while (read(fd, &buffer, 1) > 0)
-    {
-        if (buffer == '\n')
-        {
-            if (line_length > *x)
-                *x = line_length;
-            line_length = 0;
-            (*y)++;
-        }
-        else
-            line_length++;
-    }
-    // If the file doesn't end with a newline, count the last line
-    if (line_length > 0)
-    {
-        if (line_length > *x)
-            *x = line_length;
-        (*y)++;
-    }
-    close(fd);
-}
-
-
-// Function to check if the map is valid
-int         check_map(char **map)
-{
-    size_t  i;
-    size_t  j;
-    int     player;
-    int     exit;
-    int     collectible;
-
-    i = 0;
-    player = 0;
-    exit = 0;
-    collectible = 0;
-    while (map[i])
-    {
-        j = 0;
-        while (map[i][j])
-        {
-            if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'C' && map[i][j] != 'E' && map[i][j] != 'P')
-                return (0);
-            if (map[i][j] == 'P')
-                player++;
-            if (map[i][j] == 'E')
-                exit++;
-            if (map[i][j] == 'C')
-                collectible++;
-            j++;
-        }
-        i++;
-    }
-    if (player != 1 || exit != 1 || collectible == 0)
-        return (0);
-    return (1);
-}   
-
-// Function to get rows and cols of the map and allocate memory for it in a char** (this function also closes the .ber file)
-char    **read_map(const char *filepath, t_data *data)
-{
-    char        **map;
     size_t      row;
     char        *line;
-    int         fd;
     
-    // get dimensions and malloc array of pointers
-    get_dimensions(filepath, &data->map_width, &data->map_height);
-    if (!(map = (char **)malloc((data->map_height + 1) * sizeof(char *))))
-        return (NULL);
-    // Open file again to get fd
-    fd = open(filepath, O_RDONLY);
-    if (fd < 0)
-    {
-        free(map);
-        return (NULL);
-    }
-    // loop over array of pointers and malloc each pointer to the correct size 
     row = 0;
-    while ((line = get_next_line(fd)) != NULL)
+    while ((line = get_next_line(fd)) != NULL) // loop over array of pointers 
     {
-        map[row] = (char *)malloc((data->map_width + 1)* sizeof(char));
+        map[row] = (char *)malloc((data->map_width + 1)* sizeof(char)); //malloc each row/pointer
         if (!map[row])
         {
             while (row > 0)
@@ -122,6 +37,36 @@ char    **read_map(const char *filepath, t_data *data)
         row++;
     }
     map[row] = NULL;
+    return (map);
+}
+
+// Function to put the player icon in the window
+static void    put_player_to_window(t_data *data, size_t row, size_t col)
+{
+    mlx_put_image_to_window(data->mlx, data->win, data->player.img, col * data->pixel_rate, row * data->pixel_rate);
+    data->player_pos.col = col;
+    data->player_pos.row = row;
+}
+
+// Main function that allocates memory for the map and reads the map from the .ber file
+char    **read_map(const char *filepath, t_data *data)
+{
+    char        **map;
+    int         fd;
+    
+    // get dimensions and malloc array of pointers
+    get_dimensions(filepath, &data->map_width, &data->map_height);
+    if (!(map = (char **)malloc((data->map_height + 1) * sizeof(char *))))
+        return (NULL);
+    // Open file to get fd
+    fd = open(filepath, O_RDONLY);
+    if (fd < 0)
+    {
+        ft_free_map(map);
+        return (NULL);  
+    }
+    // Malloc and fill map
+    map = malloc_and_fill_map(map, data, fd);
     close(fd);
     return (map);
 }
@@ -146,11 +91,7 @@ void    draw_map(char **map, t_data *data)
 			else if (map[row][col] == 'E')
                 mlx_put_image_to_window(data->mlx, data->win, data->exit.img, col * data->pixel_rate, row * data->pixel_rate);
             else if (map[row][col] == 'P')
-            {
-                mlx_put_image_to_window(data->mlx, data->win, data->player.img, col * data->pixel_rate, row * data->pixel_rate);
-                data->player_pos.col = col;
-                data->player_pos.row = row;
-            }
+                put_player_to_window(data, row, col);
             else if (map[row][col] == '0')
                 mlx_put_image_to_window(data->mlx, data->win, data->floor.img, col * data->pixel_rate, row * data->pixel_rate);
             col++;

@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 12:03:15 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 12:10:01 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 13:30:28 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int pos_conditions(size_t row, size_t col, t_data *data)
         return (0);
 }
 
-// Function that takes keycode and data struct as arguments in order to implement every keypress into an event
+// Function that takes keycode and data struct as arguments 
+// in order to implement every keypress into an event
 int ft_keypress(int keycode, void *param)
 {
     size_t  row;
@@ -77,41 +78,15 @@ int ft_keypress(int keycode, void *param)
     row = data->player_pos.row;
     col = data->player_pos.col;
     if (keycode == 0) //keycode for a
-    {
-        if (pos_conditions(row, col - 1, data) == 1)
-    	{
-            data->map[row][col] = '0';
-            data->map[row][col - 1] = 'P';
-            data->count++;
-        }
-    }    
+        data->count += move_left(row, col, data);
     if (keycode == 13) //keycode for w
-        if (pos_conditions(row - 1, col, data) == 1)
-        {
-            data->map[row][col] = '0';
-            data->map[row - 1][col] = 'P';
-            data->count++;        
-        }
+        data->count += move_up(row, col, data);
     if (keycode == 1) //keycode for s
-        if (pos_conditions(row + 1, col, data) == 1)
-        {
-            data->map[row][col] = '0';
-            data->map[row + 1][col] = 'P';
-            data->count++;       
-        }
+        data->count += move_down(row, col, data);
     if (keycode == 2) //keycode for d
-        if (pos_conditions(row, col + 1, data) == 1)
-        {
-            data->map[row][col] = '0';
-            data->map[row][col + 1] = 'P';
-            data->count++;        
-        }
+        data->count += move_right(row, col, data);
     if (keycode == 53) //keycode for ESC
-    {
-        mlx_destroy_window(data->mlx, data->win);
-        exit(0);
-        return (0);
-    }
+        return (escape(data));
     ft_printf("movement count : %d\n", data->count);
     draw_map(data->map, data);
     return (0);

@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/05 12:05:40 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 13:30:08 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,10 @@ int     handle_close(t_data *data);
 int 	render_next_frame(void *data);
 int     pos_conditions(size_t row, size_t col, t_data *data);
 int     ft_keypress(int keycode, void *param);
+int     move_down(size_t row, size_t col, t_data *data);
+int     move_up(size_t row, size_t col, t_data *data);
+int     move_left(size_t row, size_t col, t_data *data);
+int     move_right(size_t row, size_t col, t_data *data);
+int     escape(t_data *data);
 
 #endif
