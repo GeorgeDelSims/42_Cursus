@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 15:36:40 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 16:08:38 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void    draw_map(char **map, t_data *data)
 // Function to initialize the images
 void    init_images(t_data *data)
 {
-    data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/grass.xpm", &data->wall.row, &data->wall.col);
-    data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/water1.xpm", &data->floor.row, &data->floor.col);
-    data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/broccoli.xpm", &data->collectible.row, &data->collectible.col);
-	data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/tree.xpm", &data->exit.row, &data->exit.col);
-	data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/KingKong.xpm", &data->player.row, &data->player.col);
+    data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/tile044.xpm", &data->wall.row, &data->wall.col);
+    data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/tile004.xpm", &data->floor.row, &data->floor.col);
+    data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/brain.xpm", &data->collectible.row, &data->collectible.col);
+	data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/tile036.xpm", &data->exit.row, &data->exit.col);
+	data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/mutant2.xpm", &data->player.row, &data->player.col);
 }

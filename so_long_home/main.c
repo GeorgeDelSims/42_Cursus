@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 13:01:02 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 15:44:40 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int ac, char *av[])
     if (!(data = (t_data *)malloc(sizeof(t_data))))
         return (-1);
 	data->mlx = mlx_init();
-    data->pixel_rate = 32;
+    data->pixel_rate = 64;
     if (!data->mlx)
         return (ft_free(data));
     data->map = NULL;
