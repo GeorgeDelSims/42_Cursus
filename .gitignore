@@ -1,4 +1,5 @@
 # Ignore all folders except those ending with _home
 #*/
 #!*_home/
+mlx/
 **/.DS_Store

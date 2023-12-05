@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/04 15:21:01 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 09:08:43 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,50 +48,60 @@ void    get_dimensions(const char *filepath, size_t *x, size_t *y)
 }
 
 // Function to check if a character is in the map
-static int  is_in(char c, t_data *data)
-{
-    size_t i;
-    size_t j;
-
-    i = 0;
-    while (i < data->map_height)
-    {
-        j = 0;
-        while (j < data->map_width)
-        {
-            if (data->map[i][j] == c)
-                return (1);
-            j++;
-        }
-        i++;
-    }
-    return (0);   
-}
+//static int  is_in(char c, t_data *data)
+//{
+//    size_t i;
+//    size_t j;
+//
+//    i = 0;
+//    while (i < data->map_height)
+//    {
+//        j = 0;
+//        while (j < data->map_width)
+//        {
+//            if (data->map[i][j] == c)
+//                return (1);
+//            j++;
+//        }
+//        i++;
+//    }
+//    return (0);   
+//}
 
 // Function to check if the map is valid
-int check_map(t_data *data)
+int         check_map(char **map)
 {
-    size_t i;
-    size_t j;
+    size_t  i;
+    size_t  j;
+    int     player;
+    int     exit;
+    int     collectible;
 
     i = 0;
-    printf("problem isnt here");
-    if (!is_in('P', data) || !is_in('E', data) || !is_in('C', data) || !is_in('1', data) || !is_in('0', data))
-        return (0);
-    while (i < data->map_height)
+    player = 0;
+    exit = 0;
+    collectible = 0;
+    while (map[i])
     {
         j = 0;
-        while (j < data->map_width)
+        while (map[i][j])
         {
-            if (data->map[i][j] != '1' && data->map[i][j] != '0' && data->map[i][j] != 'C' && data->map[i][j] != 'E' && data->map[i][j] != 'P')
+            if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'C' && map[i][j] != 'E' && map[i][j] != 'P')
                 return (0);
+            if (map[i][j] == 'P')
+                player++;
+            if (map[i][j] == 'E')
+                exit++;
+            if (map[i][j] == 'C')
+                collectible++;
             j++;
         }
         i++;
     }
-    printf("Map is valid\n");
+    if (player != 1 || exit != 1 || collectible == 0)
+        return (0);
     return (1);
-}
+}   
 
 // Function to get rows and cols of the map and allocate memory for it in a char** (this function also closes the .ber file)
 char    **read_map(const char *filepath, t_data *data)

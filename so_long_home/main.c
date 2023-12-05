@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/04 15:30:07 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/05 09:07:42 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ static char **map_main(char **map, t_data *data, const char  *filepath)
         free(data);
         return (NULL);
     }
-    //printf("before map is checked\n");
-    //if (check_map(data) == 0)
-    //{
-    //    ft_free_map(map);
-    //    free(data);
-    //    printf("Error\nInvalid map\n");
-    //    return (NULL);
-    //}
+    printf("before map is checked\n");
+    if (check_map(map) == 0)
+    {
+        ft_free_map(map);
+        free(data);
+        printf("Error\nInvalid map\n");
+        return (NULL);
+    }
     printf("after map is checked\n");
     init_images(data);
     draw_map(map, data);
