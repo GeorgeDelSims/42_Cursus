@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/05 13:30:08 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:38:38 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ typedef struct s_data {
     t_image player_pos;
 }			t_data;
 
+typedef struct s_mc // Map check struct
+{
+    size_t  P; // player
+    size_t  E; // exit 
+    size_t  C; // collectible
+    size_t  i; // rows
+    size_t  j; // columns
+}           t_mc;
+
 void    get_dimensions(const char *filepath, size_t *x, size_t *y);
 char    **read_map(const char *filepath, t_data *data);
 void    draw_map(char **map, t_data *data);
@@ -59,5 +68,10 @@ int     move_up(size_t row, size_t col, t_data *data);
 int     move_left(size_t row, size_t col, t_data *data);
 int     move_right(size_t row, size_t col, t_data *data);
 int     escape(t_data *data);
+int	    check_path(t_data *data);
+t_mc    *init_map_check(t_mc *mc);
+void    print_map(char  **map);
+void	find_player_pos(t_data	*data);
+
 
 #endif

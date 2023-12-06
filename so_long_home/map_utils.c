@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 16:08:38 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/06 15:51:58 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// Function to malloc the rows in the map and fill them with the characters in the .ber file
+// Function to malloc the rows in the map and 
+// fill them with the characters in the .ber file
 static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
 {
     size_t      row;
@@ -40,12 +41,28 @@ static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
     return (map);
 }
 
-// Function to put the player icon in the window
-static void    put_player_to_window(t_data *data, size_t row, size_t col)
+// Function to find the player position for the map
+void	find_player_pos(t_data	*data)
 {
-    mlx_put_image_to_window(data->mlx, data->win, data->player.img, col * data->pixel_rate, row * data->pixel_rate);
-    data->player_pos.col = col;
-    data->player_pos.row = row;
+	size_t	row;
+	size_t	col;
+	
+	row = 0;
+	while (data->map[row])
+	{
+        col = 0;
+		while (data->map[row][col])
+		{
+			if (data->map[row][col] == 'P')
+			{
+                data->player.row = row;
+                data->player.col = col;
+                return ;
+            }
+			col++;	
+		}
+		row++;
+	}
 }
 
 // Main function that allocates memory for the map and reads the map from the .ber file
@@ -84,16 +101,15 @@ void    draw_map(char **map, t_data *data)
         col = 0;
         while (map[row][col])
         {
+            mlx_put_image_to_window(data->mlx, data->win, data->floor.img, col * data->pixel_rate, row * data->pixel_rate);
             if (map[row][col] == '1')
                 mlx_put_image_to_window(data->mlx, data->win, data->wall.img, col * data->pixel_rate, row * data->pixel_rate);
             else if (map[row][col] == 'C')
                 mlx_put_image_to_window(data->mlx, data->win, data->collectible.img, col * data->pixel_rate, row * data->pixel_rate);
-			else if (map[row][col] == 'E')
+		    else if (map[row][col] == 'E')
                 mlx_put_image_to_window(data->mlx, data->win, data->exit.img, col * data->pixel_rate, row * data->pixel_rate);
             else if (map[row][col] == 'P')
-                put_player_to_window(data, row, col);
-            else if (map[row][col] == '0')
-                mlx_put_image_to_window(data->mlx, data->win, data->floor.img, col * data->pixel_rate, row * data->pixel_rate);
+                mlx_put_image_to_window(data->mlx, data->win, data->player.img, col * data->pixel_rate, row * data->pixel_rate);
             col++;
         }
         row++;
@@ -103,9 +119,14 @@ void    draw_map(char **map, t_data *data)
 // Function to initialize the images
 void    init_images(t_data *data)
 {
-    data->wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/tile044.xpm", &data->wall.row, &data->wall.col);
-    data->floor.img = mlx_xpm_file_to_image(data->mlx, "./textures/tile004.xpm", &data->floor.row, &data->floor.col);
-    data->collectible.img = mlx_xpm_file_to_image(data->mlx, "./textures/brain.xpm", &data->collectible.row, &data->collectible.col);
-	data->exit.img = mlx_xpm_file_to_image(data->mlx, "./textures/tile036.xpm", &data->exit.row, &data->exit.col);
-	data->player.img = mlx_xpm_file_to_image(data->mlx, "./textures/mutant2.xpm", &data->player.row, &data->player.col);
+    data->wall.img = mlx_xpm_file_to_image(data->mlx,
+    "./textures/tile044.xpm", &data->wall.row, &data->wall.col);
+    data->floor.img = mlx_xpm_file_to_image(data->mlx,
+    "./textures/tile004.xpm", &data->floor.row, &data->floor.col);
+    data->collectible.img = mlx_xpm_file_to_image(data->mlx,
+    "./textures/brain.xpm", &data->collectible.row, &data->collectible.col);
+	data->exit.img = mlx_xpm_file_to_image(data->mlx,
+    "./textures/tile036.xpm", &data->exit.row, &data->exit.col);
+	data->player.img = mlx_xpm_file_to_image(data->mlx,
+    "./textures/mutant2.xpm", &data->player.row, &data->player.col);
 }

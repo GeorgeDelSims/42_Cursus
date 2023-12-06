@@ -1,6 +1,6 @@
 NAME = so_long
 
-SOURCES = main.c map_utils.c keypress_utils.c small_utils.c keypress_utils2.c map_utils2.c
+SOURCES = main.c map_utils.c keypress_utils.c small_utils.c keypress_utils2.c map_utils2.c map_utils3.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -8,7 +8,7 @@ LIBFT  = ./libft
 
 MLX = ./mlx
 
-CC = gcc -g
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I$(MLX)
 
 MAKE = make

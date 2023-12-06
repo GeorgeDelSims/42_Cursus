@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:34:05 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 15:38:27 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/06 13:05:50 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-typedef struct s_map_check
-{
-    int     player;
-    int     exit;
-    int     collectible;
-    int     i;
-    int     j;
-}               t_map_check;
 
 // Function to get the length of the lines in the map
 static size_t  get_line_length(int fd, size_t *row, size_t *col)
@@ -67,23 +59,23 @@ void    get_dimensions(const char *filepath, size_t *row, size_t *col)
 
 
 // Initialise map check struct
-static t_map_check *init_map_check(t_map_check *map_check)
+t_mc    *init_map_check(t_mc *mc)
 {
-    map_check = (t_map_check *)malloc(sizeof(t_map_check));
-    if (!map_check)
+    mc = (t_mc *)malloc(sizeof(t_mc));
+    if (!mc)
         return (NULL);
-    map_check->player = 0;
-    map_check->exit = 0;
-    map_check->collectible = 0;
-    map_check->i = 0;
-    map_check->j = 0;
-    return (map_check);
+    mc->P = 0;
+    mc->E = 0;
+    mc->C = 0;
+    mc->i = 0;
+    mc->j = 0;
+    return (mc);
 }
 
 // Function to check if the map is valid
 int         check_map(char **map)
 {
-    t_map_check *mc;
+    t_mc *mc;
 
     mc = NULL;
     mc = init_map_check(mc);
@@ -95,16 +87,16 @@ int         check_map(char **map)
             if (map[mc->i][mc->j] != '1' && map[mc->i][mc->j] != '0' && map[mc->i][mc->j] != 'C' && map[mc->i][mc->j] != 'E' && map[mc->i][mc->j] != 'P')
                 return (0);
             if (map[mc->i][mc->j] == 'P')
-                mc->player++;
+                mc->P++;
             if (map[mc->i][mc->j] == 'E')
-                mc->exit++;
+                mc->E++;
             if (map[mc->i][mc->j] == 'C')
-                mc->collectible++;
+                mc->C++;
             mc->j++;
         }
         mc->i++;
     }
-    if (mc->player != 1 || mc->exit != 1 || mc->collectible == 0)
+    if (mc->P != 1 || mc->E != 1 || mc->C == 0)
         return (0);
     return (1);
 }
