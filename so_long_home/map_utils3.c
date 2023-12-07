@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:23:28 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/07 11:31:34 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:18:42 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ int	check_path(t_data *data)
 	
 	mapcpy = copy_map(data);
 	if (!mapcpy)
+	{
+		ft_free_map(mapcpy);
 		return (0);
+	}
 	size.i = data->map_height;
 	size.j = data->map_width;
 	curr.i = data->player.row;
@@ -118,8 +121,12 @@ int	check_path(t_data *data)
 	if (find_char(mapcpy, 'E') == 1 || find_char(mapcpy, 'C') == 1)
 	{
 		ft_free_map(mapcpy);
+		//free(&curr);
+		//free(&size);
 		return (0);	
 	}
 	ft_free_map(mapcpy);
+	//free(&curr);
+	//free(&size);
 	return (1);
 }

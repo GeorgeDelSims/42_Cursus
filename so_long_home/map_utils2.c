@@ -6,12 +6,11 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:34:05 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 11:38:45 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:13:53 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 // Function to get the length of the lines in the map
 static size_t  get_line_length(int fd, size_t *row, size_t *col)
