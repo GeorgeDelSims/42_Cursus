@@ -8,7 +8,7 @@ LIBFT  = ./libft
 
 MLX = ./mlx
 
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror -I$(MLX)
 
 MAKE = make

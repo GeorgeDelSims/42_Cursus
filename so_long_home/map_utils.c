@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/06 15:51:58 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 10:04:27 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	find_player_pos(t_data	*data)
 			{
                 data->player.row = row;
                 data->player.col = col;
+                data->player_pos.row = row;
+                data->player_pos.col = col;
                 return ;
             }
 			col++;	

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keypress_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:28:04 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/05 13:28:42 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/07 10:20:09 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int move_down(size_t row, size_t col, t_data *data)
     {
         data->map[row][col] = '0';
         data->map[row + 1][col] = 'P';
-        data->count++;
+        data->player_pos.row++;
         return (1);
     }
     return (0);
@@ -30,6 +30,7 @@ int move_up(size_t row, size_t col, t_data *data)
     {
         data->map[row][col] = '0';
         data->map[row - 1][col] = 'P';
+        data->player_pos.row--;
         return (1);
     }
     return (0);
@@ -41,6 +42,7 @@ int move_left(size_t row, size_t col, t_data *data)
     {
         data->map[row][col] = '0';
         data->map[row][col - 1] = 'P';
+        data->player_pos.col--;
         return (1);
     }
     return (0);
@@ -52,6 +54,7 @@ int move_right(size_t row, size_t col, t_data *data)
     {
         data->map[row][col] = '0';
         data->map[row][col + 1] = 'P';
+        data->player_pos.col++;
         return (1);
     }
     return (0);
