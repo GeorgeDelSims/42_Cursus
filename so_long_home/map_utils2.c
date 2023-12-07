@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:34:05 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 12:13:53 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 15:30:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,44 @@ void    get_dimensions(const char *filepath, size_t *row, size_t *col)
     close(fd);
 }
 
+// Function to check if the map is valid
+int         check_map(char **map)
+{
+    int p;
+    int e;
+    int c;
+    int i;
+    int j;
 
-// Initialise map check struct
+    p = 0;
+    e = 0;
+    c = 0;
+    i = 0;
+    j = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'C'
+                && map[i][j] != 'E' && map[i][j] != 'P')
+                return (0);
+            if (map[i][j] == 'P')
+                p++;
+            if (map[i][j] == 'E')
+                e++;
+            if (map[i][j] == 'C')
+                c++;
+            j++;
+        }
+        i++;
+    }
+    if (p != 1 || e != 1 || c == 0)
+        return (0);
+    return (1);
+}
+
+/*
 t_mc    *init_map_check(t_mc *mc)
 {
     mc = (t_mc *)malloc(sizeof(t_mc));
@@ -86,6 +122,7 @@ int         check_map(char **map)
             if (map[mc->i][mc->j] != '1' && map[mc->i][mc->j] != '0' && map[mc->i][mc->j] != 'C' && map[mc->i][mc->j] != 'E' && map[mc->i][mc->j] != 'P')
             {
                 free(mc);
+                mc = NULL;
                 return (0);
             }
             if (map[mc->i][mc->j] == 'P')
@@ -101,8 +138,11 @@ int         check_map(char **map)
     if (mc->P != 1 || mc->E != 1 || mc->C == 0)
     {
         free(mc);
+        mc = NULL;
         return (0);
     }
     free(mc);
+    mc = NULL;
     return (1);
 }
+*/

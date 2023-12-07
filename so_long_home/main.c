@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 12:05:58 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 15:39:49 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,18 @@ int main(int ac, char *av[])
     if (!data->map)
         return(ft_free(data));
     find_player_pos(data);
-    if (check_map(data->map) == 0 || check_path(data) == 0)
+    if (check_path(data) == 0)
     {
         ft_printf("Error : Invalid map\n");
         ft_free_map(data->map); 
+        free(data);
+        return (0);
+    }
+    if (check_map(data->map) == 0)
+    {
+        ft_printf("Error : Invalid map\n");
+        ft_free_map(data->map); 
+        free(data->mlx);
         free(data);
         return (0);
     }

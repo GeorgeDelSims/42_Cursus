@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 11:49:15 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 15:01:02 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,19 @@ static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
     while ((line = get_next_line(fd)) != NULL) // loop over array of pointers 
     {
         map[row] = ft_strdup(line); // malloc and copy content of each line 
-        if (!map[row])
-        {
-            while (row > 0)
-            {
-                row--;
-                free(map[row]);
-            }
-            free(map);
-            return (NULL);
-        }
+        //if (!map[row])
+        //{
+        //    while (row > 0)
+        //    {
+        //        row--;
+        //        free(map[row]);
+        //    }
+        //    free(map);
+        //    return (NULL);
+        //}
         map[row][data->map_width] = '\0';
         row++;
+        free(line);
     }
     map[row] = NULL;
     return (map);
