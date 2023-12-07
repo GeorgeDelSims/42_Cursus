@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 10:39:35 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 12:01:46 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void    map_main(t_data *data)
     data->win = mlx_new_window(data->mlx, data->pixel_rate * data->map_width, data->pixel_rate * data->map_height, "so_long");
     if (!data->win)
     {
+        ft_free_map(data->map);
         free(data);
         return ;
     }
@@ -41,27 +42,27 @@ int main(int ac, char *av[])
 
     if (ac != 2)
         return (0);
-    if (!(data = (t_data *)malloc(sizeof(t_data))))
+    data = (t_data *)malloc(sizeof(t_data));
+    if (!data)
         return (-1);
 	data->mlx = mlx_init();
-    data->pixel_rate = 64;
     if (!data->mlx)
-        return (ft_free(data));
+        return(ft_free(data));
+    data->pixel_rate = 64;
     data->map = read_map(av[1], data);
     if (!data->map)
-    {
-        free(data);
-        return (0);
-    }
+        return(ft_free(data));
     find_player_pos(data);
     if (check_map(data->map) == 0 || check_path(data) == 0)
     {
         ft_printf("Error : Invalid map\n");
+        ft_free_map(data->map); 
+        free(data);
         return (0);
     }
     map_main(data);
     mlx_main(data);
-    ft_free_map(data->map); // free map and struct to avoid leaks
-    ft_free(data);
+    ft_free_map(data->map);
+    free(data);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 09:56:30 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 10:04:27 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 11:49:15 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // Function to malloc the rows in the map and 
 // fill them with the characters in the .ber file
+
 static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
 {
     size_t      row;
@@ -22,7 +23,7 @@ static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
     row = 0;
     while ((line = get_next_line(fd)) != NULL) // loop over array of pointers 
     {
-        map[row] = (char *)malloc((data->map_width + 1)* sizeof(char)); //malloc each row/pointer
+        map[row] = ft_strdup(line); // malloc and copy content of each line 
         if (!map[row])
         {
             while (row > 0)
@@ -33,7 +34,6 @@ static char    **malloc_and_fill_map(char **map, t_data *data, int fd)
             free(map);
             return (NULL);
         }
-        map[row] = ft_strdup(line);
         map[row][data->map_width] = '\0';
         row++;
     }
@@ -75,7 +75,8 @@ char    **read_map(const char *filepath, t_data *data)
     
     // get dimensions and malloc array of pointers
     get_dimensions(filepath, &data->map_width, &data->map_height);
-    if (!(map = (char **)malloc((data->map_height + 1) * sizeof(char *))))
+    map = (char **)malloc((data->map_height + 1) * sizeof(char *));
+    if (!map)
         return (NULL);
     // Open file to get fd
     fd = open(filepath, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:34:05 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/06 13:05:50 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 11:38:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int         check_map(char **map)
         while (map[mc->i][mc->j])
         {
             if (map[mc->i][mc->j] != '1' && map[mc->i][mc->j] != '0' && map[mc->i][mc->j] != 'C' && map[mc->i][mc->j] != 'E' && map[mc->i][mc->j] != 'P')
+            {
+                free(mc);
                 return (0);
+            }
             if (map[mc->i][mc->j] == 'P')
                 mc->P++;
             if (map[mc->i][mc->j] == 'E')
@@ -97,6 +100,10 @@ int         check_map(char **map)
         mc->i++;
     }
     if (mc->P != 1 || mc->E != 1 || mc->C == 0)
+    {
+        free(mc);
         return (0);
+    }
+    free(mc);
     return (1);
 }

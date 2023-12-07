@@ -1,6 +1,6 @@
 NAME = so_long
 
-SOURCES = main.c map_utils.c keypress_utils.c small_utils.c keypress_utils2.c map_utils2.c map_utils3.c
+SOURCES = main.c keypress_utils.c keypress_utils2.c map_utils.c map_utils2.c map_utils3.c small_utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

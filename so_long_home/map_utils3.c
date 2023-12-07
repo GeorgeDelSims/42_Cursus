@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:23:28 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/07 10:50:17 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/07 11:31:34 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct s_map // Map check struct
     int  j; // columns
 }           t_map;
 
+// REcursive part of the flood fill function
 void	fill(char **map, t_map size, t_map curr, char to_fill)
 {
 	if (curr.j < 0 || curr.j >= size.j || curr.i < 0 || curr.i >= size.i
@@ -31,11 +32,13 @@ void	fill(char **map, t_map size, t_map curr, char to_fill)
 	fill(map, size, (t_map){curr.i, curr.j - 1}, to_fill);
 	fill(map, size, (t_map){curr.i, curr.j + 1}, to_fill);
 }
-
+//Flood fill to check path
 void	flood_fill(char **map, t_map size, t_map begin)
 {
 	fill(map, size, begin, map[begin.j][begin.i]);
 }
+
+// Finds character within map 
 static int	find_char(char **map, char c)
 {
 	int	row;
@@ -56,6 +59,7 @@ static int	find_char(char **map, char c)
 	return (0);
 }
 
+// Prints the map for debugging
 void	print_map(char **map)
 {
 	int	i;
@@ -76,6 +80,7 @@ void	print_map(char **map)
 	ft_printf("\n");
 }
 
+// Creates a copy of the map for the path check
 char	**copy_map(t_data *data)
 {
 	char	**mapcpy;
@@ -94,6 +99,7 @@ char	**copy_map(t_data *data)
     return (mapcpy);	
 }
 
+// Function that checks if there is a valid path to the Exit and all the Collectibles
 int	check_path(t_data *data)
 {
 	char **mapcpy;
@@ -101,14 +107,14 @@ int	check_path(t_data *data)
 	t_map	curr;
 	
 	mapcpy = copy_map(data);
-	//print_map(mapcpy);
+	if (!mapcpy)
+		return (0);
 	size.i = data->map_height;
 	size.j = data->map_width;
 	curr.i = data->player.row;
 	curr.j = data->player.col;
 	mapcpy[curr.i][curr.j] = '0';
 	flood_fill(mapcpy, size, curr);
-	//print_map(mapcpy);
 	if (find_char(mapcpy, 'E') == 1 || find_char(mapcpy, 'C') == 1)
 	{
 		ft_free_map(mapcpy);
