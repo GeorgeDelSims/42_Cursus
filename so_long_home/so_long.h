@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/07 10:04:33 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/12 11:47:38 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef struct s_data {
 
 typedef struct s_mc // Map check struct
 {
-    size_t  P; // player
-    size_t  E; // exit 
-    size_t  C; // collectible
+    size_t  p; // player
+    size_t  e; // exit 
+    size_t  c; // collectible
     size_t  i; // rows
     size_t  j; // columns
 }           t_mc;
