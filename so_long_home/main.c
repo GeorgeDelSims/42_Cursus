@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 15:39:49 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/12 11:19:42 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ int main(int ac, char *av[])
     data = (t_data *)malloc(sizeof(t_data));
     if (!data)
         return (-1);
-	data->mlx = mlx_init();
-    if (!data->mlx)
-        return(ft_free(data));
     data->pixel_rate = 64;
     data->map = read_map(av[1], data);
     if (!data->map)
@@ -64,10 +61,12 @@ int main(int ac, char *av[])
     {
         ft_printf("Error : Invalid map\n");
         ft_free_map(data->map); 
-        free(data->mlx);
         free(data);
         return (0);
     }
+    data->mlx = mlx_init();
+    if (!data->mlx)
+        return(ft_free(data));
     map_main(data);
     mlx_main(data);
     ft_free_map(data->map);
