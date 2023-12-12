@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 09:30:06 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/12 13:41:15 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/12 16:24:22 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ int			check_path(t_data *data);
 t_mc		*init_map_check(t_mc *mc);
 void		print_map(char **map);
 void		find_player_pos(t_data *data);
+int			check_edges(t_data *data);
 
 #endif
