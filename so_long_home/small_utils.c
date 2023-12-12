@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 11:59:34 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/07 11:09:18 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/12 11:43:04 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,30 @@ int handle_close(t_data *data)
     ft_free_map(data->map);
     ft_free(data);
     exit(0);
+}
+
+// Function to find the player position for the map
+void	find_player_pos(t_data *data)
+{
+	size_t	row;
+	size_t	col;
+
+	row = 0;
+	while (data->map[row])
+	{
+		col = 0;
+		while (data->map[row][col])
+		{
+			if (data->map[row][col] == 'P')
+			{
+				data->player.row = row;
+				data->player.col = col;
+				data->player_pos.row = row;
+				data->player_pos.col = col;
+				return ;
+			}
+			col++;
+		}
+		row++;
+	}
 }
