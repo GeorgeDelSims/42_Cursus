@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/12 11:24:51 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/12 14:08:41 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	mlx_main(t_data *data)
 	mlx_loop(data->mlx);
 }
 
-static int	invalid_map(t_data data)
+static int	invalid_map(t_data *data)
 {
 	ft_printf("Error\nInvalid map\n");
-	ft_free_map(data.map);
-	free(data.mlx);
+	ft_free_map(data->map);
+	free(data);
 	return (0);
 }
 
@@ -60,9 +60,9 @@ int	main(int ac, char *av[])
 		return (ft_free(data));
 	find_player_pos(data);
 	if (check_path(data) == 0)
-		return (invalid_map(*data));
+		return (invalid_map(data));
 	if (check_map(data->map) == 0)
-		return (invalid_map(*data));
+		return (invalid_map(data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		return (ft_free(data));
