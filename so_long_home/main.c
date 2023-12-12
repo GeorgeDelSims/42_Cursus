@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 10:44:12 by georgesims        #+#    #+#             */
-/*   Updated: 2023/12/12 16:28:52 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/12 17:20:55 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,18 @@ static int	invalid_map(t_data *data)
 	return (0);
 }
 
+static int	map_checks(t_data *data)
+{
+	ft_printf("check path  = %d\n", check_path(data));
+	ft_printf("check edges  = %d\n", check_edges(data));
+	ft_printf("check map  = %d\n", check_map(data->map));
+	if (check_path(data) == 0 || check_edges(data) == 0)
+		return (0);
+	if (check_map(data->map) == 0)
+		return (0);
+	return (1);
+}
+
 // Main Function
 int	main(int ac, char *av[])
 {
@@ -59,12 +71,7 @@ int	main(int ac, char *av[])
 	if (!data->map)
 		return (ft_free(data));
 	find_player_pos(data);
-	ft_printf("check path  = %d\n", check_path(data));
-	ft_printf("check edges  = %d\n", check_edges(data));
-	ft_printf("check map  = %d\n", check_map(data->map));
-	if (check_path(data) == 0 || check_edges(data) == 0)
-		return (invalid_map(data));
-	if (check_map(data->map) == 0)
+	if (map_checks(data) == 0)
 		return (invalid_map(data));
 	data->mlx = mlx_init();
 	if (!data->mlx)
