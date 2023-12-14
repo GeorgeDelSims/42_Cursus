@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:23:28 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/12 13:30:46 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/14 11:11:44 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,25 @@ typedef struct s_map // Map check struct
 	int	j;
 }			t_map;
 
+
 // REcursive part of the flood fill function
 void	fill(char **map, t_map size, t_map curr, char to_fill)
 {
 	if (curr.j < 0 || curr.j >= size.j || curr.i < 0 || curr.i >= size.i
-		|| (map[curr.j][curr.i] != to_fill && map[curr.j][curr.i] != 'C'
-			&& map[curr.j][curr.i] != 'E' && map[curr.j][curr.i] != '0'))
+		|| (map[curr.i][curr.j] != to_fill && map[curr.i][curr.j] != 'C'
+			&& map[curr.i][curr.j] != 'E' && map[curr.i][curr.j] != '0'))
 		return ;
-	map[curr.j][curr.i] = 'V';
+	map[curr.i][curr.j] = 'V';
 	fill(map, size, (t_map){curr.i - 1, curr.j}, to_fill);
-	fill(map, size, (t_map){curr.i + 1, curr.j}, to_fill);
 	fill(map, size, (t_map){curr.i, curr.j - 1}, to_fill);
+	fill(map, size, (t_map){curr.i + 1, curr.j}, to_fill);
 	fill(map, size, (t_map){curr.i, curr.j + 1}, to_fill);
 }
 
 // Flood fill to check path
 void	flood_fill(char **map, t_map size, t_map begin)
 {
-	fill(map, size, begin, map[begin.j][begin.i]);
+	fill(map, size, begin, map[begin.i][begin.j]);
 }
 
 // Finds character within map
@@ -96,8 +97,13 @@ int	check_path(t_data *data)
 	size.j = data->map_width;
 	curr.i = data->player.row;
 	curr.j = data->player.col;
-	mapcpy[curr.i][curr.j] = '0';
+	ft_printf("map height : %d\n", data->map_height);
+	ft_printf("map width : %d\n", data->map_width);
+	ft_printf("player row : %d\n", data->player.row);
+	ft_printf("player col : %d\n", data->player.col);
+	print_map(mapcpy);
 	flood_fill(mapcpy, size, curr);
+	print_map(mapcpy);
 	if (find_char(mapcpy, 'E') == 1 || find_char(mapcpy, 'C') == 1)
 	{
 		ft_free_map(mapcpy);
@@ -106,25 +112,3 @@ int	check_path(t_data *data)
 	ft_free_map(mapcpy);
 	return (1);
 }
-
-/*
-// Prints the map for debugging
-void	print_map(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			ft_printf("%c ", map[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-	ft_printf("\n");
-}*/

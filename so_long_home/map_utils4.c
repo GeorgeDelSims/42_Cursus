@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:22:56 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/12 17:23:50 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/14 10:28:02 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,3 +38,23 @@ int	check_edges(t_data *data)
 	return (1);
 }
 
+// Prints the map for debugging
+void	print_map(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			ft_printf("%c ", map[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+	ft_printf("\n");
+}
