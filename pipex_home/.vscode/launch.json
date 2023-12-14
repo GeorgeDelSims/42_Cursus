@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/gsims/Git_files/42_Cursus/pipex_home/srcs",
+      "program": "/Users/gsims/Git_files/42_Cursus/pipex_home/srcs/build/Debug/outDebug"
+    }
+  ]
+}

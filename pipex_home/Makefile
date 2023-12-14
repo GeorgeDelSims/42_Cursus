@@ -1,26 +1,33 @@
 NAME = pipex
 
-SOURCES	= main.c
+SOURCES	= ./srcs/main.c ./srcs/parsing.c ./srcs/utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
+
+LIBFT = ./libft/libft.a
 
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-%.0: %.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
+$(NAME): $(LIBFT) $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+
+$(LIBFT):
+	make -C $(LIBFT)
 
 clean:
 	rm -f $(OBJECTS)
+	make -C $(LIBFT) clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C $(LIBFT) fclean
 
 re: fclean all
 

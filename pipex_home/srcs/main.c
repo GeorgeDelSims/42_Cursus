@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 09:14:33 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/14 18:00:12 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // arg[2] and arg[3] are shell commands.
 // the result of cmd1 being applied to file1 needs to be fed to cmd2 and applied to file2.
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
-void	child_process(t_data *data, char *argv[], char **env)
+void	child_process(t_data *data, char *argv[])
 {
 	// close the read end of the pipe
 	close(data->fd[0]);
@@ -27,11 +27,14 @@ void	child_process(t_data *data, char *argv[], char **env)
 	// close the write end of the pipe
 	close(data->fd[1]);
 	// execute the first command
-	execve(argv[2], argv[2], env);
+	execve(data->cmd_path1, data->cmd1, data->env);
 }
 
-void	parent_process(t_data *data, char *argv[], char **env)
+void	parent_process(t_data *data, char *argv[])
 {
+	int		status;
+	
+	waitpid(-1, &status, 0);
 	// close the write end of the pipe
 	close(data->fd[1]);
 	// make the standard input (stdin = 0) of the current process
@@ -40,16 +43,36 @@ void	parent_process(t_data *data, char *argv[], char **env)
 	// close the read end of the pipe
 	close(data->fd[0]);
 	// execute the second command
-	execve(argv[3], argv[3], env);
+	execve(data->cmd_path2, data->cmd2, data->env);
 }
 
-int	main(int argc, char *argv[], char **env)
+// Combine all string parsing functions into one main one
+static void	str_parsing(char *argv[], t_data *data)
+{
+	parse_cmds(argv, data);
+	data->bin_paths = bin_paths(data);
+	data->cmd_paths1 = combine_cmd_path(data, data->cmd1);
+	data->cmd_paths2 = combine_cmd_path(data, data->cmd2);
+}
+
+// Example: ./pipex file1 ls -a wc file2 
+// ==> 
+
+int	main(int argc, char *argv[], char *envp[])
 {
 	pid_t	pid;
 	t_data	*data;
 	
 	if (argc != 5)
 		return (0);
+	// initialise some struct variables 
+	data->env = envp;
+	str_parsing(argv, data);
+	if (path_access(data, data->cmd_path1) == 0 || path_access(data, data->cmd_path2) == 0)
+	{
+		//free all used variables
+		return (0);
+	}
 	// open file1 for reading and file2 for writing
 	data->file1 = open(argv[1], O_RDONLY);
 	data->file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -74,9 +97,9 @@ int	main(int argc, char *argv[], char **env)
 	}
 	// child process
 	if (pid == 0)
-		child_process(data->fd, argv, env);
+		child_process(data, argv);
 	// parent process	
 	else
-		parent_process(data->fd, argv, env);
+		parent_process(data, argv);
 	return (0);
 }

@@ -1,0 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/14 16:41:46 by gsims             #+#    #+#             */
+/*   Updated: 2023/12/14 16:50:40 by gsims            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/pipex.h"
+
+char	*ft_strjoin_mod(const char *s1, const char *s2)
+{
+	char	*newstr;
+	int		i;
+	int		j;
+	int		len;
+
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	newstr = (char *)malloc((len + 1) * sizeof(char));
+	if (newstr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len && s1[i] != '\0')
+	{
+		newstr[i] = s1[i];
+		i++;
+	}
+	newstr[i] = '/';
+	i++;
+	j = 0;
+	while (i < len && s2[j] != '\0')
+		newstr[i++] = s2[j++];
+	newstr[i] = '\0';
+	return (newstr);
+}
+/*
+int	main()
+{
+	const char	*s1 = "helloDFSFSDFT  ";
+	const char	*s2 = "com";
+
+	printf("%s\n", ft_strjoin_mod(s1, s2));
+	return (0);
+}*/

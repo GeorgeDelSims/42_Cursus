@@ -24,7 +24,7 @@ the PID of the child process),
 you will want to execute the second command. 
 Before doing this, you should redirect 
 the standard input to the read end of the pipe. 
-hen, you can execute the command.
+then, you can execute the command.
 
 Finally, you should wait for both child 
 processes to finish using the waitpid() function.
