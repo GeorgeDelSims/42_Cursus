@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:22:56 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 10:28:02 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/14 11:19:07 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	check_edges(t_data *data)
 			return (0);
 		while (data->map[i][j])
 		{
-			if ((i == 0 || i == (int)data->map_height - 1) && data->map[i][j] != '1')
+			if ((i == 0 || i == (int)data->map_height - 1)
+				&& data->map[i][j] != '1')
 				return (0);
 			j++;
 		}

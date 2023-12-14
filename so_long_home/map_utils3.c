@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:23:28 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 11:11:44 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/14 11:18:38 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef struct s_map // Map check struct
 	int	i;
 	int	j;
 }			t_map;
-
 
 // REcursive part of the flood fill function
 void	fill(char **map, t_map size, t_map curr, char to_fill)
@@ -97,13 +96,7 @@ int	check_path(t_data *data)
 	size.j = data->map_width;
 	curr.i = data->player.row;
 	curr.j = data->player.col;
-	ft_printf("map height : %d\n", data->map_height);
-	ft_printf("map width : %d\n", data->map_width);
-	ft_printf("player row : %d\n", data->player.row);
-	ft_printf("player col : %d\n", data->player.col);
-	print_map(mapcpy);
 	flood_fill(mapcpy, size, curr);
-	print_map(mapcpy);
 	if (find_char(mapcpy, 'E') == 1 || find_char(mapcpy, 'C') == 1)
 	{
 		ft_free_map(mapcpy);
