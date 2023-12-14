@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 18:00:12 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/14 18:13:58 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "../includes/pipex.h"
 
-void	child_process(t_data *data, char *argv[])
+void	child_process(t_data *data)
 {
 	// close the read end of the pipe
 	close(data->fd[0]);
@@ -30,7 +30,7 @@ void	child_process(t_data *data, char *argv[])
 	execve(data->cmd_path1, data->cmd1, data->env);
 }
 
-void	parent_process(t_data *data, char *argv[])
+void	parent_process(t_data *data)
 {
 	int		status;
 	
@@ -66,6 +66,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 5)
 		return (0);
 	// initialise some struct variables 
+	data = (char *)malloc(sizeof(t_data));
+	if (!data)
+		return (0);
 	data->env = envp;
 	str_parsing(argv, data);
 	if (path_access(data, data->cmd_path1) == 0 || path_access(data, data->cmd_path2) == 0)
@@ -97,9 +100,9 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	// child process
 	if (pid == 0)
-		child_process(data, argv);
+		child_process(data);
 	// parent process	
 	else
-		parent_process(data, argv);
+		parent_process(data);
 	return (0);
 }

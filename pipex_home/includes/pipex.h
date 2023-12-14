@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:43:38 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 18:00:39 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/14 18:04:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef struct  s_data
     char    *env[];
 }           t_data;
 
-void	child_process(t_data *data, char *argv[]);
-void	parent_process(t_data *data, char *argv[]);
+void	child_process(t_data *data);
+void	parent_process(t_data *data);
 int 	main(int argc, char *argv[], char **env);
 char	*ft_strjoin_mod(const char *s1, const char *s2);
 char    **bin_paths(t_data *data);
