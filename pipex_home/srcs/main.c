@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 18:13:58 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/19 11:26:42 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 5)
 		return (0);
 	// initialise some struct variables 
-	data = (char *)malloc(sizeof(t_data));
+	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (0);
 	data->env = envp;
 	str_parsing(argv, data);
-	if (path_access(data, data->cmd_path1) == 0 || path_access(data, data->cmd_path2) == 0)
+	if (path_access(data, data->cmd_path1) == 0 || path_access2(data, data->cmd_path2) == 0)
 	{
 		//free all used variables
 		return (0);

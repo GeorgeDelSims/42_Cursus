@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 13:27:01 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 17:53:52 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/19 11:27:04 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,28 @@ void	parse_cmds(char *argv[], t_data *data)
 // Create array of paths with command appended
 char	**combine_cmd_path(t_data *data, char *cmd[])
 {
-	int	i;
-
+	int		i;
+	
 	i = 0;
 	while (data->bin_paths[i])
 	{
-		data->cmd_paths[i] = ft_strjoin_mod(data->bin_paths[i], cmd[0])
+		if (cmd == data->cmd1)
+			data->cmd_paths1[i] = ft_strjoin_mod(data->bin_paths[i], cmd[0]);
+		else if (cmd == data->cmd2)
+			data->cmd_paths2[i] = ft_strjoin_mod(data->bin_paths[i], cmd[0]);
 		i++;
 	}
-	data->cmd_paths[i] = NULL;
-	return (data->cmd_paths);
-}
-
-// Test if these paths can be accessed and execve if they can
-int	path_access(t_data *data, char *cmd_path)
-{
-	int	i;
-
-	i = 0;
-	while (data->cmd_paths[i])
+	if (cmd == data->cmd1)
 	{
-		if (access(data->cmd_paths[i], X_OK) == 0)
-		{
-			cmd_path = ft_strdup(data->cmd_paths[i]); // Malloc !!! 
-			return (1);
-		}
-		i++;
+		data->cmd_paths1[i] = NULL;
+		return (data->cmd_paths1);
+	}	
+	else if (cmd == data->cmd2)
+	{
+		data->cmd_paths2[i] = NULL;
+		return (data->cmd_paths2);
 	}
-	ft_printf("path invalid or cannot be accessed.\n");
-	return (0);
+	else
+		return (NULL);
 }
+

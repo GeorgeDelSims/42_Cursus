@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:43:38 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/14 18:04:33 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/19 11:26:32 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct  s_data
     char    **cmd2; // needs to be freed
     char    *cmd_path1; // needs to be freed
     char    *cmd_path2; // needs to be freed
-    char    *env[];
+    char    **env;
 }           t_data;
 
 void	child_process(t_data *data);
@@ -45,5 +45,6 @@ char    **bin_paths(t_data *data);
 void	parse_cmds(char *argv[], t_data *data);
 char	**combine_cmd_path(t_data *data, char *cmd[]);
 int	    path_access(t_data *data, char *cmd_path);
+int     path_access2(t_data *data, char *cmd_path);
 
 #endif
