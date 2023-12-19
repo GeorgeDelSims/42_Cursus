@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/19 11:26:42 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/19 15:57:05 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,48 @@
 
 #include "../includes/pipex.h"
 
-void	child_process(t_data *data)
+void	child_process(t_data *d)
 {
 	// close the read end of the pipe
-	close(data->fd[0]);
+	close(d->fd[0]);
 	// make the standard output (stdout = 1) of the current process
 	// into a copy of the write end of the pipe (fd[1])
-	dup2(data->fd[1], 1);
+	dup2(d->fd[1], 1);
 	// close the write end of the pipe
-	close(data->fd[1]);
+	close(d->fd[1]);
 	// execute the first command
-	execve(data->cmd_path1, data->cmd1, data->env);
+	execve(d->cmd_path1, d->cmd1, d->env);
 }
 
-void	parent_process(t_data *data)
+void	parent_process(t_data *d)
 {
 	int		status;
 	
 	waitpid(-1, &status, 0);
 	// close the write end of the pipe
-	close(data->fd[1]);
+	close(d->fd[1]);
 	// make the standard input (stdin = 0) of the current process
 	// into a copy of the read end of the pipe (fd[0])
-	dup2(data->fd[0], 0);
+	dup2(d->fd[0], 0);
 	// close the read end of the pipe
-	close(data->fd[0]);
+	close(d->fd[0]);
 	// execute the second command
-	execve(data->cmd_path2, data->cmd2, data->env);
+	execve(d->cmd_path2, d->cmd2, d->env);
 }
 
 // Combine all string parsing functions into one main one
-static void	str_parsing(char *argv[], t_data *data)
+static void	str_parsing(char *argv[], t_data *d)
 {
-	parse_cmds(argv, data);
-	data->bin_paths = bin_paths(data);
-	data->cmd_paths1 = combine_cmd_path(data, data->cmd1);
-	data->cmd_paths2 = combine_cmd_path(data, data->cmd2);
+	parse_cmds(argv, d);
+	d->bin_paths = bin_paths(d);
+	d->cmd_paths1 = (char **)malloc(sizeof(char *));
+	if	(!d->cmd_paths1)
+		return ;
+	d->cmd_paths2 = (char **)malloc(sizeof(char *));
+	if	(!d->cmd_paths2)
+		return ;
+	d->cmd_paths1 = combine_cmd_path(d, d->cmd1);
+	d->cmd_paths2 = combine_cmd_path(d, d->cmd2);
 }
 
 // Example: ./pipex file1 ls -a wc file2 
@@ -61,32 +67,32 @@ static void	str_parsing(char *argv[], t_data *data)
 int	main(int argc, char *argv[], char *envp[])
 {
 	pid_t	pid;
-	t_data	*data;
+	t_data	*d;
 	
 	if (argc != 5)
 		return (0);
 	// initialise some struct variables 
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
+	d = (t_data *)malloc(sizeof(t_data));
+	if (!d)
 		return (0);
-	data->env = envp;
-	str_parsing(argv, data);
-	if (path_access(data, data->cmd_path1) == 0 || path_access2(data, data->cmd_path2) == 0)
+	d->env = envp;
+	str_parsing(argv, d);
+	if (path_access(d, d->cmd_path1) == 0 || path_access2(d, d->cmd_path2) == 0)
 	{
 		//free all used variables
 		return (0);
 	}
 	// open file1 for reading and file2 for writing
-	data->file1 = open(argv[1], O_RDONLY);
-	data->file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (data->file1 == -1 || data->file2 == -1)
+	d->file1 = open(argv[1], O_RDONLY);
+	d->file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (d->file1 == -1 || d->file2 == -1)
 	{
 		perror("Error");
 		exit(1);
 	}
 	// pipe reads from fd[0] and writes to fd[1]
-	pipe(data->fd);
-	if (pipe(data->fd) == -1)
+	pipe(d->fd);
+	if (pipe(d->fd) == -1)
 	{
 		perror("Error");
 		exit(1);
@@ -100,9 +106,9 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	// child process
 	if (pid == 0)
-		child_process(data);
+		child_process(d);
 	// parent process	
 	else
-		parent_process(data);
+		parent_process(d);
 	return (0);
 }

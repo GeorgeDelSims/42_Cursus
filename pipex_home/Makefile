@@ -6,7 +6,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 LIBFT = ./libft
 
-CC = gcc -v -g
+CC = gcc -g
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -15,11 +15,11 @@ CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJECTS)
+$(NAME): $(LIBFT)/libft.a $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L./libft -lft
 
-$(LIBFT):
-	make -C ./libft
+$(LIBFT)/libft.a:
+	make -C $(LIBFT)
 
 clean:
 	rm -f $(OBJECTS)
