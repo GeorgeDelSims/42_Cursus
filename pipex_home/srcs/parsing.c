@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 13:27:01 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/19 15:52:49 by gsims            ###   ########.fr       */
+/*   Updated: 2023/12/21 16:08:44 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char *ft_parse_path(char *envp[])
 	int		index;
 	
 	index = 0;
+	if (envp == NULL)
+		return (NULL);
 	while (envp[index] != NULL)
 	{
 		if (ft_strncmp(envp[index], "PATH=", 5) == 0)
@@ -35,11 +37,11 @@ static char *ft_parse_path(char *envp[])
 }
 
 // splits the path string into the various possible paths to binary files
-char **bin_paths(t_data *d)
+char **bin_paths(t_data *d, char *envp[])
 {
 	char	*path_from_env;
 	
-	path_from_env = ft_parse_path(d->env);
+	path_from_env = ft_parse_path(envp);
 	if (path_from_env == NULL)
 		return (NULL);
 	d->bin_paths = ft_split(path_from_env, ':');
@@ -58,30 +60,23 @@ void	parse_cmds(char *argv[], t_data *d)
 char	**combine_cmd_path(t_data *d, char *cmd[])
 {
 	int		i;
+	char	**cmd_paths;
 	
-	i = 0;
-	while (d->bin_paths[i])
-	{
-		if (cmd == d->cmd1)
-		{
-			d->cmd_paths1[i] = NULL;
-			d->cmd_paths1[i] = ft_strjoin_mod(d->bin_paths[i], cmd[0]);
-		}
-		else if (cmd == d->cmd2)
-			d->cmd_paths2[i] = NULL;
-			d->cmd_paths2[i] = ft_strjoin_mod(d->bin_paths[i], cmd[0]);
-		i++;
-	}
+	cmd_paths = NULL;
 	if (cmd == d->cmd1)
-	{
-		d->cmd_paths1[i] = NULL;
-		return (d->cmd_paths1);
-	}	
+		cmd_paths = d->cmd_paths1;
 	else if (cmd == d->cmd2)
+		cmd_paths = d->cmd_paths2;
+	i = 0;
+	if (cmd_paths)
 	{
-		d->cmd_paths2[i] = NULL;
-		return (d->cmd_paths2);
+		while (d->bin_paths[i])
+		{
+			cmd_paths[i] = ft_strjoin_mod(d->bin_paths[i], cmd[0]);
+			ft_printf("cmd_paths[i] : %s\n", cmd_paths[i]);
+			i++;
+		}
+		cmd_paths[i] = NULL;
 	}
-	else
-		return (NULL);
+	return (cmd_paths);
 }
