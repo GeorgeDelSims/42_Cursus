@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/29 12:25:04 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/29 13:10:09 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	parent_process(t_data *d, char *envp[])
 	// execute the second command
 	ft_printf("cmd_path2: %s\n", d->cmd_path2);
 	ft_printf("cmd2:\n");
-	ft_print_array(d->cmd2);	
-	ft_printf("before waitpid\n");
+	ft_print_array(d->cmd2);
+	perror("before waitpid\n");
 	waitpid(-1, &status, 0);
-	ft_printf("after waitpid\n");	
+	perror("after waitpid\n");	
 	if (execve(d->cmd_path2, d->cmd2, envp) == -1) 
 	{
     	perror("execve"); // Print an error message
@@ -97,7 +97,6 @@ static int	ft_init_pipex(t_data *d, char *argv[], char *envp[])
 	parse_cmds(argv, d);
 	d->bin_paths = bin_paths(d, envp);
 	count = ft_count_array(d->bin_paths);
-	ft_printf("count : %d\n", count);
 	d->cmd_paths1 = (char **)malloc(sizeof(char *) * (count + 1));
 	d->cmd_paths2 = (char **)malloc(sizeof(char *) * (count + 1));
 	if	(!d->cmd_paths1 || !d->cmd_paths2)
