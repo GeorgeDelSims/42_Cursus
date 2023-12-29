@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/21 16:29:44 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/29 12:25:04 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,23 @@
 // arg[1] and arg[4] are file names
 // arg[2] and arg[3] are shell commands.
 // the result of cmd1 being applied to file1 needs to be fed to cmd2 and applied to file2.
+// example command: ./pipex file1.txt cat nl file2.txt
+// --> concatenates content into file2 while adding line numbers
+
 
 #include "../includes/pipex.h"
+
+static void	ft_print_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		ft_printf("%s\n", array[i]);
+		i++;
+	}
+}
 
 void	child_process(t_data *d, char *envp[])
 {
@@ -23,18 +38,26 @@ void	child_process(t_data *d, char *envp[])
 	close(d->fd[0]);
 	// make the standard output (stdout = 1) of the current process
 	// into a copy of the write end of the pipe (fd[1])
+	ft_printf("fd[0] : %d\n", d->fd[0]);
+	ft_printf("fd[1] : %d\n", d->fd[1]);
 	dup2(d->fd[1], 1);
 	// close the write end of the pipe
 	close(d->fd[1]);
 	// execute the first command
-	execve(d->cmd_path1, d->cmd1, envp);
+	ft_printf("cmd_path1: %s\n", d->cmd_path1);
+	ft_printf("cmd1:\n");
+	ft_print_array(d->cmd1);
+	if (execve(d->cmd_path1, d->cmd1, envp) == -1) 
+	{
+    	perror("execve"); // Print an error message
+    	exit(1); // Terminate the process in case of an error
+	}
 }
 
 void	parent_process(t_data *d, char *envp[])
 {
 	int		status;
 	
-	waitpid(-1, &status, 0);
 	// close the write end of the pipe
 	close(d->fd[1]);
 	// make the standard input (stdin = 0) of the current process
@@ -43,22 +66,50 @@ void	parent_process(t_data *d, char *envp[])
 	// close the read end of the pipe
 	close(d->fd[0]);
 	// execute the second command
-	execve(d->cmd_path2, d->cmd2, envp);
+	ft_printf("cmd_path2: %s\n", d->cmd_path2);
+	ft_printf("cmd2:\n");
+	ft_print_array(d->cmd2);	
+	ft_printf("before waitpid\n");
+	waitpid(-1, &status, 0);
+	ft_printf("after waitpid\n");	
+	if (execve(d->cmd_path2, d->cmd2, envp) == -1) 
+	{
+    	perror("execve"); // Print an error message
+    	exit(1); // Terminate the process in case of an error
+	}
+}
+
+int	ft_count_array(char **array)
+{
+	int	count;
+	
+	count = 0;
+	while (array[count])
+		count++;
+	return (count);
 }
 
 // Loads of mallocs to be checked here
 static int	ft_init_pipex(t_data *d, char *argv[], char *envp[])
 {	
+	int	count;
+	
 	parse_cmds(argv, d);
 	d->bin_paths = bin_paths(d, envp);
-	d->cmd_paths1 = (char **)malloc(sizeof(char *));
-	d->cmd_paths2 = (char **)malloc(sizeof(char *));
+	count = ft_count_array(d->bin_paths);
+	ft_printf("count : %d\n", count);
+	d->cmd_paths1 = (char **)malloc(sizeof(char *) * (count + 1));
+	d->cmd_paths2 = (char **)malloc(sizeof(char *) * (count + 1));
 	if	(!d->cmd_paths1 || !d->cmd_paths2)
 		return (0);
 	d->cmd_paths1 = combine_cmd_path(d, d->cmd1);
 	d->cmd_paths2 = combine_cmd_path(d, d->cmd2);
 	if	(!d->cmd_paths1 || !d->cmd_paths2)
 		return (0);
+	// ft_printf("cmd_paths1\n");
+	// ft_print_array(d->cmd_paths1);
+	// ft_printf("cmd_paths2\n");
+	// ft_print_array(d->cmd_paths2);	
 	return (1);
 }
 
@@ -91,25 +142,14 @@ static void	ft_exec(t_data *d, char *envp[])
 		perror("Error");
 		exit(1);
 	}
+	ft_printf("%d\n", pid);
 	// child process
 	if (pid == 0)
 		child_process(d, envp);
-	// parent process	
+	// parent process
 	else
 		parent_process(d, envp);
 }
-
-// static void	ft_print_array(char **array)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (array[i])
-// 	{
-// 		ft_printf("%s\n", array[i]);
-// 		i++;
-// 	}
-// }
 
 
 int	main(int argc, char *argv[], char *envp[])
@@ -125,9 +165,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (ft_init_pipex(d, argv, envp) == 0)
 		return (0);
 	// ft_print_array(d->cmd_paths1);
-	ft_printf("Made it to here\n");
-	ft_printf("d->cmd_paths1[0] : %s\n", d->cmd_paths1[0]);
-	ft_printf("d->cmd_paths1[1] : %s\n", d->cmd_paths1[1]);
+	// ft_printf("Made it to here\n");
+	// ft_printf("d->cmd_paths1[0] : %s\n", d->cmd_paths1[0]);
+	// ft_printf("d->cmd_paths1[1] : %s\n", d->cmd_paths1[1]);
+	// ft_printf("d->cmd_paths1[2] : %s\n", d->cmd_paths1[2]);
+	// ft_printf("d->cmd_paths1[3] : %s\n", d->cmd_paths1[3]);
 	// ft_print_array(d->cmd_paths2);
 	if (path_access(d, &d->cmd_path1) == 0 || path_access2(d, &d->cmd_path2) == 0)
 	{

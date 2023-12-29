@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:41:46 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/21 14:50:52 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/29 10:57:41 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*ft_strjoin_mod(const char *s1, const char *s2)
 	newstr = (char *)malloc((len + 1) * sizeof(char));
 	if (newstr == NULL)
 		return (NULL);
+	ft_bzero(newstr, len + 1);
 	i = 0;
 	while (i < len && s1[i] != '\0')
 	{

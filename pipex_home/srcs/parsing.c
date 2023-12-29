@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 13:27:01 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/21 16:08:44 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/29 11:43:34 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,15 @@ char **bin_paths(t_data *d, char *envp[])
 // splits the command string into the various arguments
 void	parse_cmds(char *argv[], t_data *d)
 {
+	int	count1;
+	int	count2;
+	
 	d->cmd1 = ft_split(argv[2], ' '); // Malloc !!!
 	d->cmd2 = ft_split(argv[3], ' '); // Malloc !!!
+	count1 = ft_count_array(d->cmd1);
+	count2 = ft_count_array(d->cmd2);
+	d->cmd1[count1] = NULL;
+	d->cmd2[count2] = NULL;
 }
 
 // Create array of paths with command appended
@@ -73,7 +80,7 @@ char	**combine_cmd_path(t_data *d, char *cmd[])
 		while (d->bin_paths[i])
 		{
 			cmd_paths[i] = ft_strjoin_mod(d->bin_paths[i], cmd[0]);
-			ft_printf("cmd_paths[i] : %s\n", cmd_paths[i]);
+			// ft_printf("cmd_paths[i] : %s\n", cmd_paths[i]);
 			i++;
 		}
 		cmd_paths[i] = NULL;

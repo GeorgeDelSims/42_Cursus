@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:43:38 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/21 15:18:02 by georgesims       ###   ########.fr       */
+/*   Updated: 2023/12/29 11:41:02 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	parse_cmds(char *argv[], t_data *d);
 char	**combine_cmd_path(t_data *d, char *cmd[]);
 int	    path_access(t_data *d, char **cmd_path);
 int     path_access2(t_data *d, char **cmd_path);
+int	    ft_count_array(char **array);
 
 #endif
