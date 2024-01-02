@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:41:46 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/29 10:57:41 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/02 11:52:25 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	path_access(t_data *d, char **cmd_path)
 		}
 		i++;
 	}
-	ft_printf("path invalid or cannot be accessed.\n");
+	perror("path invalid or cannot be accessed.");
 	return (0);
 }
 

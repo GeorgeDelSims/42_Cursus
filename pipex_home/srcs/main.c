@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/29 13:10:09 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/02 12:01:08 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ void	child_process(t_data *d, char *envp[])
 	close(d->fd[0]);
 	// make the standard output (stdout = 1) of the current process
 	// into a copy of the write end of the pipe (fd[1])
-	ft_printf("fd[0] : %d\n", d->fd[0]);
-	ft_printf("fd[1] : %d\n", d->fd[1]);
+	// ft_printf("fd[0] : %d\n", d->fd[0]);
+	// ft_printf("fd[1] : %d\n", d->fd[1]);
 	dup2(d->fd[1], 1);
+	// redirect input to file1
+	dup2(d->file1, 0);
 	// close the write end of the pipe
 	close(d->fd[1]);
 	// execute the first command
-	ft_printf("cmd_path1: %s\n", d->cmd_path1);
-	ft_printf("cmd1:\n");
-	ft_print_array(d->cmd1);
+	// ft_printf("cmd_path1: %s\n", d->cmd_path1);
+	// ft_printf("cmd1:\n");
+	// ft_print_array(d->cmd1);
 	if (execve(d->cmd_path1, d->cmd1, envp) == -1) 
 	{
     	perror("execve"); // Print an error message
@@ -56,22 +58,19 @@ void	child_process(t_data *d, char *envp[])
 
 void	parent_process(t_data *d, char *envp[])
 {
-	int		status;
 	
 	// close the write end of the pipe
 	close(d->fd[1]);
 	// make the standard input (stdin = 0) of the current process
 	// into a copy of the read end of the pipe (fd[0])
 	dup2(d->fd[0], 0);
+	// redirect output to file2
+	dup2(d->file2, 1);
 	// close the read end of the pipe
 	close(d->fd[0]);
 	// execute the second command
 	ft_printf("cmd_path2: %s\n", d->cmd_path2);
-	ft_printf("cmd2:\n");
 	ft_print_array(d->cmd2);
-	perror("before waitpid\n");
-	waitpid(-1, &status, 0);
-	perror("after waitpid\n");	
 	if (execve(d->cmd_path2, d->cmd2, envp) == -1) 
 	{
     	perror("execve"); // Print an error message
@@ -101,14 +100,14 @@ static int	ft_init_pipex(t_data *d, char *argv[], char *envp[])
 	d->cmd_paths2 = (char **)malloc(sizeof(char *) * (count + 1));
 	if	(!d->cmd_paths1 || !d->cmd_paths2)
 		return (0);
-	d->cmd_paths1 = combine_cmd_path(d, d->cmd1);
-	d->cmd_paths2 = combine_cmd_path(d, d->cmd2);
+	d->cmd_paths1 = combine_cmd_path(d, d->cmd1); //malloc
+	d->cmd_paths2 = combine_cmd_path(d, d->cmd2); //malloc
 	if	(!d->cmd_paths1 || !d->cmd_paths2)
 		return (0);
-	// ft_printf("cmd_paths1\n");
-	// ft_print_array(d->cmd_paths1);
-	// ft_printf("cmd_paths2\n");
-	// ft_print_array(d->cmd_paths2);	
+	ft_printf("cmd_paths1\n");
+	ft_print_array(d->cmd_paths1);
+	ft_printf("cmd_paths2\n");
+	ft_print_array(d->cmd_paths2);	
 	return (1);
 }
 
@@ -118,7 +117,7 @@ static int	ft_open_files(t_data *d, char *argv[])
 	d->file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (d->file1 == -1 || d->file2 == -1)
 	{
-		perror("Error");
+		perror("Error opening file(s)");
 		exit(1);
 	}
 	return (1);
@@ -127,27 +126,27 @@ static int	ft_open_files(t_data *d, char *argv[])
 static void	ft_exec(t_data *d, char *envp[])
 {
 	pid_t	pid;
+	int		p;
 	
-	pipe(d->fd); // fd[0] = read end ; fd[1] = write end 
-	if (pipe(d->fd) == -1)
+	p = pipe(d->fd); // fd[0] = read end ; fd[1] = write end 
+	if (p == -1)
 	{
-		perror("Error");
+		perror("Error with pipe function");
 		exit(1);
 	}
 	// fork() creates a child process
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("Error");
+		perror("Error with fork function");
 		exit(1);
 	}
-	ft_printf("%d\n", pid);
 	// child process
 	if (pid == 0)
 		child_process(d, envp);
 	// parent process
-	else
-		parent_process(d, envp);
+	waitpid(-1, NULL, 0);
+	parent_process(d, envp);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 13:27:01 by gsims             #+#    #+#             */
-/*   Updated: 2023/12/29 11:43:34 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/02 11:17:12 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**combine_cmd_path(t_data *d, char *cmd[])
 	{
 		while (d->bin_paths[i])
 		{
-			cmd_paths[i] = ft_strjoin_mod(d->bin_paths[i], cmd[0]);
+			cmd_paths[i] = ft_strjoin_mod(d->bin_paths[i], cmd[0]); //malloc
 			// ft_printf("cmd_paths[i] : %s\n", cmd_paths[i]);
 			i++;
 		}
