@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:41:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/02 11:52:25 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/04 18:40:02 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	path_access(t_data *d, char **cmd_path)
 	{
 		if (access(d->cmd_paths1[i], X_OK) == 0)
 		{
-			*cmd_path = ft_strdup(d->cmd_paths1[i]); // Malloc !!! 
+			*cmd_path = ft_strdup(d->cmd_paths1[i]); // Malloc !!!
 			return (1);
 		}
 		i++;
 	}
-	perror("path invalid or cannot be accessed.");
+	perror("\033[31mpath invalid or cannot be accessed.");
 	return (0);
 }
 
@@ -68,22 +68,11 @@ int	path_access2(t_data *d, char **cmd_path)
 	{
 		if (access(d->cmd_paths2[i], X_OK) == 0)
 		{
-			*cmd_path = ft_strdup(d->cmd_paths2[i]); // Malloc !!! 
+			*cmd_path = ft_strdup(d->cmd_paths2[i]);
 			return (1);
 		}
 		i++;
 	}
-	ft_printf("path invalid or cannot be accessed.\n");
+	ft_printf("\033[31mpath invalid or cannot be accessed.\n");
 	return (0);
 }
-
-
-/*
-int	main()
-{
-	const char	*s1 = "helloDFSFSDFT  ";
-	const char	*s2 = "com";
-
-	printf("%s\n", ft_strjoin_mod(s1, s2));
-	return (0);
-}*/
