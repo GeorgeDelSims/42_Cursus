@@ -1,6 +1,6 @@
 NAME = pipex
 
-SOURCES	= ./srcs/main.c ./srcs/parsing.c ./srcs/parsing2.c ./srcs/utils.c
+SOURCES	= ./srcs/main.c ./srcs/parsing.c ./srcs/access.c ./srcs/utils.c ./srcs/processes.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

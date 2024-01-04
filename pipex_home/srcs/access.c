@@ -6,38 +6,12 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:41:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/04 18:40:02 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/04 18:56:49 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-char	*ft_strjoin_mod(const char *s1, const char *s2)
-{
-	char	*newstr;
-	int		i;
-	int		j;
-	int		len;
-
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	newstr = (char *)malloc((len + 1) * sizeof(char));
-	if (newstr == NULL)
-		return (NULL);
-	ft_bzero(newstr, len + 1);
-	i = 0;
-	while (i < len && s1[i] != '\0')
-	{
-		newstr[i] = s1[i];
-		i++;
-	}
-	newstr[i] = '/';
-	i++;
-	j = 0;
-	while (i < len && s2[j] != '\0')
-		newstr[i++] = s2[j++];
-	newstr[i] = '\0';
-	return (newstr);
-}
 
 // Test if these paths can be accessed and execve if they can
 int	path_access(t_data *d, char **cmd_path)
