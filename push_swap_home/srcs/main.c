@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/09 15:26:27 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/09 16:38:03 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,38 @@ void	ft_input_check(int ac, char *av[])
 	}
 }
 
+t_list	*ft_init_a(int ac, char *av[])
+{
+	int		i;
+	t_list	*stack_a;
+	t_list	*new_node;
+	int		*value;
+	
+	i = 0;
+	stack_a = NULL;
+	while (i < ac)
+	{
+		value = (int *)malloc(sizeof(int));
+		*value = ft_atoi(av[i]);
+		if (value == NULL)
+			return (NULL);
+		new_node = ft_lstnew(value);
+		ft_lstadd_back(&stack_a, new_node);
+		i++;
+	}
+	return (stack_a);
+}
+
 int	main(int ac, char *av[])
 {
+	t_list	*stack_a;
+	int		size;
+	
 	// check validity
 	ft_input_check(ac, av);
 	// Make linked list A 
-	
+	stack_a = ft_init_a(ac, av);
+	size = ft_lstsize(stack_a);
+	ft_printf("list size : %d\n", size);
 	return (0);
 }

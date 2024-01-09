@@ -15,9 +15,11 @@ CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(LIBFT)/libft.a $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L./libft -lft
+$(LIBFT)/libft.a:
+	make -C $(LIBFT)
 
+$(NAME): $(LIBFT)/libft.a $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(LIBFT) -lft
 
 clean: 
 	rm -f $(OBJECTS)
@@ -29,4 +31,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean bonus fclean re
