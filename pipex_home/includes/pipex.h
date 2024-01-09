@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:43:38 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/04 18:41:03 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/09 13:48:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 
 typedef struct s_data
 {
-	int		file1;
-	int		file2;
+	int		infile;
+	int		outfile;
 	int		fd[2];
 	char	**bin_paths;
 	char	**cmd_paths1;
@@ -46,6 +46,7 @@ char		**combine_cmd_path(t_data *d, char *cmd[]);
 int			path_access(t_data *d, char **cmd_path);
 int			path_access2(t_data *d, char **cmd_path);
 int			ft_count_array(char **array);
+void		ft_print_array(char **array);
 void		ft_free_array(char **array);
 void		ft_free_all(t_data *d);
 

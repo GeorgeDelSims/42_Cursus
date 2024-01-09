@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:44:58 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/04 18:56:53 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/09 14:30:38 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_free_all(t_data *d)
 	ft_free_array(d->cmd_paths2);
 	ft_free_array(d->cmd1);
 	ft_free_array(d->cmd2);
+	close(d->fd[0]);
+	close(d->fd[1]);
 	free(d);
 }
 
@@ -44,6 +46,18 @@ int	ft_count_array(char **array)
 	while (array[count])
 		count++;
 	return (count);
+}
+
+void	ft_print_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		ft_printf("%s\n", array[i]);
+		i++;
+	}
 }
 
 char	*ft_strjoin_mod(const char *s1, const char *s2)
