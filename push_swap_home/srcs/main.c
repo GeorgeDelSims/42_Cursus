@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/11 15:03:17 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/11 15:10:22 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	main(int ac, char *av[])
 	stack_b = NULL;
 	// ft_push(&stack_a, &stack_b);
 	// ft_swap(&stack_a);
-	ft_rotate(&stack_a);
 	// size = ft_lstsize(stack_a);
 	ft_print_stacks(stack_a, stack_b);	
 	return (0);
