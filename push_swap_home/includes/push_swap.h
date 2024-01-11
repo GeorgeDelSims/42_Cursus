@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/09 16:30:48 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/11 14:51:32 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+
+int ft_push(t_list **stack_a, t_list **stack_b);
+int ft_swap(t_list **stack);
+int ft_rotate(t_list **stack);
+int ft_rev_rotate(t_list **stack);
 
 #endif

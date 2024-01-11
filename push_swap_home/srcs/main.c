@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/09 16:38:03 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/11 15:03:17 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_input_check(int ac, char *av[])
 	}
 }
 
+// Initiate Stack A
 t_list	*ft_init_a(int ac, char *av[])
 {
 	int		i;
@@ -48,7 +49,7 @@ t_list	*ft_init_a(int ac, char *av[])
 	t_list	*new_node;
 	int		*value;
 	
-	i = 0;
+	i = 1;
 	stack_a = NULL;
 	while (i < ac)
 	{
@@ -63,16 +64,38 @@ t_list	*ft_init_a(int ac, char *av[])
 	return (stack_a);
 }
 
+
+// Print node function for debugging (to be used with ft_lstiter)
+void print_node(void *content)
+{
+    printf("%d\n", *(int *)content);
+}
+
+// print for debugging purposes:
+void	ft_print_stacks(t_list *stack_a, t_list *stack_b)
+{
+	ft_printf("stack A :\n");
+	ft_lstiter(stack_a, print_node);
+	ft_printf("stack B :\n");
+	ft_lstiter(stack_b, print_node);
+	ft_lstiter(stack_a, free);
+}
+
 int	main(int ac, char *av[])
 {
 	t_list	*stack_a;
-	int		size;
+	t_list	*stack_b;
+	// int		size;`
 	
 	// check validity
 	ft_input_check(ac, av);
 	// Make linked list A 
 	stack_a = ft_init_a(ac, av);
-	size = ft_lstsize(stack_a);
-	ft_printf("list size : %d\n", size);
+	stack_b = NULL;
+	// ft_push(&stack_a, &stack_b);
+	// ft_swap(&stack_a);
+	ft_rotate(&stack_a);
+	// size = ft_lstsize(stack_a);
+	ft_print_stacks(stack_a, stack_b);	
 	return (0);
 }
