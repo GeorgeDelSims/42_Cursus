@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 15:11:31 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/11 15:28:58 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/12 11:20:24 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,20 @@ int get_min(t_list *stack)
         curr = curr->next;
     }
     return (min);
+}
+
+// Print node function for debugging (to be used with ft_lstiter)
+void print_node(void *content)
+{
+    printf("%d\n", *(int *)content);
+}
+
+// print for debugging purposes:
+void	ft_print_stacks(t_list *stack_a, t_list *stack_b)
+{
+	ft_printf("stack A :\n");
+	ft_lstiter(stack_a, print_node);
+	ft_printf("stack B :\n");
+	ft_lstiter(stack_b, print_node);
+	ft_lstiter(stack_a, free);
 }

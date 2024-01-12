@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/11 15:10:22 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/12 11:20:31 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,6 @@ t_list	*ft_init_a(int ac, char *av[])
 	return (stack_a);
 }
 
-
-// Print node function for debugging (to be used with ft_lstiter)
-void print_node(void *content)
-{
-    printf("%d\n", *(int *)content);
-}
-
-// print for debugging purposes:
-void	ft_print_stacks(t_list *stack_a, t_list *stack_b)
-{
-	ft_printf("stack A :\n");
-	ft_lstiter(stack_a, print_node);
-	ft_printf("stack B :\n");
-	ft_lstiter(stack_b, print_node);
-	ft_lstiter(stack_a, free);
-}
 
 int	main(int ac, char *av[])
 {
