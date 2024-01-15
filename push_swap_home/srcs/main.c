@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/12 11:20:31 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/15 14:53:00 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,43 +42,39 @@ void	ft_input_check(int ac, char *av[])
 }
 
 // Initiate Stack A
-t_list	*ft_init_a(int ac, char *av[])
+void	ft_init_a(t_var *v, int ac, char *av[])
 {
 	int		i;
-	t_list	*stack_a;
 	t_list	*new_node;
 	int		*value;
 	
 	i = 1;
-	stack_a = NULL;
+	v->stack_a = NULL;
 	while (i < ac)
 	{
 		value = (int *)malloc(sizeof(int));
-		*value = ft_atoi(av[i]);
 		if (value == NULL)
-			return (NULL);
+			exit (1);
+		*value = ft_atoi(av[i]);
 		new_node = ft_lstnew(value);
-		ft_lstadd_back(&stack_a, new_node);
+		ft_lstadd_back(&v->stack_a, new_node);
 		i++;
 	}
-	return (stack_a);
 }
 
 
 int	main(int ac, char *av[])
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
+	t_var	*v;
 	// int		size;`
 	
-	// check validity
 	ft_input_check(ac, av);
-	// Make linked list A 
-	stack_a = ft_init_a(ac, av);
-	stack_b = NULL;
+	v = (t_var *)malloc(sizeof(t_var *));
+	ft_init_a(v, ac, av);
+	v->stack_b = NULL;
 	// ft_push(&stack_a, &stack_b);
 	// ft_swap(&stack_a);
 	// size = ft_lstsize(stack_a);
-	ft_print_stacks(stack_a, stack_b);	
+	ft_print_stacks(v->stack_a, v->stack_b);	
 	return (0);
 }

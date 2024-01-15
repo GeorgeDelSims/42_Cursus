@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/12 11:21:25 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/15 14:43:07 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+
+typedef struct s_var
+{
+    t_list  *stack_a;
+    t_list  *stack_b;
+    int     size;
+}           t_var;
+
 
 int     ft_push(t_list **stack_a, t_list **stack_b);
 int     ft_swap(t_list **stack);
