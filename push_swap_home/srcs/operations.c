@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 11:46:25 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/16 11:49:39 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 14:32:11 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 int ft_push(t_lst **stack_a, t_lst **stack_b)
 {
     t_lst  *temp;
-    if (!(*stack_b))
+    if (!(*stack_a))
         return (0);
-    temp = *stack_b;
-    *stack_b = (*stack_b)->next;
-    temp->next = *stack_a;
-    *stack_a = temp;
+    temp = *stack_a;
+    *stack_a = (*stack_a)->next;
+    temp->next = *stack_b;
+    *stack_b = temp;
     return (1);
 }
 

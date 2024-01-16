@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 12:14:04 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 14:33:01 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,19 @@ int	main(int ac, char *av[])
 {
 	t_var	*v;
 	int		size;
+	char	**args;
 	
-	size = ft_input_check(ac, av);
-	ft_printf("size after input check : %d\n", size);
 	v = (t_var *)malloc(sizeof(t_var *) + 1);
 	if (!v)
 		error(1, "variable memory not allocated\n");
-	ft_printf("size = %d\n ac = %d\n", size, ac);
-	ft_init_a(v, size, ac, av);
+	args = ft_input_check(ac, av);
+	size = ft_count_array(args);
+	ft_init_a(v, size, ac, args);
 	v->stack_b = NULL;
-	// ft_push(&stack_a, &stack_b);
-	// ft_swap(&stack_a);
+	ft_push(&v->stack_a, &v->stack_b);
+	// ft_push(&v->stack_a, &v->stack_b);
+	// ft_swap(&v->stack_a);
+	// ft_rotate(&v->stack_a);
 	// size = ft_lstsize(stack_a);
 	ft_print_stacks(v->stack_a, v->stack_b);	
 	return (0);
