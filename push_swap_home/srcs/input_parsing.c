@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 13:49:38 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 15:41:03 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,17 @@ int	ft_count_array(char **array)
 	return (count);
 }
 
-void	ft_num_input_check(int size, char *av[])
+void	ft_num_input_check(int i, int size, char **args)
 {
-	int i;
 	int j;
 	
-	i = 1;
 	while (i < size)
 	{
 		j = 0;
-		while (av[i][j])
+		while (args[i][j])
 		{
-			if (av[i][j] < '0' || av[i][j] > '9')
-				error(1, "Input incorrect");
+			if (args[i][j] < '0' || args[i][j] > '9')
+				ft_error(1, "Input incorrect");
 		j++;
 		}
 	i++;
@@ -43,28 +41,23 @@ void	ft_num_input_check(int size, char *av[])
 
 char	**ft_str_input_check(char *str)
 {
-	char	**array;
+	char	**args;
 	int		size;
-	// int		i;
 	
-	array = ft_split(str, ' ');
-	if (!array)
-		error(1, "Input incorrect");
-	size = ft_count_array(array);
-	ft_num_input_check(size, array);
-	// i = 0;
-	// while (i < size)
-	// {
-		// ft_printf("array[%d] : %s\n", i, array[i]);
-		// i++;
-	// }
-	return (array);
+	args = ft_split(str, ' ');
+	if (!args)
+		ft_error(1, "Input incorrect");
+	size = ft_count_array(args);
+	ft_num_input_check(0, size, args);
+	return (args);
 }
 
 char	**ft_input_check(int ac, char *av[])
 {
 	char	**args;
 	
+	if (ac < 2)
+		ft_error(1, "No arguments given.");
 	if (ac == 2)
 	{
 		args = ft_str_input_check(av[1]);
@@ -72,7 +65,7 @@ char	**ft_input_check(int ac, char *av[])
 	}
 	else
 	{
-		ft_num_input_check(ac, av);
+		ft_num_input_check(1, ac, av);
 		return (av);
 	}
 }

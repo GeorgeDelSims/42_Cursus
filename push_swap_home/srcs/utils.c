@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 15:11:31 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/16 10:21:48 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 15:23:13 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,23 @@ void	ft_print_stacks(t_lst *stack_a, t_lst *stack_b)
 	ft_lst_iter(stack_a, free);
 }
 
-void    error(int errno, char *str)
+void    ft_free_array(char **array)
 {
-    write(1, "Error:\n", 7);
-    ft_printf("%s\n", str);
+    int size;
+    int i;
+    
+    size = ft_count_array(array);
+    i = 0;
+    while (i < size)
+    {
+        free(array[i]);
+        i++;
+    }
+    free(array);
+}
+
+void    ft_error(int errno, char *str)
+{
+    ft_printf("Error:\n%s\n", str);
     exit(errno);
 }

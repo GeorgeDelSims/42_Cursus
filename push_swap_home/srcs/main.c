@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 14:33:01 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 15:23:19 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_init_a(t_var *v, int size, int ac, char *av[])
 	{
 		value = (int *)malloc(sizeof(int));
 		if (value == NULL)
-			error(1, "value memory not allocated\n");
+			ft_error(1, "value memory not allocated\n");
 		*value = ft_atoi(av[i]);
 		new_node = ft_lst_new(value);
 		ft_lst_add_back(&v->stack_a, new_node);
@@ -53,7 +53,7 @@ int	main(int ac, char *av[])
 	
 	v = (t_var *)malloc(sizeof(t_var *) + 1);
 	if (!v)
-		error(1, "variable memory not allocated\n");
+		ft_error(1, "variable memory not allocated\n");
 	args = ft_input_check(ac, av);
 	size = ft_count_array(args);
 	ft_init_a(v, size, ac, args);
@@ -62,7 +62,6 @@ int	main(int ac, char *av[])
 	// ft_push(&v->stack_a, &v->stack_b);
 	// ft_swap(&v->stack_a);
 	// ft_rotate(&v->stack_a);
-	// size = ft_lstsize(stack_a);
-	ft_print_stacks(v->stack_a, v->stack_b);	
+	ft_print_stacks(v->stack_a, v->stack_b);
 	return (0);
 }
