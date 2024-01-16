@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/15 14:53:00 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/16 12:14:04 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,58 +19,44 @@
 // print list of operations done
 // Find some way of making the program choose which operation is the most effective? 
 
-void	ft_input_check(int ac, char *av[])
-{
-	int i;
-	int j;
-
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] < '0' || av[i][j] > '9')
-			{
-				write(1, "Error\n", 6);
-				exit(1);
-			}
-		j++;
-		}
-	i++;
-	}
-}
-
 // Initiate Stack A
-void	ft_init_a(t_var *v, int ac, char *av[])
+void	ft_init_a(t_var *v, int size, int ac, char *av[])
 {
 	int		i;
-	t_list	*new_node;
+	t_lst	*new_node;
 	int		*value;
 	
-	i = 1;
+	if (size == ac)
+		i = 1;
+	else
+	{
+		i = 0;
+	}
 	v->stack_a = NULL;
-	while (i < ac)
+	while (i < size)
 	{
 		value = (int *)malloc(sizeof(int));
 		if (value == NULL)
-			exit (1);
+			error(1, "value memory not allocated\n");
 		*value = ft_atoi(av[i]);
-		new_node = ft_lstnew(value);
-		ft_lstadd_back(&v->stack_a, new_node);
+		new_node = ft_lst_new(value);
+		ft_lst_add_back(&v->stack_a, new_node);
 		i++;
 	}
 }
 
-
 int	main(int ac, char *av[])
 {
 	t_var	*v;
-	// int		size;`
+	int		size;
 	
-	ft_input_check(ac, av);
-	v = (t_var *)malloc(sizeof(t_var *));
-	ft_init_a(v, ac, av);
+	size = ft_input_check(ac, av);
+	ft_printf("size after input check : %d\n", size);
+	v = (t_var *)malloc(sizeof(t_var *) + 1);
+	if (!v)
+		error(1, "variable memory not allocated\n");
+	ft_printf("size = %d\n ac = %d\n", size, ac);
+	ft_init_a(v, size, ac, av);
 	v->stack_b = NULL;
 	// ft_push(&stack_a, &stack_b);
 	// ft_swap(&stack_a);

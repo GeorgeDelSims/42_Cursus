@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 15:11:31 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/12 11:20:24 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/16 10:21:48 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int get_max(t_list *stack)
+int get_max(t_lst *stack)
 {
     int max;
-    t_list *curr;
+    t_lst *curr;
 
     max = *(int *)(stack->content);
     curr = stack->next;
@@ -28,10 +28,10 @@ int get_max(t_list *stack)
     return (max);
 }
 
-int get_min(t_list *stack)
+int get_min(t_lst *stack)
 {
     int min;
-    t_list *curr;
+    t_lst *curr;
 
     min = *(int *)(stack->content);
     curr = stack->next;
@@ -44,18 +44,25 @@ int get_min(t_list *stack)
     return (min);
 }
 
-// Print node function for debugging (to be used with ft_lstiter)
+// Print node function for debugging (to be used with ft_lst_iter)
 void print_node(void *content)
 {
     printf("%d\n", *(int *)content);
 }
 
 // print for debugging purposes:
-void	ft_print_stacks(t_list *stack_a, t_list *stack_b)
+void	ft_print_stacks(t_lst *stack_a, t_lst *stack_b)
 {
 	ft_printf("stack A :\n");
-	ft_lstiter(stack_a, print_node);
+	ft_lst_iter(stack_a, print_node);
 	ft_printf("stack B :\n");
-	ft_lstiter(stack_b, print_node);
-	ft_lstiter(stack_a, free);
+	ft_lst_iter(stack_b, print_node);
+	ft_lst_iter(stack_a, free);
+}
+
+void    error(int errno, char *str)
+{
+    write(1, "Error:\n", 7);
+    ft_printf("%s\n", str);
+    exit(errno);
 }

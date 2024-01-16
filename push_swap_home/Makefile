@@ -1,6 +1,6 @@
 NAME = push_swap
 
-SOURCES = ./srcs/main.c ./srcs/operations.c ./srcs/utils.c
+SOURCES = ./srcs/main.c ./srcs/operations.c ./srcs/utils.c ./srcs/input_parsing.c ./srcs/utilslst.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
