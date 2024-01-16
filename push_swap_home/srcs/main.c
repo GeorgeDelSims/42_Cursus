@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 15:23:19 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 17:08:28 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ void	ft_init_a(t_var *v, int size, int ac, char *av[])
 	if (size == ac)
 		i = 1;
 	else
-	{
 		i = 0;
-	}
 	v->stack_a = NULL;
 	while (i < size)
 	{
@@ -49,19 +47,25 @@ int	main(int ac, char *av[])
 {
 	t_var	*v;
 	int		size;
+	int		sorted;
 	char	**args;
 	
-	v = (t_var *)malloc(sizeof(t_var *) + 1);
+	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
 	args = ft_input_check(ac, av);
+	ft_print_array(args);
 	size = ft_count_array(args);
 	ft_init_a(v, size, ac, args);
 	v->stack_b = NULL;
-	ft_push(&v->stack_a, &v->stack_b);
+	// ft_push(&v->stack_a, &v->stack_b);
 	// ft_push(&v->stack_a, &v->stack_b);
 	// ft_swap(&v->stack_a);
 	// ft_rotate(&v->stack_a);
 	ft_print_stacks(v->stack_a, v->stack_b);
+	sorted = check_sort(v->stack_a);
+	ft_printf("stack_a[1]: %d\n", *(v->stack_a->next->content));
+	ft_printf("sorted : %d\n", sorted);
+	ft_free_stacks(v);
 	return (0);
 }

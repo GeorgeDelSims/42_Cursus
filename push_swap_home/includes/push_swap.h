@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 15:39:50 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 17:10:29 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,10 @@ char	**ft_str_input_check(char *str);
 void	ft_num_input_check(int i, int size, char *av[]);
 void    ft_error(int errno, char *str);
 int	    ft_count_array(char **array);
+void    ft_free_array(char **array);
+void    ft_free_stacks(t_var *v);
+void    ft_free_all(t_var *v, char **array);
+int     check_sort(t_lst *stack);
+void	ft_print_array(char **array);
 
 #endif

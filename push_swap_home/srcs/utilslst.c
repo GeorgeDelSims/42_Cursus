@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:33:48 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 10:33:52 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/16 16:30:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,4 @@ t_lst	*ft_lst_new(void *content)
 	new->content = content;
 	new->next = NULL;
 	return (new);
-}
-
-t_lst	*ft_lst_last(t_lst *lst)
-{
-	t_lst	*curr;
-
-	if (!lst)
-		return (NULL);
-	curr = lst;
-	while (curr->next != NULL)
-		curr = curr->next;
-	curr->next = NULL;
-	return (curr);
 }
