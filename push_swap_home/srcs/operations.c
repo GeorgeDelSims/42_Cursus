@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 11:46:25 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/16 14:32:11 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/17 12:14:00 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,13 @@ int ft_rev_rotate(t_lst **stack)
     last->next = *stack;
     *stack = last;
     return (1);
+}
+
+int	ft_rrr(t_var *v)
+{
+	int	res;
+	
+	res = ft_rev_rotate(&v->stack_a) + ft_rev_rotate(&v->stack_b);
+	ft_printf("rrr\n");
+	return (1);
 }

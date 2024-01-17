@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 17:08:28 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/17 15:38:52 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,53 +19,77 @@
 // print list of operations done
 // Find some way of making the program choose which operation is the most effective? 
 
+// Still to do: 
+// - Make sure it accepts negative values 
+// - make sure it doesn't accept twin values (pas de doublons)
+
 // Initiate Stack A
-void	ft_init_a(t_var *v, int size, int ac, char *av[])
+int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 {
 	int		i;
+	int		res;
 	t_lst	*new_node;
 	int		*value;
 	
-	if (size == ac)
+	if (size_a == ac)
 		i = 1;
 	else
 		i = 0;
+	res = size_a - i;
 	v->stack_a = NULL;
-	while (i < size)
+	while (i < size_a)
 	{
 		value = (int *)malloc(sizeof(int));
 		if (value == NULL)
 			ft_error(1, "value memory not allocated\n");
 		*value = ft_atoi(av[i]);
-		new_node = ft_lst_new(value);
+		new_node = ft_lst_new(value, NULL, NULL);
 		ft_lst_add_back(&v->stack_a, new_node);
 		i++;
 	}
+	return (res);
+}
+
+// Initiate variables and check input 
+void	ft_init_var(t_var *v, int ac, char *av[])
+{
+	int	size_a;
+	
+	v->args = ft_input_check(ac, av);
+	size_a = ft_count_array(v->args);
+	v->size_a = ft_init_a(v, size_a, ac, v->args);
+	v->stack_b = NULL;
+	ft_fill_values(v);
+	// ft_print_array(args);
+	// ft_printf("size_a : %d\n", v->size_a);
 }
 
 int	main(int ac, char *av[])
 {
 	t_var	*v;
-	int		size;
-	int		sorted;
-	char	**args;
+	// int		sorted;
+	// int		result;
 	
 	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
-	args = ft_input_check(ac, av);
-	ft_print_array(args);
-	size = ft_count_array(args);
-	ft_init_a(v, size, ac, args);
-	v->stack_b = NULL;
-	// ft_push(&v->stack_a, &v->stack_b);
-	// ft_push(&v->stack_a, &v->stack_b);
-	// ft_swap(&v->stack_a);
-	// ft_rotate(&v->stack_a);
+	ft_init_var(v, ac, av);
+	//result = ft_sa(v);
+	//result = ft_pa(v);
+	//result += ft_pa(v);
+	//result += ft_pa(v);
+	//result += ft_rrr(v);
+	//result += ft_pb(v);
+	//result += ft_rr(v);
+	//result += ft_pa(v);
+	//result = ft_sort(v);
+	// sorted = check_sort(v->stack_a);
+	//ft_printf("result : %d\n", result);
+	// ft_printf("sorted : %d\n", sorted);
+	ft_printf("size_a : %d\n", v->size_a);
+	ft_printf("size_b : %d\n", v->size_b);
 	ft_print_stacks(v->stack_a, v->stack_b);
-	sorted = check_sort(v->stack_a);
-	ft_printf("stack_a[1]: %d\n", *(v->stack_a->next->content));
-	ft_printf("sorted : %d\n", sorted);
+	// ft_print_stacks_backup(v->stack_a, v->stack_b);
 	ft_free_stacks(v);
 	return (0);
 }
