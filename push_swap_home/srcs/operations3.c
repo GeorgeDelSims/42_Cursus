@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:06:39 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/17 12:13:17 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/18 11:31:00 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ int	ft_rb(t_var *v)
 }
 
 int	ft_rr(t_var *v)
-{
-	int	res;
-	
-	res = ft_rotate(&v->stack_a) + ft_rotate(&v->stack_b);
+{	
+	ft_rotate(&v->stack_a);
+	ft_rotate(&v->stack_b);
 	ft_printf("rr\n");
 	return (1);
 }

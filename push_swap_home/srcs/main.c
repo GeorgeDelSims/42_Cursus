@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/17 15:38:52 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/18 14:44:45 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,23 @@ int	main(int ac, char *av[])
 	t_var	*v;
 	// int		sorted;
 	// int		result;
-	
+		
 	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
-	//result = ft_sa(v);
-	//result = ft_pa(v);
-	//result += ft_pa(v);
-	//result += ft_pa(v);
-	//result += ft_rrr(v);
+	// result = 0;
+	// result += ft_sa(v);
+	// result = ft_pa(v);
+	// result += ft_pa(v);
+	// result += ft_pa(v);
+	// result += ft_rrr(v);
 	//result += ft_pb(v);
 	//result += ft_rr(v);
 	//result += ft_pa(v);
 	//result = ft_sort(v);
 	// sorted = check_sort(v->stack_a);
-	//ft_printf("result : %d\n", result);
+	// ft_printf("result : %d\n", result);
 	// ft_printf("sorted : %d\n", sorted);
 	ft_printf("size_a : %d\n", v->size_a);
 	ft_printf("size_b : %d\n", v->size_b);
