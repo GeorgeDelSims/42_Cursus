@@ -6,21 +6,12 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/18 14:41:24 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/18 19:38:01 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-// Calculate cost for each node 
-// void    ft_calculate_cost(t_var *v)
-// {
-    // t_lst   *tmp;
-    // 
-    // tmp = v->stack_a;
-    // ft_printf("size_a = %d\n", v->size_a);
-// }
-// 
 
 // Get the amount of steps to reach the correct destination in stack B for the number chosen in stack A
 int ft_get_steps_b(int num, t_lst *stack_b)
@@ -29,17 +20,19 @@ int ft_get_steps_b(int num, t_lst *stack_b)
     int     min;
     int     count;
     t_lst   *last;
+    t_lst   *curr_b;
 
-    max = get_max(stack_b);
-    min = get_min(stack_b);
+    curr_b = stack_b;
+    max = get_max(curr_b);
+    min = get_min(curr_b);
     count = 1;
-    last = ft_lst_last(stack_b);
+    last = ft_lst_last(curr_b);
     if (num < min)
     {
-        while (*(stack_b->content) != min)
+        while (*(curr_b->content) != min)
         {
             count++;
-            stack_b = stack_b->next;
+            curr_b = curr_b->next;
         }
     }
     else if (num > max)
@@ -47,20 +40,20 @@ int ft_get_steps_b(int num, t_lst *stack_b)
         while (*(stack_b->content) != max)
         {
             count++;
-            stack_b = stack_b->next;
+            curr_b = curr_b->next;
         }
         count--;
     }
     else if (num > min && num < max)
     {
-        if (*(last->content) > num && *(stack_b->content) < num)
+        if (*(last->content) > num && *(curr_b->content) < num)
             return (0);
-        while (stack_b)
+        while (curr_b)
         {
-            if (*(stack_b->content) > num && *(stack_b->next->content) < num)
+            if (*(curr_b->content) > num && *(curr_b->next->content) < num)
                 break ;
             count++;
-            stack_b = stack_b->next;
+            curr_b = curr_b->next;
         }
     }
     return (count);
@@ -69,19 +62,22 @@ int ft_get_steps_b(int num, t_lst *stack_b)
 // get raw number of operations to sort node according to position in stack
 void    ft_fill_raw_cost(t_lst *stack, int stack_size)
 {
-    while (stack)
+    t_lst   *curr;
+    
+    curr = stack;
+    while (curr)
     {
-        if (stack->cost == NULL)
+        if (curr->cost == NULL)
         {
-            stack->cost = (int *)malloc(sizeof(int));
-            if (stack->cost == NULL)
+            curr->cost = (int *)malloc(sizeof(int));
+            if (curr->cost == NULL)
                 ft_error(1, "malloc failure ft_get_cost");
         }
-        if (*(stack->idx) <= stack_size / 2)
-            *(stack->cost) = *(stack->idx); // this is where the cost function calculator goes
-        else if (*(stack->idx) > stack_size / 2)
-            *(stack->cost) = stack_size - *(stack->idx); // this is where the cost function calculator goes
-        stack = stack->next;
+        if (*(curr->idx) <= stack_size / 2)
+            *(curr->cost) = *(curr->idx); // this is where the cost function calculator goes
+        else if (*(curr->idx) > stack_size / 2)
+            *(curr->cost) = stack_size - *(curr->idx); // this is where the cost function calculator goes
+        curr= curr->next;
     }
 }
 
@@ -90,20 +86,24 @@ void    ft_cost(t_var *v)
 {
     int steps_a;
     int steps_b;
+    t_lst   *curr_a;
+    t_lst   *curr_b;
     
     steps_a = 0;
     steps_b = 0;
-    while (v->stack_a)
+    curr_a = v->stack_a;
+    curr_b = v->stack_b;
+    while (curr_a)
     {
-        steps_b = ft_get_steps_b(*(v->stack_a->content), v->stack_b);
+        steps_b = ft_get_steps_b(*(curr_a->content), curr_b);
         if (steps_b <= v->size_b / 2) // first half of the stack B
         {
            if (steps_a <= v->size_a / 2) // first half of stack A
             {
                 if (steps_a > steps_b)
-                    *(v->stack_a->cost) = steps_a;
+                    *(curr_a->cost) = steps_a;
                 else
-                    *(v->stack_a->cost) = steps_b;                    
+                    *(curr_a->cost) = steps_b;                    
             } 
         }
         else if (steps_b > v->size_b / 2) // second half of the stack B
@@ -113,37 +113,39 @@ void    ft_cost(t_var *v)
             {
                 steps_a = v->size_a - steps_a;
                 if (steps_a > steps_b)
-                    *(v->stack_a->cost) = steps_a;
+                    *(curr_a->cost) = steps_a;
                 else
-                    *(v->stack_a->cost) = steps_b;
+                    *(curr_a->cost) = steps_b;
             }
             else
-                *(v->stack_a->cost) = steps_a + steps_b;
+                *(curr_a->cost) = steps_a + steps_b;
         }
         steps_a++;
-        v->stack_a = v->stack_a->next;
+        curr_a = curr_a->next;
     }
 }
 
 // Iterate on the idx of each node of the stacks 
 void    ft_lst_idx(t_lst *stack)
 {
-    int i;
+    int     i;
+    t_lst   *curr;
     
     if (!stack)
         return ;
+    curr = stack;
     i = 0;
-    while (stack)
+    while (curr)
     {
-        if (stack->idx == NULL)
+        if (curr->idx == NULL)
         {
-            stack->idx = (int *)malloc(sizeof(int));
-            if (stack->idx == NULL)
+            curr->idx = (int *)malloc(sizeof(int));
+            if (curr->idx == NULL)
                 ft_error(1, "malloc failure ft_lst_idx\n");
         }
-        *(stack->idx) = i;
+        *(curr->idx) = i;
         i++;
-        stack = stack->next;
+        curr = curr->next;
     }
 }
 

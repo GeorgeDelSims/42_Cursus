@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilslst2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:30:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 16:58:20 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/18 19:45:23 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int get_max(t_lst *stack)
     int max;
     t_lst *curr;
 
-    max = *(int *)(stack->content);
     curr = stack->next;
+    max = *(int *)(curr->content);
     while (curr != NULL)
     {
         if (*(int *)(curr->content) > max)
@@ -47,8 +47,8 @@ int get_min(t_lst *stack)
     int min;
     t_lst *curr;
 
-    min = *(int *)(stack->content);
     curr = stack->next;
+    min = *(int *)(curr->content);
     while (curr != NULL)
     {
         if (*(int *)(curr->content) < min)
