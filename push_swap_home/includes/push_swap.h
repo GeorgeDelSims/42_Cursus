@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/18 14:41:54 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/22 15:46:53 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,7 @@ void    ft_fill_values(t_var *v);
 void    ft_lst_idx(t_lst *stack);
 void    ft_get_cost(t_lst *stack, int stack_size);
 int     ft_get_steps_b(int num, t_lst *stack_b);
+void    ft_fill_raw_cost(t_lst *stack, int stack_size);
 void    ft_cost(t_var *v);
+
 #endif

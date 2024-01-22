@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:30:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/18 19:45:23 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/22 15:57:19 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int get_max(t_lst *stack)
     int max;
     t_lst *curr;
 
+    if (stack->next == NULL)
+        return (*(stack->content));
     curr = stack->next;
     max = *(int *)(curr->content);
     while (curr != NULL)
@@ -47,6 +49,8 @@ int get_min(t_lst *stack)
     int min;
     t_lst *curr;
 
+    if (stack->next == NULL)
+        return (*(stack->content));
     curr = stack->next;
     min = *(int *)(curr->content);
     while (curr != NULL)

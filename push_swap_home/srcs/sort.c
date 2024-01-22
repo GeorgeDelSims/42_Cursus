@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/18 19:38:01 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/22 16:21:27 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ int ft_get_steps_b(int num, t_lst *stack_b)
     t_lst   *curr_b;
 
     curr_b = stack_b;
+    if (curr_b == NULL)
+        ft_error(1, "stack_b empty");
     max = get_max(curr_b);
     min = get_min(curr_b);
     count = 1;
     last = ft_lst_last(curr_b);
+    //ft_print_stacks(curr_a, curr_b);
     if (num < min)
     {
-        while (*(curr_b->content) != min)
+        while (*(curr_b->content) != min && curr_b->next != NULL)
         {
             count++;
             curr_b = curr_b->next;
@@ -37,7 +40,7 @@ int ft_get_steps_b(int num, t_lst *stack_b)
     }
     else if (num > max)
     {
-        while (*(stack_b->content) != max)
+        while (*(curr_b->content) != max && curr_b->next != NULL)
         {
             count++;
             curr_b = curr_b->next;
@@ -156,7 +159,7 @@ void    ft_fill_values(t_var *v)
     ft_lst_idx(v->stack_b);
     ft_fill_raw_cost(v->stack_a, v->size_a);
     ft_fill_raw_cost(v->stack_b, v->size_b);
-    ft_cost(v);    
+    ft_cost(v);
 }
 
 // sort 9 numbers or less 
