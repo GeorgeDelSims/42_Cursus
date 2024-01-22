@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/22 16:21:27 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/22 16:41:16 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void    ft_cost(t_var *v)
     t_lst   *curr_a;
     t_lst   *curr_b;
     
-    steps_a = 0;
-    steps_b = 0;
+    steps_a = 1;
+    steps_b = 1;
     curr_a = v->stack_a;
     curr_b = v->stack_b;
     while (curr_a)
@@ -104,9 +104,9 @@ void    ft_cost(t_var *v)
            if (steps_a <= v->size_a / 2) // first half of stack A
             {
                 if (steps_a > steps_b)
-                    *(curr_a->cost) = steps_a;
+                    *(curr_a->cost) += steps_a;
                 else
-                    *(curr_a->cost) = steps_b;                    
+                    *(curr_a->cost) += steps_b;                    
             } 
         }
         else if (steps_b > v->size_b / 2) // second half of the stack B
@@ -116,9 +116,9 @@ void    ft_cost(t_var *v)
             {
                 steps_a = v->size_a - steps_a;
                 if (steps_a > steps_b)
-                    *(curr_a->cost) = steps_a;
+                    *(curr_a->cost) += steps_a;
                 else
-                    *(curr_a->cost) = steps_b;
+                    *(curr_a->cost) += steps_b;
             }
             else
                 *(curr_a->cost) = steps_a + steps_b;
