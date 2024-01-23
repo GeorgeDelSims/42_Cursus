@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/22 16:13:08 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/23 09:46:25 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,35 +59,26 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
 	v->stack_b = NULL;
-    ft_lst_idx(v->stack_a);
-    ft_lst_idx(v->stack_b);
-    ft_fill_raw_cost(v->stack_a, v->size_a);
-    ft_fill_raw_cost(v->stack_b, v->size_b);
-	ft_print_stacks(v->stack_a, v->stack_b);
+	if (v->size_a < 6)
+		v->operations = ft_sort_small(v);
+	else
+	{
+		v->operations = ft_pa(v);
+		v->operations += ft_pa(v);
+	}
 }
 
 int	main(int ac, char *av[])
 {
 	t_var	*v;
 	// int		sorted;
-	int		result;
 		
 	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
-	result = 0;
-	//result += ft_sa(v);
-	result = ft_pa(v);
-	result += ft_pa(v);
-	result += ft_pa(v);
-	// result += ft_rrr(v);
-	//result += ft_pb(v);
-	//result += ft_rr(v);
-	//result += ft_pa(v);
-	//result = ft_sort(v);
 	// sorted = check_sort(v->stack_a);
-	ft_printf("result : %d\n", result);
+	ft_printf("operations : %d\n", v->operations);
 	// ft_printf("sorted : %d\n", sorted);
 	ft_printf("size_a : %d\n", v->size_a);
 	ft_printf("size_b : %d\n", v->size_b);

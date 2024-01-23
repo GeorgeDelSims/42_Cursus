@@ -2,7 +2,7 @@ NAME = push_swap
 
 SOURCES = ./srcs/main.c ./srcs/operations.c ./srcs/utils.c ./srcs/input_parsing.c \
 ./srcs/utilslst.c ./srcs/utilslst2.c ./srcs/free.c ./srcs/operations2.c \
-./srcs/operations3.c ./srcs/sort.c \
+./srcs/operations3.c ./srcs/cost.c ./srcs/cost2.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 

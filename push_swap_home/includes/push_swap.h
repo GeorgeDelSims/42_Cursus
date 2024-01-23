@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/22 15:46:53 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/23 09:45:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_var
     char    **args;
     int     size_a;
     int     size_b;
+    int     operations;
 }           t_var;
 
 void	ft_init_var(t_var *v, int ac, char *av[]);
@@ -82,5 +83,7 @@ void    ft_get_cost(t_lst *stack, int stack_size);
 int     ft_get_steps_b(int num, t_lst *stack_b);
 void    ft_fill_raw_cost(t_lst *stack, int stack_size);
 void    ft_cost(t_var *v);
+int     ft_sort_small(t_var *v);
+
 
 #endif
