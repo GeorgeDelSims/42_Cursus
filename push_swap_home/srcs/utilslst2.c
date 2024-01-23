@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilslst2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:30:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/22 15:57:19 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/23 14:35:58 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ t_lst	*ft_lst_last(t_lst *lst)
 
 int get_max(t_lst *stack)
 {
-    int max;
-    t_lst *curr;
+    int     max;
+    t_lst   *curr;
 
     if (stack->next == NULL)
         return (*(stack->content));
-    curr = stack->next;
+    curr = stack;
     max = *(int *)(curr->content);
     while (curr != NULL)
     {
@@ -51,7 +51,7 @@ int get_min(t_lst *stack)
 
     if (stack->next == NULL)
         return (*(stack->content));
-    curr = stack->next;
+    curr = stack;
     min = *(int *)(curr->content);
     while (curr != NULL)
     {
@@ -63,11 +63,22 @@ int get_min(t_lst *stack)
 }
 
 // Check if stack is sorted (return 1 if sorted and 0 if not)
-int	check_sort(t_lst *stack)
+int	check_sort_a(t_lst *stack)
 {
 	while (stack != NULL && stack->next != NULL)
 	{
 		if (*(stack->content) > *(stack->next->content))
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+int	check_sort_b(t_lst *stack)
+{
+	while (stack != NULL && stack->next != NULL)
+	{
+		if (*(stack->content) < *(stack->next->content))
 			return (0);
 		stack = stack->next;
 	}

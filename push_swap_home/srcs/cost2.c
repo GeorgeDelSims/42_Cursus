@@ -6,20 +6,23 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/23 10:20:00 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 15:59:11 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
 // Helper function for ft_get_steps_b
-static int ft_small_num(t_lst *curr_b, int count, int min)
+static int ft_small_num(t_lst *curr_b, int count, int min, int max)
 {
+    if (*(curr_b->content) == max) // if max is top of stack B -> put small num on top
+        return (0);
     while (*(curr_b->content) != min && curr_b->next != NULL)
     {
         count++;
         curr_b = curr_b->next;
     }
+    // Add clause for when in second half of stack (if > half the stack)
     return (count);
 }
 
@@ -31,7 +34,7 @@ static int ft_big_num(t_lst *curr_b, int count, int max)
         count++;
         curr_b = curr_b->next;
     }
-    count--;
+    //count--;
     return (count);
 }
 
@@ -42,16 +45,19 @@ static int ft_mid_num(t_lst *curr_b, t_lst *last, int count, int num)
         return (0);
     while (curr_b)
     {
+        count++;
         if (*(curr_b->content) > num && *(curr_b->next->content) < num)
             break ;
-        count++;
         curr_b = curr_b->next;
     }
     return (count);
 }
 
 // Get the amount of steps to reach the correct destination in stack B for the number chosen in stack A
-int ft_get_steps_b(int num, t_lst *stack_b)
+// DOES NOT INCLUDE THE PUSH FROM STACK A TO STACK B
+// Only takes into account the order of stack_b, not the placement of num in stack_a
+// Does not take into account first half / second half problem or reverse rotates
+int ft_get_steps_brut(int num, t_lst *stack_b) //, t_var *v)
 {
     int     max;
     int     min;
@@ -64,14 +70,14 @@ int ft_get_steps_b(int num, t_lst *stack_b)
         ft_error(1, "stack_b empty");
     max = get_max(curr_b);
     min = get_min(curr_b);
-    count = 1;
+    count = 0;
     last = ft_lst_last(curr_b);
     if (num < min)
-        count = ft_small_num(curr_b, count, min);
+        count += ft_small_num(curr_b, count, min, max);
     else if (num > max)
-        count = ft_big_num(curr_b, count, max);    
+        count += ft_big_num(curr_b, count, max);    
     else if (num > min && num < max)
-        count = ft_mid_num(curr_b, last, count, num);
+        count += ft_mid_num(curr_b, last, count, num);
     return (count);
 }
 

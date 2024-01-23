@@ -6,58 +6,62 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:17:16 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 10:21:04 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 14:01:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-
-static void    ft_cost_first_half(t_var *v, int steps_a, int steps_b, t_lst *curr_a)
+// both halves of stack A & first half of Stack B
+static void    ft_cost_first_half(t_var *v, int steps_a, int steps_brut, t_lst *curr_a)
 {
-   if (steps_a <= v->size_a / 2) // first half of stack A
+	if (steps_a <= v->size_a / 2) // first half of stack A 
     {
-        if (steps_a > steps_b)
-            *(curr_a->cost) += steps_a;
+        if (steps_a > steps_brut)
+            *(curr_a->cost) = steps_a + 1;
         else
-            *(curr_a->cost) += steps_b;                    
-    } 
+            *(curr_a->cost) = steps_brut + 1;                    
+    }
+    else if (steps_a > v->size_a / 2) // second half of stack A
+    {
+        *(curr_a->cost) = v->size_a - steps_a + steps_brut + 1;
+    }
 }
 
-static void    ft_cost_second_half(t_var *v, int steps_a, int steps_b, t_lst *curr_a)
+// both halves of stack A & second half of Stack B
+static void    ft_cost_second_half(t_var *v, int steps_a, int steps_brut, t_lst *curr_a)
 {
-    steps_b = v->size_b - steps_b;
-    if (steps_a > v->size_a / 2) // second half of stack A
+    steps_brut = v->size_b - steps_brut;
+    if (steps_a > v->size_a / 2)  // Second half of stack A
     {
         steps_a = v->size_a - steps_a;
-        if (steps_a > steps_b)
+        if (steps_a > steps_brut)
             *(curr_a->cost) += steps_a;
         else
-            *(curr_a->cost) += steps_b;
+            *(curr_a->cost) += steps_brut;
     }
-    else
-        *(curr_a->cost) = steps_a + steps_b;
+    else // First half of Stack A
+        *(curr_a->cost) = steps_a + steps_brut + 1;
 }
 
 // fills the real cost into each node 
 void    ft_cost(t_var *v)
 {
     int steps_a;
-    int steps_b;
+    int steps_brut;
     t_lst   *curr_a;
     t_lst   *curr_b;
     
-    steps_a = 1;
-    steps_b = 1;
+    steps_a = 0;
     curr_a = v->stack_a;
     curr_b = v->stack_b;
     while (curr_a)
     {
-        steps_b = ft_get_steps_b(*(curr_a->content), curr_b);
-        if (steps_b <= v->size_b / 2) // first half of the stack B
-            ft_cost_first_half(v, steps_a, steps_b, curr_a);
-        else if (steps_b > v->size_b / 2) // second half of the stack B
-            ft_cost_second_half(v, steps_a, steps_b, curr_a);
+        steps_brut = ft_get_steps_brut(*(curr_a->content), curr_b);
+        if (steps_brut <= v->size_b / 2) // first half of the stack B
+            ft_cost_first_half(v, steps_a, steps_brut, curr_a); // both halves of stack A
+        else if (steps_brut > v->size_b / 2) // second half of the stack B
+            ft_cost_second_half(v, steps_a, steps_brut, curr_a); // both halves of stack A
         steps_a++;
         curr_a = curr_a->next;
     }

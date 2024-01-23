@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 09:42:59 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/22 16:13:13 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/23 14:57:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_sb(t_var *v)
 	
 	res = ft_swap(&v->stack_b);
 	ft_printf("sb\n");
+	ft_fill_values(v);
 	return (res);
 }
 
@@ -46,9 +47,18 @@ int ft_pa(t_var *v)
 	v->size_a--;
 	v->size_b++;
 	ft_printf("pa\n");
-	//ft_printf("size_a : %d\n", v->size_a);
-	//ft_printf("size_b : %d\n", v->size_b);
 	ft_fill_values(v);
+	return(res);
+}
+
+int ft_pa_start(t_var *v)
+{
+	int	res;
+
+	res = ft_push(&v->stack_a, &v->stack_b);
+	v->size_a--;
+	v->size_b++;
+	ft_printf("pa\n");
 	return(res);
 }
 
@@ -56,8 +66,8 @@ int ft_pb(t_var *v)
 {
 	int	res;
 	res = ft_push(&v->stack_b, &v->stack_a);
-	v->size_a--;
-	v->size_b++;
+	v->size_a++;
+	v->size_b--;
 	ft_printf("pb\n");
 	return(res);
 }

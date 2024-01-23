@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 09:45:45 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 15:20:58 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ int	    ft_count_array(char **array);
 void    ft_free_array(char **array);
 void    ft_free_stacks(t_var *v);
 void    ft_free_all(t_var *v, char **array);
-int     check_sort(t_lst *stack);
+int     check_sort_a(t_lst *stack);
+int	    check_sort_b(t_lst *stack);
 void	ft_print_array(char **array);
 int     ft_sa(t_var *v);
 int     ft_sb(t_var *v);
 int     ft_ss(t_var *v);
 int     ft_pa(t_var *v);
+int     ft_pa_start(t_var *v);
 int     ft_pb(t_var *v);
 int     ft_rrb(t_var *v);
 int     ft_rra(t_var *v);
@@ -74,16 +76,14 @@ int     ft_rr(t_var *v);
 int     ft_rb(t_var *v);
 int     ft_ra(t_var *v);
 int     ft_rrr(t_var *v);
-int     ft_sort(t_var *v);
+void    ft_sort(t_var *v);
 int     ft_sort_big(t_var *v);
 int     ft_sort_small(t_var *v);
 void    ft_fill_values(t_var *v);
 void    ft_lst_idx(t_lst *stack);
 void    ft_get_cost(t_lst *stack, int stack_size);
-int     ft_get_steps_b(int num, t_lst *stack_b);
+int     ft_get_steps_brut(int num, t_lst *stack_b);//, t_var *v);
 void    ft_fill_raw_cost(t_lst *stack, int stack_size);
 void    ft_cost(t_var *v);
-int     ft_sort_small(t_var *v);
-
 
 #endif
