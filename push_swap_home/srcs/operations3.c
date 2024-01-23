@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 10:06:39 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/18 11:31:00 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/23 16:42:30 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_ra(t_var *v)
 	
 	res = ft_rotate(&v->stack_a);
 	ft_printf("ra\n");
+	ft_fill_values(v);
 	return (res);
 }
 
@@ -28,6 +29,7 @@ int	ft_rb(t_var *v)
 	
 	res = ft_rotate(&v->stack_b);
 	ft_printf("rb\n");
+	ft_fill_values(v);
 	return (res);
 }
 
@@ -36,6 +38,7 @@ int	ft_rr(t_var *v)
 	ft_rotate(&v->stack_a);
 	ft_rotate(&v->stack_b);
 	ft_printf("rr\n");
+	ft_fill_values(v);
 	return (1);
 }
 
@@ -45,6 +48,7 @@ int	ft_rra(t_var *v)
 	
 	res = ft_rev_rotate(&v->stack_a);
 	ft_printf("rra\n");
+	ft_fill_values(v);
 	return (res);
 }
 
@@ -54,5 +58,6 @@ int	ft_rrb(t_var *v)
 	
 	res = ft_rev_rotate(&v->stack_b);
 	ft_printf("rrb\n");
+	ft_fill_values(v);
 	return (res);
 }

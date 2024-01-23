@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/23 15:59:11 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 16:57:49 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int ft_small_num(t_lst *curr_b, int count, int min, int max)
         curr_b = curr_b->next;
     }
     // Add clause for when in second half of stack (if > half the stack)
-    return (count);
+    return (count + 1);
 }
 
 // Helper function for ft_get_steps_b
@@ -73,7 +73,10 @@ int ft_get_steps_brut(int num, t_lst *stack_b) //, t_var *v)
     count = 0;
     last = ft_lst_last(curr_b);
     if (num < min)
+    {
+        ft_printf("curr_b content : %d\n", *(curr_b->content));
         count += ft_small_num(curr_b, count, min, max);
+    }
     else if (num > max)
         count += ft_big_num(curr_b, count, max);    
     else if (num > min && num < max)

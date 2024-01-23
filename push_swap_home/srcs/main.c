@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 16:26:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 17:08:34 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,22 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 int	main(int ac, char *av[])
 {
 	t_var	*v;
-	int		sorted_a;
-	int		sorted_b;
+	// int		sorted_a;
+	// int		sorted_b;
 		
 	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
-	sorted_a = check_sort_a(v->stack_a);
-	sorted_b = check_sort_b(v->stack_b);
-	ft_printf("sorted_a : %d\n", sorted_a);
-	ft_printf("sorted_b : %d\n", sorted_b);
-	ft_printf("size_a : %d\n", v->size_a);
-	ft_printf("size_b : %d\n", v->size_b);
-	ft_print_stacks(v->stack_a, v->stack_b);
+	// sorted_a = check_sort_a(v->stack_a);
+	// sorted_b = check_sort_b(v->stack_b);
+	// ft_printf("sorted_a : %d\n", sorted_a);
+	// ft_printf("sorted_b : %d\n", sorted_b);
+	// ft_printf("size_a : %d\n", v->size_a);
+	// ft_printf("size_b : %d\n", v->size_b);
+	// ft_print_stacks(v->stack_a, v->stack_b);
 	ft_sort(v);
-	ft_print_stacks(v->stack_a, v->stack_b);
+	//ft_print_stacks(v->stack_a, v->stack_b);
 	ft_printf("operations : %d\n", v->operations);
 	ft_free_stacks(v);
 	return (0);

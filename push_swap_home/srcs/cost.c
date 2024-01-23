@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:17:16 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 14:01:24 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 17:10:23 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void    ft_cost(t_var *v)
     while (curr_a)
     {
         steps_brut = ft_get_steps_brut(*(curr_a->content), curr_b);
+        // ft_printf("Brut steps for content (%d) : %d\n", *(curr_a->content), steps_brut);
         if (steps_brut <= v->size_b / 2) // first half of the stack B
             ft_cost_first_half(v, steps_a, steps_brut, curr_a); // both halves of stack A
         else if (steps_brut > v->size_b / 2) // second half of the stack B

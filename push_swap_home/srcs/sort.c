@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:20:09 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 16:24:53 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/23 18:05:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra)
     operations = 0;
     steps_b = ft_get_steps_brut(*(cheap->content), v->stack_b);
     if (steps_b > v->size_b / 2)
-        steps_b = v->size_b - steps_b;  // Possible mistake here 
+        steps_b = v->size_b - steps_b - rr;  // Possible mistake here 
     while (rr-- > 0)
         operations += ft_rr(v);
     while (ra-- > 0)
@@ -91,28 +91,55 @@ static int ft_operator_second_half(t_var *v, t_lst *cheap, int rrr, int rra)
 void    ft_sort(t_var *v)
 {
     t_lst   *cheap;
+    t_lst   *curr_b;
     int     idx;
+    int     idx_b;
     int     cost;
+    int     double_ops;
 
+    double_ops = 0;
     while (v->size_a > 0)
     {
+        curr_b = v->stack_b;
         cheap = ft_find_cheapest(v);
         ft_printf("cheapest content : %d\n", *(cheap->content));
         idx = *(cheap->idx);
         cost = *(cheap->cost);
-        if (idx < v->size_a / 2) // First half of Stack A
+        idx_b = ft_get_steps_brut(*(cheap->content), curr_b);
+        if (idx <= v->size_a / 2) // First half of Stack A
         {
-            if (cost < idx + 1 ) // Check if cost is lower than index + 1 (means there will be double operations to reduce cost)
+            if (idx_b <= v->size_b / 2) // First half of Stack B
             {
-                v->operations += ft_operator_first_half(v, cheap, 1 + idx - cost, idx);
-                ft_print_stacks(v->stack_a, v->stack_b);
-                ft_printf("operations : %d\n", v->operations);
+                if (cost <= idx + 1 ) // Check if cost is lower than index + 1 (means there will be double operations to reduce cost)
+                {
+                    double_ops = 1 + idx - cost;
+                    v->operations += ft_operator_first_half(v, cheap, double_ops, idx - double_ops);
+                    ft_print_stacks(v->stack_a, v->stack_b);
+                    ft_printf("operations : %d\n", v->operations);
+                }
+                else
+                {
+                    v->operations += ft_operator_first_half(v, cheap, 0, idx);
+                    ft_print_stacks(v->stack_a, v->stack_b);
+                    ft_printf("operations : %d\n", v->operations);
+                }
             }
-            else
+            else // Second half of Stack B
             {
-                v->operations += ft_operator_first_half(v, cheap, 0, idx);
-                ft_print_stacks(v->stack_a, v->stack_b);
-                ft_printf("operations : %d\n", v->operations);
+                idx = v->size_b - idx;
+                if (cost <= idx + 1 ) // Check if cost is lower than index + 1 (means there will be double operations to reduce cost)
+                {
+                    double_ops = 1 + idx - cost;
+                    v->operations += ft_operator_first_half(v, cheap, double_ops, idx - double_ops);
+                    ft_print_stacks(v->stack_a, v->stack_b);
+                    ft_printf("operations : %d\n", v->operations);
+                }
+                else
+                {
+                    v->operations += ft_operator_first_half(v, cheap, 0, idx);
+                    ft_print_stacks(v->stack_a, v->stack_b);
+                    ft_printf("operations : %d\n", v->operations);
+                }
             }
         }
         else // Second half of Stack A 
