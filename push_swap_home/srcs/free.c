@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:23:43 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/16 16:24:55 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/25 13:54:14 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void    ft_free_array(char **array)
 
 static void ft_free_node(t_lst *node)
 {
-    if (node) {
-        // free(node->content);
-        // free(node->idx);
-        // free(node->pos);
+    if (node) 
+    {
+        free(node->content);
+        free(node->idx);
+        free(node->cost);
         free(node);
     }
 }
@@ -54,7 +55,7 @@ static void ft_free_lst(t_lst **lst)
     *lst = NULL;
 }
 
-void    ft_free_stacks(t_var *v)//, char **args)
+void    ft_free_stacks(t_var *v)
 {
     ft_free_lst(&v->stack_a);
     ft_free_lst(&v->stack_b);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 15:20:58 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/25 14:32:30 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ typedef struct s_lst
 {
     int             *content;
     int             *idx;
-    char            **dir;
     int             *cost;
     struct s_lst    *next;
-    struct s_lst    *prev;
 }                   t_lst;
 
 typedef struct s_var
@@ -37,6 +35,14 @@ typedef struct s_var
     int     size_b;
     int     operations;
 }           t_var;
+
+typedef struct  s_sort
+{
+    int idx;
+    int idx_b;
+    int double_ops;
+    int cost;
+}       t_sort;
 
 void	ft_init_var(t_var *v, int ac, char *av[]);
 int     ft_push(t_lst **stack_a, t_lst **stack_b);
@@ -54,8 +60,6 @@ void	ft_lst_iter(t_lst *lst, void (*f)(void *));
 t_lst	*ft_lst_new(void *content, void *idx, void *cost);
 t_lst	*ft_lst_last(t_lst *lst);
 char    **ft_input_check(int ac, char *av[]);
-char	**ft_str_input_check(char *str);
-void	ft_num_input_check(int i, int size, char *av[]);
 void    ft_error(int errno, char *str);
 int	    ft_count_array(char **array);
 void    ft_free_array(char **array);
@@ -78,12 +82,13 @@ int     ft_ra(t_var *v);
 int     ft_rrr(t_var *v);
 void    ft_sort(t_var *v);
 int     ft_sort_big(t_var *v);
-int     ft_sort_small(t_var *v);
 void    ft_fill_values(t_var *v);
 void    ft_lst_idx(t_lst *stack);
 void    ft_get_cost(t_lst *stack, int stack_size);
 int     ft_get_steps_brut(int num, t_lst *stack_b);//, t_var *v);
 void    ft_fill_raw_cost(t_lst *stack, int stack_size);
 void    ft_cost(t_var *v);
+t_lst   *ft_find_cheapest(t_var *v);
+int ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra);
 
 #endif

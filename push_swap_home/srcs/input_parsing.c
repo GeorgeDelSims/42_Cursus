@@ -6,12 +6,13 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/25 13:38:07 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/25 13:44:36 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
+// Helper function, compares two strings and returns 0 if they're the same and 1 if they're different
 static int	ft_strdiff(char *s1, char *s2)
 {
 	int	i;
@@ -31,6 +32,7 @@ static int	ft_strdiff(char *s1, char *s2)
 		return (1);
 }
 
+// Checks for duplicate strings in the character array containing the input numbers 
 static void	ft_check_dups(char **array, char *str, int index)
 {
 	int	k;
@@ -49,17 +51,8 @@ static void	ft_check_dups(char **array, char *str, int index)
 	}
 }
 
-int	ft_count_array(char **array)
-{
-	int	count;
-
-	count = 0;
-	while (array[count])
-		count++;
-	return (count);
-}
-
-void	ft_num_input_check(int i, int size, char **args)
+// Checks that all characters are number characters 
+static void	ft_num_input_check(int i, int size, char **args)
 {
 	int j;
 	
@@ -77,7 +70,9 @@ void	ft_num_input_check(int i, int size, char **args)
 	}
 }
 
-char	**ft_str_input_check(char *str)
+// Input check for the case in which the number array is given 
+// between brackets as a single large string
+static char	**ft_str_input_check(char *str)
 {
 	char	**args;
 	int		size;
@@ -90,6 +85,7 @@ char	**ft_str_input_check(char *str)
 	return (args);
 }
 
+// Input check Main function 
 char	**ft_input_check(int ac, char *av[])
 {
 	char	**args;

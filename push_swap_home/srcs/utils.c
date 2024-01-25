@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 15:11:31 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/17 15:19:47 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/25 13:39:57 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void ft_print_stacks(t_lst *stack_a, t_lst *stack_b)
     }
 }
 
-// 
 void	ft_print_array(char **array)
 {
 	int	i;
@@ -77,6 +76,16 @@ void	ft_print_array(char **array)
 		ft_printf("array[%d] : %s\n", i, array[i]);
 		i++;
 	}
+}
+
+int	ft_count_array(char **array)
+{
+	int	count;
+
+	count = 0;
+	while (array[count])
+		count++;
+	return (count);
 }
 
 

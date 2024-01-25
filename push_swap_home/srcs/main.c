@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/25 10:11:30 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/25 14:33:38 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,17 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
 	v->stack_b = NULL;
-	if (v->size_a < 6)
-		v->operations = ft_sort_small(v);
-	else
-	{
-		v->operations = ft_pa_start(v);
-		v->operations += ft_pa(v);
-		ft_printf("BEGINNING\n");
-		// If stack B does not start with highest number
-		if (*(v->stack_b->content) < *(v->stack_b->next->content))
-			v->operations += ft_sb(v);
-		ft_print_stacks(v->stack_a, v->stack_b);
-	}
+	//if (v->size_a < 6)
+	//	v->operations = ft_sort_small(v);
+	//else
+	//{
+	v->operations = ft_pa_start(v);
+	v->operations += ft_pa(v);
+	ft_printf("BEGINNING\n");
+	// If stack B does not start with highest number
+	if (*(v->stack_b->content) < *(v->stack_b->next->content))
+		v->operations += ft_sb(v);
+	ft_print_stacks(v->stack_a, v->stack_b);
 }
 
 int	main(int ac, char *av[])
