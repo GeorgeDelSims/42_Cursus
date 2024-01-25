@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 17:08:34 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/25 10:11:30 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 	{
 		v->operations = ft_pa_start(v);
 		v->operations += ft_pa(v);
+		ft_printf("BEGINNING\n");
 		// If stack B does not start with highest number
 		if (*(v->stack_b->content) < *(v->stack_b->next->content))
 			v->operations += ft_sb(v);
+		ft_print_stacks(v->stack_a, v->stack_b);
 	}
 }
 

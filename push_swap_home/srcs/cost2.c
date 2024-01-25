@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cost2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/23 16:57:49 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/25 12:16:56 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ static int ft_mid_num(t_lst *curr_b, t_lst *last, int count, int num)
     while (curr_b)
     {
         count++;
+        // encountering an error (segfault) when curr_b->next->content == NULL
+        if (curr_b->next == NULL)
+            break ;
         if (*(curr_b->content) > num && *(curr_b->next->content) < num)
             break ;
         curr_b = curr_b->next;
