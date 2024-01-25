@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:20:09 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/25 12:25:56 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/25 12:28:15 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,10 @@ void    ft_sort(t_var *v)
         cost = *(cheap->cost);
         idx_b = ft_get_steps_brut(*(cheap->content), curr_b);
         double_ops = 1 + idx - cost;
-        ft_printf("cheap->content : %d\n", *(cheap->content));
-        ft_printf("cheap->idx : %d\n", *(cheap->idx));
-        ft_printf("cheap->cost : %d\n", *(cheap->cost));
-        ft_printf("idx_b : %d\n", idx_b);
+        //ft_printf("cheap->content : %d\n", *(cheap->content));
+        //ft_printf("cheap->idx : %d\n", *(cheap->idx));
+        //ft_printf("cheap->cost : %d\n", *(cheap->cost));
+        //ft_printf("idx_b : %d\n", idx_b);
         if (idx <= v->size_a / 2) // First half of Stack A
         {
             if (idx_b <= v->size_b / 2) // First half of Stack B

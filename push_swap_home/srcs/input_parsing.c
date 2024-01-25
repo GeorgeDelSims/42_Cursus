@@ -3,14 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/17 10:28:56 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/25 13:38:07 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
+static int	ft_strdiff(char *s1, char *s2)
+{
+	int	i;
+	
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
+	}
+	if (s1[i] == '\0' && s2[i] == '\0')
+		return (0);
+	else
+		return (1);
+}
+
+static void	ft_check_dups(char **array, char *str, int index)
+{
+	int	k;
+	
+	if (!array)
+		ft_error(1, "Input incorrect");
+	k = 0;
+	while (array[k])
+	{
+		if (k != index && ft_strdiff(array[k], str) == 0)
+		{
+			ft_printf("Duplicate numbers in input : %s\n", str);
+			exit(1);
+		}
+		k++;
+	}
+}
 
 int	ft_count_array(char **array)
 {
@@ -33,6 +70,7 @@ void	ft_num_input_check(int i, int size, char **args)
 		{
 			if (args[i][j] < '0' || args[i][j] > '9')
 				ft_error(1, "Input incorrect");
+			ft_check_dups(args, args[i], i);
 		j++;
 		}
 	i++;
