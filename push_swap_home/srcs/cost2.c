@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:23:50 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/25 13:51:40 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/26 09:28:58 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int ft_get_steps_brut(int num, t_lst *stack_b) //, t_var *v)
     count = 0;
     last = ft_lst_last(curr_b);
     if (num < min)
-    {
-        ft_printf("curr_b content : %d\n", *(curr_b->content));
         count += ft_small_num(curr_b, count, min, max);
-    }
     else if (num > max)
         count += ft_big_num(curr_b, count, max);    
     else if (num > min && num < max)

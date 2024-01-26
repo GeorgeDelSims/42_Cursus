@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   utilslst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
+/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:33:48 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/17 14:59:55 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/26 09:34:50 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	ft_lst_add_back(t_lst **lst, t_lst *new)
+void	ft_lst_add_back(t_lst **lst, t_lst *new_node)
 {
 	t_lst	*curr;
 
-	if (!lst || !new)
+	if (!lst || !new_node)
 		return ;
 	if (*lst == NULL)
 	{
-		*lst = new;
+		*lst = new_node;
 		return ;
 	}
 	curr = *lst;
 	while (curr->next)
 		curr = curr->next;
-	curr->next = new;
+	curr->next = new_node;
 }
 
-void	ft_lst_add_front(t_lst **lst, t_lst *new)
+void	ft_lst_add_front(t_lst **lst, t_lst *new_node)
 {
-	if (!lst || !new)
+	if (!lst || !new_node)
 		return ;
-	new->next = *lst;
-	*lst = new;
+	new_node->next = *lst;
+	*lst = new_node;
 }
 
 int	ft_lst_size(t_lst *lst)
@@ -65,14 +65,14 @@ void	ft_lst_iter(t_lst *lst, void (*f)(void *))
 
 t_lst	*ft_lst_new(void *content, void *idx, void *cost)
 {
-	t_lst	*new;
+	t_lst	*new_node;
 
-	new = (t_lst *)malloc(sizeof(t_lst));
-	if (new == NULL)
+	new_node = (t_lst *)malloc(sizeof(t_lst));
+	if (new_node == NULL)
 		return (NULL);
-	new->content = content;
-	new->idx = idx;
-	new->cost = cost;
-	new->next = NULL;
-	return (new);
+	new_node->content = content;
+	new_node->idx = idx;
+	new_node->cost = cost;
+	new_node->next = NULL;
+	return (new_node);
 }

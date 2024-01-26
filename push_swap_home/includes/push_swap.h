@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/25 14:32:30 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/26 09:39:53 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int     get_max(t_lst *stack);
 int     get_min(t_lst *stack);
 void    ft_print_stacks(t_lst *stack_a, t_lst *stack_b);
 void	ft_print_stacks_backup(t_lst *stack_a, t_lst *stack_b);
-void	ft_lst_add_back(t_lst **lst, t_lst *new);
-void	ft_lst_add_front(t_lst **lst, t_lst *new);
+void	ft_lst_add_back(t_lst **lst, t_lst *new_node);
+void	ft_lst_add_front(t_lst **lst, t_lst *new_node);
 int	    ft_lst_size(t_lst *lst);
 void	ft_lst_iter(t_lst *lst, void (*f)(void *));
 t_lst	*ft_lst_new(void *content, void *idx, void *cost);
@@ -68,12 +68,11 @@ void    ft_free_all(t_var *v, char **array);
 int     check_sort_a(t_lst *stack);
 int	    check_sort_b(t_lst *stack);
 void	ft_print_array(char **array);
-int     ft_sa(t_var *v);
 int     ft_sb(t_var *v);
-int     ft_ss(t_var *v);
 int     ft_pa(t_var *v);
 int     ft_pa_start(t_var *v);
 int     ft_pb(t_var *v);
+int     ft_pb_last(t_var *v);
 int     ft_rrb(t_var *v);
 int     ft_rra(t_var *v);
 int     ft_rr(t_var *v);
@@ -89,6 +88,7 @@ int     ft_get_steps_brut(int num, t_lst *stack_b);//, t_var *v);
 void    ft_fill_raw_cost(t_lst *stack, int stack_size);
 void    ft_cost(t_var *v);
 t_lst   *ft_find_cheapest(t_var *v);
-int ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra);
+int     ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra);
+void    ft_back_to_top(t_var *v);
 
 #endif

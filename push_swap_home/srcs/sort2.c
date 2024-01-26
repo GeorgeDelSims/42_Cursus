@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:29:55 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/25 14:51:55 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/26 09:29:59 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,31 @@ int ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra)
         operations += ft_rb(v);
     operations += ft_pa(v);
     return (operations);
+}
+
+// Function to bring the largest number in stack B back to the top
+void    ft_back_to_top(t_var *v)
+{
+    int     max;
+    int     steps;
+    t_lst   *curr_b;
+    
+    max = get_max(v->stack_b);
+    curr_b = v->stack_b;
+    steps = 0;
+    while (curr_b && *(curr_b->content) != max)
+    {
+        steps++;
+        curr_b = curr_b->next;
+    }
+    if (steps < v->size_b / 2)
+    {
+        while (steps-- > 0)
+            v->operations += ft_rb(v); 
+    }
+    else
+    {
+        while (steps-- > 0)
+            v->operations += ft_rrb(v);
+    }
 }

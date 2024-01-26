@@ -6,7 +6,7 @@
 /*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/25 14:33:38 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/26 09:43:20 by georgesims       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,9 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
 	v->stack_b = NULL;
-	//if (v->size_a < 6)
-	//	v->operations = ft_sort_small(v);
-	//else
-	//{
 	v->operations = ft_pa_start(v);
 	v->operations += ft_pa(v);
 	ft_printf("BEGINNING\n");
-	// If stack B does not start with highest number
 	if (*(v->stack_b->content) < *(v->stack_b->next->content))
 		v->operations += ft_sb(v);
 	ft_print_stacks(v->stack_a, v->stack_b);
@@ -75,22 +70,13 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 int	main(int ac, char *av[])
 {
 	t_var	*v;
-	// int		sorted_a;
-	// int		sorted_b;
 		
 	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
-	// sorted_a = check_sort_a(v->stack_a);
-	// sorted_b = check_sort_b(v->stack_b);
-	// ft_printf("sorted_a : %d\n", sorted_a);
-	// ft_printf("sorted_b : %d\n", sorted_b);
-	// ft_printf("size_a : %d\n", v->size_a);
-	// ft_printf("size_b : %d\n", v->size_b);
-	// ft_print_stacks(v->stack_a, v->stack_b);
 	ft_sort(v);
-	//ft_print_stacks(v->stack_a, v->stack_b);
+	ft_print_stacks(v->stack_a, v->stack_b);
 	ft_printf("operations : %d\n", v->operations);
 	ft_free_stacks(v);
 	return (0);
