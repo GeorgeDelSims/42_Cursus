@@ -6,12 +6,11 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:30:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/23 14:35:58 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/30 15:12:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
 
 t_lst	*ft_lst_last(t_lst *lst)
 {
@@ -26,40 +25,40 @@ t_lst	*ft_lst_last(t_lst *lst)
 	return (curr);
 }
 
-int get_max(t_lst *stack)
+int	get_max(t_lst *stack)
 {
-    int     max;
-    t_lst   *curr;
+	int		max;
+	t_lst	*curr;
 
-    if (stack->next == NULL)
-        return (*(stack->content));
-    curr = stack;
-    max = *(int *)(curr->content);
-    while (curr != NULL)
-    {
-        if (*(int *)(curr->content) > max)
-            max = *(int *)curr->content;
-        curr = curr->next;
-    }
-    return (max);
+	if (stack->next == NULL)
+		return (*(stack->content));
+	curr = stack;
+	max = *(int *)(curr->content);
+	while (curr != NULL)
+	{
+		if (*(int *)(curr->content) > max)
+			max = *(int *)curr->content;
+		curr = curr->next;
+	}
+	return (max);
 }
 
-int get_min(t_lst *stack)
+int	get_min(t_lst *stack)
 {
-    int min;
-    t_lst *curr;
+	int		min;
+	t_lst	*curr;
 
-    if (stack->next == NULL)
-        return (*(stack->content));
-    curr = stack;
-    min = *(int *)(curr->content);
-    while (curr != NULL)
-    {
-        if (*(int *)(curr->content) < min)
-            min = *(int *)curr->content;
-        curr = curr->next;
-    }
-    return (min);
+	if (stack->next == NULL)
+		return (*(stack->content));
+	curr = stack;
+	min = *(int *)(curr->content);
+	while (curr != NULL)
+	{
+		if (*(int *)(curr->content) < min)
+			min = *(int *)curr->content;
+		curr = curr->next;
+	}
+	return (min);
 }
 
 // Check if stack is sorted (return 1 if sorted and 0 if not)

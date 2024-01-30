@@ -6,23 +6,14 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 11:45:20 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/30 16:30:50 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-// receive a list of chars and spaces, check the validity of the input
-// Initialise linked list A and turn all received chars into ints and put into linked list 
-// initialise linked list B 
-// implement each operation with a function
-// print list of operations done
-// Find some way of making the program choose which operation is the most effective? 
-
-// Still to do: 
-// - Make sure it accepts negative values 
-// - make sure it doesn't accept twin values (pas de doublons)
-
+// ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l
+// ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_Mac $ARG
 // Initiate Stack A
 int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 {
@@ -30,7 +21,7 @@ int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 	int		res;
 	t_lst	*new_node;
 	int		*value;
-	
+
 	if (size_a == ac)
 		i = 1;
 	else
@@ -50,25 +41,24 @@ int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 	return (res);
 }
 
-// Initiate variables and check input 
+// Initiate variables and check input
 void	ft_init_var(t_var *v, int ac, char *av[])
 {
 	int	size_a;
-	
+
 	v->args = ft_input_check(ac, av);
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
 	v->stack_b = NULL;
-	v->min_a = get_min(v->stack_a);
-	v->max_a = get_max(v->stack_a);
-	if (v->size_a < 4)
+	refresh_min_max_a(v);
+	v->operations = 0;
+	if (v->size_a < 6)
 	{
-		ft_sort_three(v);
-		ft_print_stacks(v->stack_a, v->stack_b);
+		ft_sort_small(v);
 		ft_free_stacks(v);
 		exit(0);
 	}
-	v->operations = ft_pa_start(v);
+	v->operations += ft_pa(v);
 	v->operations += ft_pa(v);
 	if (*(v->stack_b->content) < *(v->stack_b->next->content))
 		v->operations += ft_sb(v);
@@ -77,14 +67,12 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 int	main(int ac, char *av[])
 {
 	t_var	*v;
-		
+
 	v = (t_var *)malloc(sizeof(t_var));
 	if (!v)
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
 	ft_sort(v);
-	ft_print_stacks(v->stack_a, v->stack_b);
-	ft_printf("operations : %d\n", v->operations);
 	ft_free_stacks(v);
 	return (0);
 }

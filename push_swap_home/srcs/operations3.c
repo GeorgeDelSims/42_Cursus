@@ -10,13 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/push_swap.h"
 
 int	ft_ra(t_var *v)
 {
 	int	res;
-	
+
 	res = ft_rotate(&v->stack_a);
 	ft_printf("ra\n");
 	ft_fill_values(v);
@@ -26,7 +25,7 @@ int	ft_ra(t_var *v)
 int	ft_rb(t_var *v)
 {
 	int	res;
-	
+
 	res = ft_rotate(&v->stack_b);
 	ft_printf("rb\n");
 	ft_fill_values(v);
@@ -34,7 +33,7 @@ int	ft_rb(t_var *v)
 }
 
 int	ft_rr(t_var *v)
-{	
+{
 	ft_rotate(&v->stack_a);
 	ft_rotate(&v->stack_b);
 	ft_printf("rr\n");
@@ -45,7 +44,7 @@ int	ft_rr(t_var *v)
 int	ft_rra(t_var *v)
 {
 	int	res;
-	
+
 	res = ft_rev_rotate(&v->stack_a);
 	ft_printf("rra\n");
 	ft_fill_values(v);
@@ -55,7 +54,7 @@ int	ft_rra(t_var *v)
 int	ft_rrb(t_var *v)
 {
 	int	res;
-	
+
 	res = ft_rev_rotate(&v->stack_b);
 	ft_printf("rrb\n");
 	ft_fill_values(v);

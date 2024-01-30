@@ -15,7 +15,7 @@
 int	ft_sa(t_var *v)
 {
 	int	res;
-	
+
 	res = ft_swap(&v->stack_a);
 	ft_printf("sa\n");
 	ft_fill_values(v);

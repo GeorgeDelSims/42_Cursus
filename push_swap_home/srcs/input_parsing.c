@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   input_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/25 13:44:36 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/30 15:02:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-// Helper function, compares two strings and returns 0 if they're the same and 1 if they're different
+// Helper function, compares two strings
+// and returns 0 if they're the same and 1 if they're different
 static int	ft_strdiff(char *s1, char *s2)
 {
 	int	i;
-	
+
 	if (!s1 || !s2)
 		return (0);
 	i = 0;
@@ -32,11 +33,12 @@ static int	ft_strdiff(char *s1, char *s2)
 		return (1);
 }
 
-// Checks for duplicate strings in the character array containing the input numbers 
+// Checks for duplicate strings in the
+// character array containing the input numbers
 static void	ft_check_dups(char **array, char *str, int index)
 {
 	int	k;
-	
+
 	if (!array)
 		ft_error(1, "Input incorrect");
 	k = 0;
@@ -51,11 +53,11 @@ static void	ft_check_dups(char **array, char *str, int index)
 	}
 }
 
-// Checks that all characters are number characters 
+// Checks that all characters are number characters
 static void	ft_num_input_check(int i, int size, char **args)
 {
-	int j;
-	
+	int	j;
+
 	while (i < size)
 	{
 		j = 0;
@@ -64,19 +66,19 @@ static void	ft_num_input_check(int i, int size, char **args)
 			if (args[i][j] < '0' || args[i][j] > '9')
 				ft_error(1, "Input incorrect");
 			ft_check_dups(args, args[i], i);
-		j++;
+			j++;
 		}
-	i++;
+		i++;
 	}
 }
 
-// Input check for the case in which the number array is given 
+// Input check for the case in which the number array is given
 // between brackets as a single large string
 static char	**ft_str_input_check(char *str)
 {
 	char	**args;
 	int		size;
-	
+
 	args = ft_split(str, ' ');
 	if (!args)
 		ft_error(1, "Input incorrect");
@@ -85,11 +87,11 @@ static char	**ft_str_input_check(char *str)
 	return (args);
 }
 
-// Input check Main function 
+// Input check Main function
 char	**ft_input_check(int ac, char *av[])
 {
 	char	**args;
-	
+
 	if (ac < 2)
 		ft_error(1, "No arguments given.");
 	if (ac == 2)
