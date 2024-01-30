@@ -6,12 +6,15 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/09 14:11:51 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/30 16:43:35 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+
+// ./pipex file1.txt cat tee file2.txt
+//Bash : cat file1.txt | tee file2.txt
 // Loads of mallocs to be checked here
 static void	ft_init_pipex(t_data *d, char *argv[], char *envp[])
 {
