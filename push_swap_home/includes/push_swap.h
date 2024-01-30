@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/26 09:39:53 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/30 11:19:57 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ typedef struct s_var
     char    **args;
     int     size_a;
     int     size_b;
+    int     min_a;
+    int     min_b;
+    int     max_a;
+    int     max_b;
     int     operations;
 }           t_var;
 
@@ -69,6 +73,7 @@ int     check_sort_a(t_lst *stack);
 int	    check_sort_b(t_lst *stack);
 void	ft_print_array(char **array);
 int     ft_sb(t_var *v);
+int     ft_sa(t_var *v);
 int     ft_pa(t_var *v);
 int     ft_pa_start(t_var *v);
 int     ft_pb(t_var *v);
@@ -90,5 +95,7 @@ void    ft_cost(t_var *v);
 t_lst   *ft_find_cheapest(t_var *v);
 int     ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra);
 void    ft_back_to_top(t_var *v);
+void    ft_sort_three(t_var *v);
+
 
 #endif

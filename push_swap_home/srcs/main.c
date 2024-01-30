@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/26 09:43:20 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/30 11:45:20 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,19 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
 	v->stack_b = NULL;
+	v->min_a = get_min(v->stack_a);
+	v->max_a = get_max(v->stack_a);
+	if (v->size_a < 4)
+	{
+		ft_sort_three(v);
+		ft_print_stacks(v->stack_a, v->stack_b);
+		ft_free_stacks(v);
+		exit(0);
+	}
 	v->operations = ft_pa_start(v);
 	v->operations += ft_pa(v);
-	ft_printf("BEGINNING\n");
 	if (*(v->stack_b->content) < *(v->stack_b->next->content))
 		v->operations += ft_sb(v);
-	ft_print_stacks(v->stack_a, v->stack_b);
 }
 
 int	main(int ac, char *av[])

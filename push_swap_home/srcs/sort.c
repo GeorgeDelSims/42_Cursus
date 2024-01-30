@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: georgesims <georgesims@student.42.fr>      +#+  +:+       +#+        */
+/*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:20:09 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/26 09:33:29 by georgesims       ###   ########.fr       */
+/*   Updated: 2024/01/30 11:37:32 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int ft_operator_second_half(t_var *v, t_lst *cheap, int rrr, int rra)
     
     operations = 0;
     steps_b = ft_get_steps_brut(*(cheap->content), v->stack_b);
-    ft_printf("steps_b in ft_operator_second_half : %d\n", steps_b);
     while (rrr-- > 0)
         operations += ft_rrr(v);
     while (rra-- > 0)
