@@ -8,6 +8,8 @@ OBJECTS = $(SOURCES:.c=.o)
 
 LIBFT = ./libft
 
+BONUS = ./bonus
+
 CC = gcc -g 
 
 CFLAGS = -Wall -Wextra -Werror
@@ -26,6 +28,9 @@ $(NAME): $(LIBFT)/libft.a $(OBJECTS)
 clean: 
 	rm -f $(OBJECTS)
 	make -C $(LIBFT) clean
+
+bonus: 
+	make -C $(BONUS)
 
 fclean: clean
 	rm -f $(NAME)

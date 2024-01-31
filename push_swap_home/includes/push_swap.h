@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 16:18:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/01/31 13:28:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_sort
 }					t_sort;
 
 void				ft_init_var(t_var *v, int ac, char *av[]);
+int					ft_init_a(t_var *v, int size_a, int ac, char *av[]);
 int					ft_push(t_lst **stack_a, t_lst **stack_b);
 int					ft_swap(t_lst **stack);
 int					ft_rotate(t_lst **stack);
