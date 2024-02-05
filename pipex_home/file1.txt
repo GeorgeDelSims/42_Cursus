@@ -1,25 +1,31 @@
 This is a test 
 This is a test 
 This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
-This is a test 
+This is a test pattern
 
 Hello
 Hello
 Hello
 
+Bash commands: 
 < file1.txt cat | nl > file2.txt
+Pipex:
 ./pipex file1.txt cat nl file2.txt 
+
+< file1.txt sort | uniq > file2.txt
+Pipex 
+./pipex file1.txt sort uniq file2.txt 
+
+< file1.txt head | less > file2.txt
+Pipex
+./pipex file1.txt head less file2.txt 
+
+< file1.txt grep 'Hello' | wc -l > file2.txt
+Pipex
+./pipex file1.txt "grep 'Hello" "wc -l" file2.txt 
+-----> PROBLEM : Bash gives result of 2 and Pipex result of 5
+
+< file1.txt  cat | tr 'a-z' 'A-Z' > file2.txt
+pipex:
+./pipex file1.txt "cat" "tr 'a-z' 'A-Z'" file2.txt
+

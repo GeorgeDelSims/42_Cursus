@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/31 13:28:33 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/05 09:55:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_var
 	t_lst			*stack_a;
 	t_lst			*stack_b;
 	char			**args;
+	char			**cmds;
 	int				size_a;
 	int				size_b;
 	int				min_a;
