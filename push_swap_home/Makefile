@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gsims <gsims@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/06 17:01:14 by gsims             #+#    #+#              #
+#    Updated: 2024/02/06 17:01:15 by gsims            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = push_swap
 
 SOURCES = ./srcs/main.c ./srcs/operations.c ./srcs/utils.c ./srcs/input_parsing.c ./srcs/print_functions.c\
