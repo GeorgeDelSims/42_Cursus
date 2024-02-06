@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:19:31 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/06 11:22:28 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/06 16:45:47 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,12 @@
 // Checks the list is sorted 
 // Returns OK, KO or Error depending on the result 
 
-static void	ft_print_stack(t_lst *stack_a)
-{
-	ft_printf("stack A :\n");
-	while (stack_a)
-	{
-		if (stack_a->content == NULL)
-			ft_printf("content: / | ");
-		else
-			ft_printf("content: %d |", *(int *)stack_a->content);
-		if (stack_a->idx == NULL)
-			ft_printf("idx: / | ");
-		else
-			ft_printf("idx: %d |", *(int *)stack_a->idx);
-		if (stack_a->cost == NULL)
-			ft_printf("cost: / |\n");
-		else
-			ft_printf("cost: %d |\n", *(int *)stack_a->cost);
-		stack_a = stack_a->next;
-	}
-}
-
 // Initiate variables and check input
 void	ft_init_var_check(t_var *vc, int ac, char *av[])
 {
 	int		size_a;
-	
+
+	ft_printf("av[1] : %s\n", av[1]);
 	vc->args = ft_input_check(ac, av);
 	size_a = ft_count_array(vc->args);
 	vc->size_a = ft_init_a(vc, size_a, ac, vc->args);
@@ -70,7 +50,7 @@ int	ft_strcmp(char *s1, char * s2)
 	return (1);
 }
 
-
+// Applies all commands according to the STDin 
 void	ft_apply_cmds(char *cmd, t_var *vc)
 {
 	if (ft_strcmp(cmd, "pa") == 1)
@@ -113,17 +93,16 @@ void	ft_check_loop(t_var *vc)
 	char	*temp;
 
 	write(STDOUT_FILENO, "Before GNL\n", 11);
-	temp = get_next_line(0);
-	while (temp)
+	while (1)
 	{
-		if (temp[0] == '\0')
+		temp = get_next_line(0);
+		if (temp[0] == '\0' || ft_strcmp(temp, "\n") == 1 || temp == NULL)
 		{
 			free(temp);
 			break ;
 		}
 		ft_apply_cmds(temp, vc);
 		free(temp);
-		temp = get_next_line(0);
 	}
 }
 
@@ -132,14 +111,12 @@ int	main(int ac, char *av[])
 	t_var	*vc;
 	int		check;
 
-	vc = (t_var *)malloc(sizeof(t_var *));
+	vc = (t_var *)malloc(sizeof(t_var));
 	if (!vc)
 		ft_error(1, "Error\n");
 	ft_init_var_check(vc, ac, av);
-	ft_print_stack(vc->stack_a);
 	ft_check_loop(vc);
 	check = check_sort_a(vc->stack_a);
-	write(STDOUT_FILENO, "Helloooo\n", 9);
 	ft_free_lst(&vc->stack_a);
 	free(vc);
 	if (check == 1)

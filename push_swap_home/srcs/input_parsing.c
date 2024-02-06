@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 15:02:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/06 15:54:35 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,16 @@ char	**ft_input_check(int ac, char *av[])
 	if (ac == 2)
 	{
 		args = ft_str_input_check(av[1]);
+		ft_printf("str_input\n");
 		return (args);
 	}
 	else
 	{
 		ft_num_input_check(1, ac, av);
+		ft_printf("num_input\n");
+		ft_printf("av[1] in input check : %s\n", av[1]);
+		ft_printf("av[2] in input check : %s\n", av[2]);
+		ft_printf("av[3] in input check : %s\n", av[3]);
 		return (av);
 	}
 }
