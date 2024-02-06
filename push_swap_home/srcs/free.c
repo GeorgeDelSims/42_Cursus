@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:23:43 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 16:37:13 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/06 10:04:23 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_free_node(t_lst *node)
 	}
 }
 
-static void	ft_free_lst(t_lst **lst)
+void	ft_free_lst(t_lst **lst)
 {
 	t_lst	*current;
 	t_lst	*next;

@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:49:12 by gsims             #+#    #+#             */
-/*   Updated: 2023/11/15 10:31:43 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/06 10:32:03 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static char	*read_and_fill_buffer(int fd, char *leftover, char *buffer)
 	read_line = 1;
 	while (read_line > 0)
 	{
+		write(STDOUT_FILENO, "Inside GNL\n", 11);
 		read_line = read(fd, buffer, BUFFER_SIZE);
 		if (read_line == -1)
 		{

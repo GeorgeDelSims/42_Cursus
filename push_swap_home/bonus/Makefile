@@ -16,7 +16,7 @@ OBJECTS = $(ALL_SOURCES:%.c=$(OBJ_DIR)/%.o)
 
 OBJ_DIR = ./objects_bonus
 
-CC = gcc
+CC = gcc -g
 
 CFLAGS = -Wall -Wextra -Werror
 
