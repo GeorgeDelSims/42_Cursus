@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:20:09 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 15:03:46 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 09:52:58 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	ft_sort(t_var *v)
 		else
 			sort_second_half(v, s, cheap);
 	}
+	free(s);
 	ft_back_to_top(v);
 	while (v->size_b > 1)
 		v->operations += ft_pb(v);

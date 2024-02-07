@@ -59,7 +59,7 @@ static int	ft_mid_num(t_lst *curr_b, t_lst *last, int count, int num)
 // Only takes into account the order of stack_b,
 //	not the placement of num in stack_a
 // Does not take into account first half
-//second half problem or reverse rotates
+// second half problem or reverse rotates
 int	ft_get_steps_brut(int num, t_lst *stack_b)
 {
 	int		max;

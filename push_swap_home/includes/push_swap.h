@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/31 13:28:33 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:22:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_var
 	int				max_a;
 	int				max_b;
 	int				operations;
+	int				quotes;
 }					t_var;
 
 typedef struct s_sort
@@ -64,7 +65,7 @@ int					ft_lst_size(t_lst *lst);
 void				ft_lst_iter(t_lst *lst, void (*f)(void *));
 t_lst				*ft_lst_new(void *content, void *idx, void *cost);
 t_lst				*ft_lst_last(t_lst *lst);
-char				**ft_input_check(int ac, char *av[]);
+char				**ft_input_check(t_var *v, int ac, char *av[]);
 void				ft_error(int errno, char *str);
 int					ft_count_array(char **array);
 void				ft_free_array(char **array);
@@ -86,6 +87,7 @@ int					ft_ra(t_var *v);
 int					ft_rrr(t_var *v);
 void				ft_sort(t_var *v);
 int					ft_sort_big(t_var *v);
+void				ft_sort_two(t_var *v);
 void				ft_fill_values(t_var *v);
 void				ft_lst_idx(t_lst *stack);
 void				ft_get_cost(t_lst *stack, int stack_size);

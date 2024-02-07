@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/31 12:46:11 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:38:52 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 	t_lst	*new_node;
 	int		*value;
 
-	if (size_a == ac)
+	if (size_a > 2 && size_a == ac)
 		i = 1;
 	else
 		i = 0;
@@ -46,7 +46,7 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 {
 	int	size_a;
 
-	v->args = ft_input_check(ac, av);
+	v->args = ft_input_check(v, ac, av);
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
 	v->stack_b = NULL;
@@ -73,6 +73,8 @@ int	main(int ac, char *av[])
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
 	ft_sort(v);
+	if (v->quotes == 1)
+		ft_free_array(v->args);
 	ft_free_stacks(v);
 	return (0);
 }

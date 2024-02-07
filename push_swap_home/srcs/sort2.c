@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:29:55 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/30 15:04:14 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:32:05 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_lst	*ft_find_cheapest(t_var *v)
 
 // Runs operations for the situation when the cheapest number
 // is in the first half of A
-// This function can definitely be merged with 
+// This function can definitely be merged with
 // First_half_A_second_half_B (just like the other one)
 int	ft_operator_first_half(t_var *v, t_lst *cheap, int rr, int ra)
 {
@@ -86,5 +86,25 @@ void	ft_back_to_top(t_var *v)
 	{
 		while (steps++ < v->size_b)
 			v->operations += ft_rrb(v);
+	}
+}
+
+// Sorts two or less numbers
+void	ft_sort_two(t_var *v)
+{
+	t_lst	*curr_a;
+
+	curr_a = v->stack_a;
+	if (curr_a->next == NULL || *(curr_a->content) < *(curr_a->next->content))
+	{
+		ft_free_stacks(v);
+		exit(0);
+	}
+	else if (*(curr_a->content) > *(curr_a->next->content))
+	{
+		ft_swap(&v->stack_a);
+		ft_printf("sa\n");
+		ft_free_stacks(v);
+		exit(0);
 	}
 }

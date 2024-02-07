@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 15:02:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:25:37 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	**ft_str_input_check(char *str)
 }
 
 // Input check Main function
-char	**ft_input_check(int ac, char *av[])
+char	**ft_input_check(t_var *v, int ac, char *av[])
 {
 	char	**args;
 
@@ -96,12 +96,15 @@ char	**ft_input_check(int ac, char *av[])
 		ft_error(1, "No arguments given.");
 	if (ac == 2)
 	{
+		v->quotes = 1;
 		args = ft_str_input_check(av[1]);
 		return (args);
 	}
 	else
 	{
+		v->quotes = 0;
 		ft_num_input_check(1, ac, av);
-		return (av);
+		args = av;
+		return (args);
 	}
 }

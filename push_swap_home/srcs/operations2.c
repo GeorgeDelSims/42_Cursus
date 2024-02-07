@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 09:42:59 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 16:25:59 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 11:26:39 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	ft_sb(t_var *v)
 	ft_fill_values(v);
 	return (res);
 }
-// Prints the opposite because I misread the rules 
+
+// Prints the opposite because I misread the rules
 int	ft_pa(t_var *v)
 {
 	int	res;
@@ -34,7 +35,7 @@ int	ft_pa(t_var *v)
 	return (res);
 }
 
-// Prints the opposite because I misread the rules 
+// Prints the opposite because I misread the rules
 int	ft_pb(t_var *v)
 {
 	int	res;
@@ -47,7 +48,7 @@ int	ft_pb(t_var *v)
 	return (res);
 }
 
-// Prints the opposite because I misread the rules 
+// Prints the opposite because I misread the rules
 int	ft_pb_last(t_var *v)
 {
 	int	res;
