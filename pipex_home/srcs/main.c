@@ -6,23 +6,20 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:04:53 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 16:43:35 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 12:22:20 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-
 // ./pipex file1.txt cat tee file2.txt
-//Bash : cat file1.txt | tee file2.txt
+// Bash : cat file1.txt | tee file2.txt
 // Loads of mallocs to be checked here
 static void	ft_init_pipex(t_data *d, char *argv[], char *envp[])
 {
 	int	count;
 
 	parse_cmds(argv, d);
-	// ft_print_array(d->cmd1);
-	// ft_print_array(d->cmd2);
 	d->bin_paths = bin_paths(d, envp);
 	count = ft_count_array(d->bin_paths);
 	d->cmd_paths1 = (char **)malloc(sizeof(char *) * (count + 1));
@@ -37,7 +34,9 @@ static void	ft_init_pipex(t_data *d, char *argv[], char *envp[])
 
 static void	ft_open_files(t_data *d, char *argv[])
 {
+	ft_printf("Opening infile: %s\n", argv[1]);
 	d->infile = open(argv[1], O_RDONLY);
+	ft_printf("Opening outfile: %s\n", argv[4]);
 	d->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (d->infile == -1 || d->outfile == -1)
 	{
@@ -53,7 +52,7 @@ static void	ft_exec(t_data *d, char *envp[])
 {
 	pid_t	pid;
 	int		p;
- 
+
 	p = pipe(d->fd);
 	if (p == -1)
 	{

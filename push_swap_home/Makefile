@@ -13,7 +13,7 @@
 NAME = push_swap
 
 SOURCES = ./srcs/main.c ./srcs/operations.c ./srcs/utils.c ./srcs/input_parsing.c ./srcs/print_functions.c\
-./srcs/utilslst.c ./srcs/utilslst2.c ./srcs/free.c ./srcs/operations2.c ./srcs/operations3.c \
+./srcs/utilslst.c ./srcs/utilslst2.c ./srcs/free.c ./srcs/operations2.c ./srcs/operations3.c ./srcs/init.c\
 ./srcs/operations4.c ./srcs/cost.c ./srcs/cost2.c ./srcs/sort.c ./srcs/sort2.c ./srcs/sort3.c \
 
 OBJECTS = $(SOURCES:.c=.o)

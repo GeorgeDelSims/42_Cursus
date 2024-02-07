@@ -6,14 +6,14 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 11:46:25 by georgesims        #+#    #+#             */
-/*   Updated: 2024/01/30 16:15:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/05 10:22:52 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
 // Push A: Take the first element at the top of A and put it at the top of B.
-// Do nothing if B is empty
+// Do nothing if A is empty
 int	ft_push(t_lst **stack_a, t_lst **stack_b)
 {
 	t_lst	*temp;

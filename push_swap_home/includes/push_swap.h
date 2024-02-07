@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:22 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/31 13:28:33 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/06 10:04:42 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_var
 	t_lst			*stack_a;
 	t_lst			*stack_b;
 	char			**args;
+	char			**cmds;
 	int				size_a;
 	int				size_b;
 	int				min_a;
@@ -69,6 +70,7 @@ void				ft_error(int errno, char *str);
 int					ft_count_array(char **array);
 void				ft_free_array(char **array);
 void				ft_free_stacks(t_var *v);
+void				ft_free_lst(t_lst **lst);
 void				ft_free_all(t_var *v, char **array);
 int					check_sort_a(t_lst *stack);
 int					check_sort_b(t_lst *stack);
