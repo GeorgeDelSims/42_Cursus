@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/07 11:38:52 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 13:38:27 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void	ft_init_var(t_var *v, int ac, char *av[])
 	v->args = ft_input_check(v, ac, av);
 	size_a = ft_count_array(v->args);
 	v->size_a = ft_init_a(v, size_a, ac, v->args);
+	if (check_sort_a(v->stack_a) == 1)
+	{
+		ft_free_stacks(v);
+		exit(0);
+	}
 	v->stack_b = NULL;
 	refresh_min_max_a(v);
 	v->operations = 0;

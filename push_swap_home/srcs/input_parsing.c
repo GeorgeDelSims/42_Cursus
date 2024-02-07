@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/07 11:25:37 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 13:42:14 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ static void	ft_num_input_check(int i, int size, char **args)
 		j = 0;
 		while (args[i][j])
 		{
-			if (args[i][j] < '0' || args[i][j] > '9')
+			if ((args[i][j] < '0' || args[i][j] > '9') && args[i][j] != '-')
+				ft_error(1, "Input incorrect");
+			if (args[i][j] == '-' && (args[i][j + 1] < '0' || args[i][j
+					+ 1] > '9' || !args[i][j + 1]))
 				ft_error(1, "Input incorrect");
 			ft_check_dups(args, args[i], i);
 			j++;
