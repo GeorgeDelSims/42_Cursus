@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/07 13:38:27 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/08 17:16:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,36 @@
 
 // ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l
 // ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_Mac $ARG
+
+static int	ft_check_dup_ints(t_var *v)
+{
+	t_lst	*curr;
+	t_lst	*iter;
+	int		i;
+	int		j;
+
+	curr = v->stack_a;
+	i = 0;
+	while (curr)
+	{
+		iter = v->stack_a;
+		j = 0;
+		while (iter)
+		{
+			if (*(iter->content) == *(curr->content) && i != j)
+			{
+				ft_free_stacks(v);
+				ft_error(0, "Duplicates in input.");
+			}
+			j++;
+			iter = iter->next;
+		}
+		i++;
+		curr = curr->next;
+	}
+	return (0);
+}
+
 // Initiate Stack A
 int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 {
@@ -38,6 +68,7 @@ int	ft_init_a(t_var *v, int size_a, int ac, char *av[])
 		ft_lst_add_back(&v->stack_a, new_node);
 		i++;
 	}
+	ft_check_dup_ints(v);
 	return (res);
 }
 
