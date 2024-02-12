@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/07 09:25:44 by gsims            ###   ########.fr       */
+/*   Created: 2024/02/12 15:00:03 by gsims             #+#    #+#             */
+/*   Updated: 2024/02/12 15:02:52 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../includes/philo.h"
 
-// ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l
-// ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_Mac $ARG
-// Initiate Stack A
-
-int	main(int ac, char *av[])
+// Gets the current time in milliseconds
+size_t	get_current_time(void)
 {
-	t_var	*v;
-
-	v = (t_var *)malloc(sizeof(t_var));
-	if (!v)
-		ft_error(1, "variable memory not allocated\n");
-	ft_init_var(v, ac, av);
-	ft_sort(v);
-	ft_free_array(v->cmds);
-	ft_free_stacks(v);
-	return (0);
+	struct timeval	time;
+	
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
+

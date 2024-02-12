@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:17:16 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 14:59:44 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/07 09:24:29 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_fill_raw_cost(t_lst *stack, int stack_size)
 		{
 			curr->cost = (int *)malloc(sizeof(int));
 			if (curr->cost == NULL)
-				ft_error(1, "malloc failure ft_get_cost");
+				ft_error(1, "malloc failure ft_fill_raw_cost\n");
 		}
 		if (*(curr->idx) <= stack_size / 2)
 			*(curr->cost) = *(curr->idx);

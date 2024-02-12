@@ -20,12 +20,10 @@ Pipex
 Pipex
 ./pipex file1.txt head less file2.txt 
 
-< file1.txt grep 'Hello' | wc -l > file2.txt
+< file1.txt grep Hello | wc -l > file2.txt
 Pipex
-./pipex file1.txt "grep 'Hello" "wc -l" file2.txt 
------> PROBLEM : Bash gives result of 2 and Pipex result of 5
+./pipex file1.txt "grep Hello" "wc -l" file2.txt 
 
 < file1.txt  cat | tr 'a-z' 'A-Z' > file2.txt
 pipex:
-./pipex file1.txt "cat" "tr 'a-z' 'A-Z'" file2.txt
-
+./pipex file1.txt "cat" "tr 'a-z' 'A-Z'" file2.tx
