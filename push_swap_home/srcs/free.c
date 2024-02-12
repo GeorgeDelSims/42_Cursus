@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:23:43 by gsims             #+#    #+#             */
-/*   Updated: 2024/01/30 16:37:13 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:39:37 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_free_stacks(t_var *v)
 {
 	ft_free_lst(&v->stack_a);
 	ft_free_lst(&v->stack_b);
+	if (v->quotes == 1)
+		ft_free_array(v->args);
 	free(v);
 }
 

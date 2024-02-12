@@ -6,52 +6,36 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:36:08 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/07 13:42:14 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/12 11:38:37 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-// Helper function, compares two strings
-// and returns 0 if they're the same and 1 if they're different
-static int	ft_strdiff(char *s1, char *s2)
-{
-	int	i;
 
-	if (!s1 || !s2)
-		return (0);
-	i = 0;
-	while (s1[i] && s2[i])
+// Checks for input above MAXINT or below MININT 
+static void	ft_int_max_min(char *str)
+{
+	if (ft_strlen(str) > 11)
+		ft_error(1, "input number too long to fit in an INT");
+	else if (ft_strlen(str) == 10)
 	{
-		if (s1[i] != s2[i])
-			return (1);
-		i++;
+		ft_printf("strncmp : %d\n", ft_strncmp(str, "2147483647", 10));
+		if (ft_strncmp(str, "2147483647", 10) > 0)
+			ft_error(1, "input above MAXINT");
 	}
-	if (s1[i] == '\0' && s2[i] == '\0')
-		return (0);
-	else
-		return (1);
-}
-
-// Checks for duplicate strings in the
-// character array containing the input numbers
-static void	ft_check_dups(char **array, char *str, int index)
-{
-	int	k;
-
-	if (!array)
-		ft_error(1, "Input incorrect");
-	k = 0;
-	while (array[k])
+	else if (ft_strlen(str) == 11)
 	{
-		if (k != index && ft_strdiff(array[k], str) == 0)
+		if (ft_strncmp(str, "-2147483648", 11) > 0)
 		{
-			ft_printf("Duplicate numbers in input : %s\n", str);
-			exit(1);
+			if (str[0] != '-')
+				ft_error(1, "input above MAXINT 2");
+			else
+				ft_error(1, "input below MININT");
 		}
-		k++;
 	}
 }
+
 
 // Checks that all characters are number characters
 static void	ft_num_input_check(int i, int size, char **args)
@@ -68,7 +52,7 @@ static void	ft_num_input_check(int i, int size, char **args)
 			if (args[i][j] == '-' && (args[i][j + 1] < '0' || args[i][j
 					+ 1] > '9' || !args[i][j + 1]))
 				ft_error(1, "Input incorrect");
-			ft_check_dups(args, args[i], i);
+			ft_int_max_min(args[i]);
 			j++;
 		}
 		i++;
@@ -96,7 +80,7 @@ char	**ft_input_check(t_var *v, int ac, char *av[])
 	char	**args;
 
 	if (ac < 2)
-		ft_error(1, "No arguments given.");
+		exit(0);
 	if (ac == 2)
 	{
 		v->quotes = 1;

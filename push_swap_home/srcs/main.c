@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:46:14 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/08 17:16:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:39:28 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	main(int ac, char *av[])
 		ft_error(1, "variable memory not allocated\n");
 	ft_init_var(v, ac, av);
 	ft_sort(v);
-	if (v->quotes == 1)
-		ft_free_array(v->args);
 	ft_free_stacks(v);
 	return (0);
 }

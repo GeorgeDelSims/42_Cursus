@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 11:47:00 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/07 11:31:22 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/12 10:39:22 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ void	ft_sort_small(t_var *v)
 {
 	if (v->size_a < 2)
 		ft_error(0, "Please provide a list of numbers, not just one.");
-	if (v->quotes == 1)
-		ft_free_array(v->args);
 	if (v->size_a < 3)
 		ft_sort_two(v);
 	if (v->size_a < 4)
