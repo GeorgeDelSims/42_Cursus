@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/12 16:02:13 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/13 11:20:54 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef enum {
 }	e_state;
 
 typedef struct	s_philo {
+	pthread_t			thread_id;
 	int					id;
 	int					state;
 	int					meals_eaten;
@@ -34,9 +35,9 @@ typedef struct	s_philo {
 	size_t				time_to_eat;
 	size_t				time_to_sleep;
 	size_t				start_time;
-	pthread_mutex_t		*r_fork;
-	pthread_mutex_t		*l_fork;
-	pthread_mutex_t		*write_lock;
+	pthread_mutex_t		*l_fork; // the one attributed to each philo
+	pthread_mutex_t		*r_fork; // (i + 1) % number of philos --> the next one (if left is 0 -> right is 1)
+	pthread_mutex_t		*write_lock; // pointer for each philosopher to point at the mutexes
 	pthread_mutex_t		*dead_lock;
 	pthread_mutex_t		*meal_lock;
 }						t_philo;
@@ -52,7 +53,7 @@ typedef	struct s_data {
 	pthread_mutex_t		dead_lock; // mutex for accessing the dead_flag
 	pthread_mutex_t		meal_lock; // mutex for eating
 	pthread_mutex_t		write_lock; // mutex for writing into the CLI 
-	t_philo				*philo;	
+	t_philo				**philo;	
 }						t_data;
 
 
@@ -60,6 +61,8 @@ int			input_check(int ac, char *av[]);
 int			ft_isdigit(char c);
 int			ft_atoi(const char	*str);
 int			init_data(t_data *d, char *av[]);
+int			philosophers(t_data *d);
+void		*routine(void *arg);
 size_t		get_current_time(void);
 
 #endif

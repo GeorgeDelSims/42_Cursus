@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:28 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/12 15:58:04 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/13 11:42:00 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,14 @@ int	main(int ac, char *av[])
 	}
 	d = (t_data *)malloc(sizeof(t_data));
 	if (!d)
-		return (0);	
+		return (0);
 	if (init_data(d, av) == 0)
 		return (0);
-	// execute()
-	// ft_free()
+	philosophers(d);
+	// destroy()
+	// ft_free() 
+	//		-> all pointers in the philo struct (iterate over philos)
+	//		-> philo array in the t_data struct 
+	//		-> t_data struct + philo structs 		
 	return (0);
 }

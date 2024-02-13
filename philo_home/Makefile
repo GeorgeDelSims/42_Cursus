@@ -6,13 +6,14 @@
 #    By: gsims <gsims@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:37:13 by gsims             #+#    #+#              #
-#    Updated: 2024/02/12 15:58:34 by gsims            ###   ########.fr        #
+#    Updated: 2024/02/13 10:43:47 by gsims            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SOURCES = ./srcs/main.c ./srcs/init.c ./srcs/input.c ./srcs/utils.c \
+	./srcs/routine.c ./srcs/philos.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 
