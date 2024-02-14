@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/14 12:51:00 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/14 16:07:34 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_philo {
 	int					id;
 	int					state;
 	int					meals_eaten;
+	int					*dead_flag;
 	size_t				last_meal;
 	size_t				time_to_die;
 	size_t				time_to_eat;
@@ -52,7 +53,8 @@ typedef	struct s_data {
 	pthread_mutex_t		dead_lock; // mutex for accessing the dead_flag
 	pthread_mutex_t		meal_lock; // mutex for eating
 	pthread_mutex_t		write_lock; // mutex for writing into the CLI 
-	t_philo				**philo;	
+	t_philo				**philo;
+	pthread_t			monitor_id;
 }						t_data;
 
 
@@ -62,7 +64,8 @@ int			ft_atoi(const char	*str);
 int			init_data(t_data *d, char *av[]);
 int			philosophers(t_data *d);
 void		*routine(void *arg);
-size_t		get_time(void);
+void		*monitor(void *data);
 size_t		get_current_time(void);
+size_t		get_time(void);
 
 #endif

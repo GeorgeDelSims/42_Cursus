@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:02:30 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/14 10:38:14 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/14 16:31:38 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,25 @@ int	philosophers(t_data *d)
 {
 	int	i;
 	int	thread;
-	// int	join;
 	
 	i = 0;
+	pthread_create(&d->monitor_id, NULL, monitor, (void *)d);
 	while (i < d->number_of_philosophers)
 	{
 		thread = pthread_create(&d->philo[i]->thread_id, NULL, routine, (void *)d->philo[i]);
-		// printf("Thread ID: %lu\n", (unsigned long)d->philo[i]->thread_id);
 		if (thread != 0)
 			return (0);
+		// if (d->dead_flag == 1)
+			// break ;
 		i++;
 	}
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
-		pthread_join(d->philo[i]->thread_id, NULL); // SEGFAULT here
+		if (d->philo[i])
+			pthread_join(d->philo[i]->thread_id, NULL);
 		i++;
 	}
+	pthread_join(d->monitor_id, NULL);
 	return (0);
 }

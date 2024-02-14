@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/14 13:26:55 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/14 16:39:35 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	init_data(t_data *d, char *av[])
 {
 	if (!av || !d)
 		return (0);
-	*d = (t_data){};
+	// *d = (t_data){};
+	d->dead_flag = 0;
 	// memset(d, 0, sizeof(t_data));
 	pthread_mutex_init(&d->write_lock, NULL);
 	pthread_mutex_init(&d->dead_lock, NULL);
