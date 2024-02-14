@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/13 13:57:44 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/14 13:26:55 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ static void	init_philos(t_data *d)
 		d->philo[i]->id = i;
 		d->philo[i]->state = THINK;
 		d->philo[i]->meals_eaten = 0;
+		d->philo[i]->time_to_die = (size_t)d->time_to_die;
+		d->philo[i]->time_to_sleep = (size_t)d->time_to_sleep;
+		d->philo[i]->time_to_eat = (size_t)d->time_to_eat;
 		d->philo[i]->write_lock = &d->write_lock;
 		d->philo[i]->dead_lock = &d->dead_lock;
 		d->philo[i]->meal_lock = &d->meal_lock;
@@ -65,11 +68,13 @@ int	init_data(t_data *d, char *av[])
 {
 	if (!av || !d)
 		return (0);
+	*d = (t_data){};
+	// memset(d, 0, sizeof(t_data));
 	pthread_mutex_init(&d->write_lock, NULL);
 	pthread_mutex_init(&d->dead_lock, NULL);
 	pthread_mutex_init(&d->meal_lock, NULL);
 	init_args(d, av);
-	d->philo = malloc(sizeof(t_philo *) * (d->number_of_philosophers + 1));
+	d->philo = malloc(sizeof(t_philo *) * (d->number_of_philosophers));
 	if (!d->philo)
 	{
 		printf("malloc error d->philo in init_data\n");

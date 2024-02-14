@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:02:30 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/13 13:54:18 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/14 10:38:14 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ int	philosophers(t_data *d)
 {
 	int	i;
 	int	thread;
-	int	join;
+	// int	join;
 	
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
-		thread = pthread_create(&d->philo[i]->thread_id, NULL, routine, (void *)&d->philo[i]);
+		thread = pthread_create(&d->philo[i]->thread_id, NULL, routine, (void *)d->philo[i]);
+		// printf("Thread ID: %lu\n", (unsigned long)d->philo[i]->thread_id);
 		if (thread != 0)
 			return (0);
 		i++;
@@ -29,14 +30,7 @@ int	philosophers(t_data *d)
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
-		if (d->philo[i]->thread_id == NULL)
-			printf("d->philo[i]->thread_id is NULL\n");
-		join = pthread_join(d->philo[i]->thread_id, NULL); // SEGFAULT here
-		if (join != 0)
-		{
-			printf("problem wiht pthread_join\n");
-			return (0);
-		}
+		pthread_join(d->philo[i]->thread_id, NULL); // SEGFAULT here
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/13 11:20:54 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/14 12:51:00 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-
-
+#include <string.h>
+#include <sys/time.h>
 typedef enum {
 	THINK,
 	EAT,
 	SLEEP,
 }	e_state;
-
 typedef struct	s_philo {
 	pthread_t			thread_id;
 	int					id;
@@ -63,6 +62,7 @@ int			ft_atoi(const char	*str);
 int			init_data(t_data *d, char *av[]);
 int			philosophers(t_data *d);
 void		*routine(void *arg);
+size_t		get_time(void);
 size_t		get_current_time(void);
 
 #endif
