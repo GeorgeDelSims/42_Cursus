@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:53:04 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/15 11:35:57 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/15 16:22:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,18 @@ static void	ft_sleep(t_philo *philo)
 	ft_usleep(philo->time_to_sleep);
 }
 
-static void	ft_die(t_philo *philo)
-{
-	size_t	time;
-	
-	time = get_time() - philo->start_time;
-	if (time - philo->last_meal > philo->time_to_die)
-		{
-			pthread_mutex_lock(philo->dead_lock);
-			*(philo->dead_flag) = 1;
-			pthread_mutex_unlock(philo->dead_lock);
-		}
-}
-
 void	*routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	ft_think(philo);
-	ft_die(philo);
-	ft_eat(philo);
-	ft_sleep(philo);
+	while (1)
+	{
+		if (*(philo->dead_flag) == 1)
+			break ;
+		ft_think(philo);
+		ft_eat(philo);
+		ft_sleep(philo);
+	}
 	return (NULL);
 }

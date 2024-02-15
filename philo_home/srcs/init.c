@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/15 10:50:17 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/15 16:25:52 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	init_philos(t_data *d)
 		d->philo[i]->id = i;
 		d->philo[i]->state = THINK;
 		d->philo[i]->meals_eaten = 0;
-		d->philo[i]->last_meal = 0;
 		d->philo[i]->dead_flag = &d->dead_flag;
 		d->philo[i]->time_to_die = (size_t)d->time_to_die;
 		d->philo[i]->time_to_sleep = (size_t)d->time_to_sleep;
@@ -60,6 +59,7 @@ static void	init_philos(t_data *d)
 		d->philo[i]->dead_lock = &d->dead_lock;
 		d->philo[i]->meal_lock = &d->meal_lock;
 		d->philo[i]->start_time = get_time();
+		d->philo[i]->last_meal = d->philo[i]->start_time;
 		pthread_mutex_init(d->philo[i]->l_fork, NULL);
 		i++;
 	}
@@ -83,6 +83,7 @@ int	init_data(t_data *d, char *av[])
 		printf("malloc error d->philo in init_data\n");
 		return (0);
 	}
+	d->start_time = get_time();
 	init_philos(d);
 	return (1);
 }

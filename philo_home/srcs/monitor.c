@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/15 10:55:32 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/15 16:23:40 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@
 void	*monitor(void *data)
 {
 	int		i;
-	size_t	time;
 	t_data	*d;
 	
-	d = data;
+	d = (t_data *)data;
 	i = 0;
 	while(1)
 	{
-		time = get_time() - d->philo[i]->start_time;
 		//printf("time for philo %d : %zu\n", d->philo[i]->id, time);
-		if (d->dead_flag == 1)
+		if (get_time() - d->philo[i]->last_meal > d->philo[i]->time_to_die)
 		{
+			pthread_mutex_lock(&d->dead_lock);
+			d->dead_flag = 1;
+			pthread_mutex_unlock(&d->dead_lock);
 			pthread_mutex_lock(&d->write_lock);
-			printf("\033[31m%zu %d died\n\033[0m", time, d->philo[i]->id);
+			printf("\033[31m%zu %d died\n\033[0m", get_time() - d->philo[i]->start_time, d->philo[i]->id);
 			pthread_mutex_unlock(&d->write_lock);
 			break ;
 		}
@@ -39,7 +40,7 @@ void	*monitor(void *data)
 			if (d->philo[i]->meals_eaten > d->number_of_times_each_philosopher_must_eat)
 			{
 				break ;
-				printf("philo %d has eaten %d meals : %zu\n", d->philo[i]->id, d->philo[i]->meals_eaten, time);
+				printf("philo %d has eaten %d meals : %zu\n", d->philo[i]->id, d->philo[i]->meals_eaten, get_time() - d->philo[i]->start_time);
 			}
 		}
 		i = (i + 1) % d->number_of_philosophers;
