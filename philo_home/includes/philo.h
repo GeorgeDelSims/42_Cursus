@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/14 16:07:34 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/15 10:00:47 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ int			ft_isdigit(char c);
 int			ft_atoi(const char	*str);
 int			init_data(t_data *d, char *av[]);
 int			philosophers(t_data *d);
+int			ft_usleep(size_t milliseconds);
 void		*routine(void *arg);
 void		*monitor(void *data);
 size_t		get_current_time(void);
 size_t		get_time(void);
+
 
 #endif
