@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:28 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 10:32:36 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 16:05:19 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char *av[])
 	if (init_data(d, av) == 0)
 		return (0);
 	philosophers(d);
-	pthread_mutex_unlock(&d->write_lock);
+	// pthread_mutex_unlock(&d->write_lock);
 	free_all(d);
 	return (0);
 }
