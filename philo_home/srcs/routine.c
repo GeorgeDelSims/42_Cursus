@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:53:04 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 16:22:05 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 16:37:45 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static void	ft_eat(t_philo *philo)
 	pthread_mutex_unlock(philo->meal_lock);
 	if (stop_threads(philo) == 1)
 	{
-		pthread_mutex_unlock(philo->r_fork);
 		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
 		return ;
 	}
 	pthread_mutex_lock(philo->write_lock);
@@ -90,24 +90,15 @@ void	*routine(void *arg)
 	{
 		if (stop_threads(philo) == 1)
 			break ;
-		// pthread_mutex_lock(philo->dead_lock);
-		// if (*(philo->dead_flag) == 1)
-		// {
-			// pthread_mutex_unlock(philo->dead_lock);
-			// break ;
-		// }
-		// pthread_mutex_unlock(philo->dead_lock);
-		// pthread_mutex_lock(philo->meal_lock);
-		// if (*(philo->meal_flag) == 1)
-		// {
-			// pthread_mutex_unlock(philo->meal_lock);
-			// break ;
-		// }
-		// pthread_mutex_unlock(philo->meal_lock);
 		ft_think(philo);
+		if (stop_threads(philo) == 1)
+			break ;
 		ft_eat(philo);
+		if (stop_threads(philo) == 1)
+			break ;
 		ft_sleep(philo);
+		if (stop_threads(philo) == 1)
+			break ;
 	}
-	
 	return (NULL);
 }
