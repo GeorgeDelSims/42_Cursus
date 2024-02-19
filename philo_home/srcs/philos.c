@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:02:30 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 09:36:25 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 11:02:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 int	philosophers(t_data *d)
 {
 	int	i;
-	int	thread[d->number_of_philosophers];
-	
+
 	i = 0;
+	d->threads = malloc(sizeof(int) * d->number_of_philosophers);
+	if (!d->threads)
+		return (0);
 	pthread_create(&d->monitor_id, NULL, monitor, (void *)d);
 	while (i < d->number_of_philosophers)
 	{
-		thread[i] = pthread_create(&d->philo[i]->thread_id, NULL, routine, (void *)d->philo[i]);
-		if (thread[i] != 0)
+		d->threads[i] = pthread_create(&d->philo[i]->thread_id, NULL, routine,
+				(void *)d->philo[i]);
+		if (d->threads[i] != 0)
 			return (0);
 		i++;
 	}

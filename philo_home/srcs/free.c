@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:05:48 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 10:26:24 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 11:01:59 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_all(t_data *d)
 {
 	int	i;
 
-	i = 0; 
+	i = 0;
 	while (i < d->number_of_philosophers)
 	{
 		if (d->philo[i]->l_fork)
@@ -28,6 +28,7 @@ void	free_all(t_data *d)
 		free(d->philo[i]);
 		i++;
 	}
+	free(d->threads);
 	pthread_mutex_destroy(&d->dead_lock);
 	pthread_mutex_destroy(&d->write_lock);
 	pthread_mutex_destroy(&d->meal_lock);

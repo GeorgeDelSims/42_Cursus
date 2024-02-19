@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 08:28:10 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 10:52:20 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,29 @@ static void	init_args(t_data *d, char *av[])
 	d->time_to_eat = ft_atoi(av[3]);
 	d->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
-		d->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
+		d->eat_number = ft_atoi(av[5]);
 }
-// Initiate right fork for each philosopher 
+
+// Initiate right fork for each philosopher
 // --> (pointer to left fork of the next philosopher)
 static void	init_right_fork(t_data *d)
 {
-	int	i; 
-	
+	int	i;
+
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
-		d->philo[i]->r_fork = d->philo[(i + 1) % d->number_of_philosophers]->l_fork;
+		d->philo[i]->r_fork = d->philo[(i + 1)
+			% d->number_of_philosophers]->l_fork;
 		i++;
 	}
 }
 
-// Initiate philosophers & Forks 
+// Initiate philosophers & Forks
 static void	init_philos(t_data *d)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
@@ -49,7 +51,6 @@ static void	init_philos(t_data *d)
 		if (!d->philo[i] || !d->philo[i]->l_fork)
 			printf("malloc error -> init_philos\n");
 		d->philo[i]->id = i;
-		d->philo[i]->state = THINK;
 		d->philo[i]->meals_eaten = 0;
 		d->philo[i]->dead_flag = &d->dead_flag;
 		d->philo[i]->meal_flag = &d->meal_flag;
@@ -64,7 +65,6 @@ static void	init_philos(t_data *d)
 		pthread_mutex_init(d->philo[i]->l_fork, NULL);
 		i++;
 	}
-	init_right_fork(d);
 }
 
 // initiate mutex locks + args
@@ -87,5 +87,6 @@ int	init_data(t_data *d, char *av[])
 	}
 	d->start_time = get_time();
 	init_philos(d);
+	init_right_fork(d);
 	return (1);
 }

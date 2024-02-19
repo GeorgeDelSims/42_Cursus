@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/12 16:01:49 by gsims            ###   ########.fr       */
+/*   Created: 2024/02/19 10:49:41 by gsims             #+#    #+#             */
+/*   Updated: 2024/02/19 10:49:43 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	numeric_values_only(int ac, char *av[])
 {
 	int	i;
 	int	j;
-		
+
 	i = 1;
 	while (i < ac)
 	{
@@ -49,7 +49,7 @@ int	input_check(int ac, char *av[])
 		return (0);
 	if (numeric_values_only(ac, av) == 0)
 		return (0);
-	if  (ft_atoi(av[1]) > 200)
+	if (ft_atoi(av[1]) > 200)
 	{
 		printf("Too many philosophers, ");
 		return (0);

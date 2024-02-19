@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:57:57 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/12 15:41:46 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 10:53:43 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,23 @@ static int	conditions(const char c)
 		return (0);
 }
 
-int	ft_atoi(const char	*str)
+int	ft_atoi(const char *str)
 {
-	int		result;
-	int		sign;
+	int	result;
+	int	sign;
 
 	result = 0;
 	sign = 1;
 	if (conditions(*str) == 0)
 		return (0);
 	while (conditions(*str) == 1)
-			str++;
+		str++;
 	if (conditions(*str) == 2)
 	{
 		if (conditions(*(str + 1)) != 3)
 			return (0);
-		else
-			if (*str == '-')
-				sign = -1;
+		else if (*str == '-')
+			sign = -1;
 		str++;
 	}
 	while (*str >= '0' && *str <= '9')

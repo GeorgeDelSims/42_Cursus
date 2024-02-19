@@ -16,11 +16,11 @@
 Functions needed:
 - A launch_thread function for launching each thread (=philosopher)
 		-> This function will be called in a loop (while number of philosophers)
-- Eat + sleep + think functions with mutex locks and which change the state of 
+- Eat + sleep + think functions with mutex locks and which change the state of
 	each philosopher -> don't forget to destroy the mutex at the end
-- A routine function that calls the eat, sleep, think functions 
+- A routine function that calls the eat, sleep, think functions
 		-> it should also malloc each philo struct
-- a monitor function / thread with a while(1) loop that breaks if dead_flag = 1 
+- a monitor function / thread with a while(1) loop that breaks if dead_flag = 1
 or if time_to_die has surpassed time_to_eat
 
 
@@ -29,7 +29,7 @@ or if time_to_die has surpassed time_to_eat
 int	main(int ac, char *av[])
 {
 	t_data	*d;
-	
+
 	if ((input_check(ac, av)) == 0)
 	{
 		printf("input incorrect\n");
