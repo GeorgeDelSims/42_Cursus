@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/15 16:25:52 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 08:10:35 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	init_philos(t_data *d)
 		d->philo[i]->state = THINK;
 		d->philo[i]->meals_eaten = 0;
 		d->philo[i]->dead_flag = &d->dead_flag;
+		d->philo[i]->meal_flag = &d->meal_flag;
 		d->philo[i]->time_to_die = (size_t)d->time_to_die;
 		d->philo[i]->time_to_sleep = (size_t)d->time_to_sleep;
 		d->philo[i]->time_to_eat = (size_t)d->time_to_eat;
@@ -72,6 +73,7 @@ int	init_data(t_data *d, char *av[])
 	if (!av || !d)
 		return (0);
 	d->dead_flag = 0;
+	d->meal_flag = 0;
 	memset(d, 0, sizeof(t_data));
 	pthread_mutex_init(&d->write_lock, NULL);
 	pthread_mutex_init(&d->dead_lock, NULL);

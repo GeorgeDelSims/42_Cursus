@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/15 16:17:48 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 08:09:48 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_philo {
 	int					state;
 	int					meals_eaten;
 	int					*dead_flag;
+	int					*meal_flag;
 	size_t				last_meal;
 	size_t				time_to_die;
 	size_t				time_to_eat;
@@ -50,6 +51,7 @@ typedef	struct s_data {
 	int					time_to_sleep; // sleep time in milliseconds
 	int					number_of_times_each_philosopher_must_eat;
 	int					dead_flag; // when = 1 means a philo died
+	int					meal_flag; // when = 1 means a philo has eaten enough
 	size_t				start_time;
 	pthread_mutex_t		dead_lock; // mutex for accessing the dead_flag
 	pthread_mutex_t		meal_lock; // mutex for eating

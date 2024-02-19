@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/15 16:23:40 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 08:20:21 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,19 @@ void	*monitor(void *data)
 	i = 0;
 	while(1)
 	{
-		//printf("time for philo %d : %zu\n", d->philo[i]->id, time);
+		// printf("get_time - last_meal for philo[%d]: %zu\n", i, get_time() - d->philo[i]->last_meal);
+		// printf("last meal time for philo[%d]: %zu\n", i,  d->philo[i]->last_meal);
+		// printf("time to die for philo [%d]: %zu\n", i, d->philo[i]->time_to_die);
+		if (d->number_of_times_each_philosopher_must_eat)
+		{
+			// printf("number_of_times : %d\n", d->number_of_times_each_philosopher_must_eat);
+			if (d->philo[i]->meals_eaten >= d->number_of_times_each_philosopher_must_eat)
+			{
+				d->meal_flag = 1;
+				printf("philo %d has eaten %d meals : %zu\n", d->philo[i]->id, d->philo[i]->meals_eaten, get_time() - d->philo[i]->start_time);
+				break ;
+			}
+		}
 		if (get_time() - d->philo[i]->last_meal > d->philo[i]->time_to_die)
 		{
 			pthread_mutex_lock(&d->dead_lock);
@@ -34,14 +46,6 @@ void	*monitor(void *data)
 			printf("\033[31m%zu %d died\n\033[0m", get_time() - d->philo[i]->start_time, d->philo[i]->id);
 			pthread_mutex_unlock(&d->write_lock);
 			break ;
-		}
-		if (d->number_of_times_each_philosopher_must_eat)
-		{
-			if (d->philo[i]->meals_eaten > d->number_of_times_each_philosopher_must_eat)
-			{
-				break ;
-				printf("philo %d has eaten %d meals : %zu\n", d->philo[i]->id, d->philo[i]->meals_eaten, get_time() - d->philo[i]->start_time);
-			}
 		}
 		i = (i + 1) % d->number_of_philosophers;
 	}
