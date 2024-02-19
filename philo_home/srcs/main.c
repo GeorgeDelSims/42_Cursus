@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:28 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/14 09:43:42 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 10:32:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	main(int ac, char *av[])
 	if (init_data(d, av) == 0)
 		return (0);
 	philosophers(d);
-	// destroy()
-	// ft_free() 
-	//		-> all pointers in the philo struct (iterate over philos)
-	//		-> philo array in the t_data struct 
-	//		-> t_data struct + philo structs 		
+	pthread_mutex_unlock(&d->write_lock);
+	free_all(d);
 	return (0);
 }

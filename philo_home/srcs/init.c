@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 08:10:35 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/19 08:28:10 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	init_philos(t_data *d)
 		d->philo[i]->write_lock = &d->write_lock;
 		d->philo[i]->dead_lock = &d->dead_lock;
 		d->philo[i]->meal_lock = &d->meal_lock;
-		d->philo[i]->start_time = get_time();
-		d->philo[i]->last_meal = d->philo[i]->start_time;
+		d->philo[i]->start_time = &d->start_time;
+		d->philo[i]->last_meal = d->start_time;
 		pthread_mutex_init(d->philo[i]->l_fork, NULL);
 		i++;
 	}
