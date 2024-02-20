@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:49:41 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 10:30:01 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 11:58:05 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ int	input_check(int ac, char *av[])
 		return (0);
 	if (numeric_values_only(ac, av) == 0)
 		return (0);
-	if (ft_atoi(av[1]) == 1)
-	{
-		printf("A single philosopher cannot eat with just one fork.\n");
-		return (0);
-	}
 	if (ft_atoi(av[1]) > 200)
 	{
 		printf("Too many philosophers, ");

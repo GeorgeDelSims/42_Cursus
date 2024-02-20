@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 10:25:52 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 14:35:28 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,8 @@ static void	ft_dead(t_data *d, int i)
 {
 	pthread_mutex_lock(&d->dead_lock);
 	d->dead_flag = 1;
+	d->dead_philo_index = i;
 	pthread_mutex_unlock(&d->dead_lock);
-	pthread_mutex_lock(&d->write_lock);
-	printf("\033[31m%zu %d died\n\033[0m", get_time() - d->start_time,
-		d->philo[i]->id);
-	pthread_mutex_unlock(&d->write_lock);
-}
-
-// Check meal flag and print out meal message
-static void	ft_meal(t_data *d, int i)
-{
-	pthread_mutex_lock(&d->meal_lock);
-	d->meal_flag = 1;
-	pthread_mutex_lock(&d->write_lock);
-	printf("All philosophers have eaten %d meals : %zu\n",
-		d->philo[i]->meals_eaten, get_time() - d->start_time);
-	pthread_mutex_unlock(&d->write_lock);
-	pthread_mutex_unlock(&d->meal_lock);
 }
 
 // Check if all philos have had enough meals
@@ -52,15 +37,15 @@ static int	enough_meals(t_data *d)
 }
 
 // Meal monitor function (just for shortening the monitor one)
-static int	meal_monitor(t_data *d, int i)
+static int	meal_monitor(t_data *d)
 {
 	if (d->eat_number)
 	{
 		pthread_mutex_lock(&d->meal_lock);
 		if (enough_meals(d) == 1)
 		{
+			d->meal_flag = 1;
 			pthread_mutex_unlock(&d->meal_lock);
-			ft_meal(d, i);
 			return (1);
 		}
 		pthread_mutex_unlock(&d->meal_lock);
@@ -78,7 +63,7 @@ void	*monitor(void *data)
 	i = 0;
 	while (1)
 	{
-		if (meal_monitor(d, i) == 1)
+		if (meal_monitor(d) == 1)
 			break ;
 		pthread_mutex_lock(&d->meal_lock);
 		if (get_time() - d->philo[i]->last_meal > d->philo[i]->time_to_die)

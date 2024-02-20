@@ -6,12 +6,13 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:28 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 10:24:49 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 14:32:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Main function
 int	main(int ac, char *av[])
 {
 	t_data	*d;
@@ -28,5 +29,9 @@ int	main(int ac, char *av[])
 		return (0);
 	philosophers(d);
 	free_all(d);
+	pthread_mutex_lock(&d->dead_lock);
+	if (d->dead_flag == 1)
+		print_philo(d->philo[d->dead_philo_index], "is dead");
+	pthread_mutex_unlock(&d->dead_lock);
 	return (0);
 }

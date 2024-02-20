@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 11:34:07 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 14:28:59 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,17 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define RESET_COLOR "\033[0m"
-
-# define BLACK "\033[30m"
+# define RESET_COLOUR "\033[0m"
 # define RED "\033[31m"
 # define GREEN "\033[32m"
 # define YELLOW "\033[33m"
 # define BLUE "\033[34m"
 # define PURPLE "\033[35m"
 # define CYAN "\033[36m"
-# define WHITE "\033[37m"
 
 typedef struct s_philo
 {
+	char			**colours;
 	pthread_t		thread_id;
 	int				id;
 	int				meals_eaten;
@@ -52,12 +50,14 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	char			*colours[6];
 	int				number_of_philosophers;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_number;
 	int				dead_flag;
+	int				dead_philo_index;
 	int				meal_flag;
 	int				*threads;
 	size_t			start_time;
@@ -74,8 +74,10 @@ int					ft_atoi(const char *str);
 int					init_data(t_data *d, char *av[]);
 int					philosophers(t_data *d);
 int					ft_usleep(size_t milliseconds);
+int					stop_threads(t_philo *philo);
 void				*routine(void *arg);
 void				*monitor(void *data);
+void 				*dead_check(void *arg);
 size_t				get_time(void);
 size_t				get_time_start(size_t *pointer_to_start_time);
 void				free_all(t_data *d);

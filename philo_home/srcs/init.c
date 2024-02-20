@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 10:31:40 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 13:57:38 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	init_philos(t_data *d)
 			printf("malloc error -> init_philos\n");
 		d->philo[i]->id = i + 1;
 		d->philo[i]->meals_eaten = 0;
+		d->philo[i]->colours = d->colours;
 		d->philo[i]->dead_flag = &d->dead_flag;
 		d->philo[i]->meal_flag = &d->meal_flag;
 		d->philo[i]->time_to_die = (size_t)d->time_to_die;
@@ -67,6 +68,17 @@ static void	init_philos(t_data *d)
 	}
 }
 
+// initiate colour array
+void	init_colours(t_data *d)
+{
+	d->colours[0] = GREEN;
+	d->colours[1] = YELLOW;
+	d->colours[2] = BLUE;
+	d->colours[3] = PURPLE;
+	d->colours[4] = CYAN;
+	d->colours[5] = RED;
+}
+
 // initiate mutex locks + args
 int	init_data(t_data *d, char *av[])
 {
@@ -79,6 +91,7 @@ int	init_data(t_data *d, char *av[])
 	pthread_mutex_init(&d->dead_lock, NULL);
 	pthread_mutex_init(&d->meal_lock, NULL);
 	init_args(d, av);
+	init_colours(d);
 	d->philo = malloc(sizeof(t_philo *) * (d->number_of_philosophers));
 	if (!d->philo)
 	{

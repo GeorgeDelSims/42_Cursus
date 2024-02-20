@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:57:57 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 11:33:55 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 14:38:06 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,36 @@ int	ft_atoi(const char *str)
 // Print function for philosophers
 void	print_philo(t_philo *philo, char *message)
 {
+	int		colour_index;
+	char 	*colour;
+
+	colour_index = philo->id % 5;
+	colour = philo->colours[colour_index];
+	pthread_mutex_lock(philo->dead_lock);
+	if (*(philo->dead_flag) == 1)
+		colour = philo->colours[5];
+	pthread_mutex_unlock(philo->dead_lock);
 	pthread_mutex_lock(philo->write_lock);
-	printf("%zu %d %s\n", get_time_start(philo->start_time), philo->id, message);
+	printf("%s%zu %d %s%s\n", colour, get_time_start(philo->start_time), philo->id, message, RESET_COLOUR);
 	pthread_mutex_unlock(philo->write_lock);
+}
+
+// test to see if threads should stop immediately (dead philo or meals eaten)
+int	stop_threads(t_philo *philo)
+{
+	pthread_mutex_lock(philo->dead_lock);
+	if (*(philo->dead_flag) == 1)
+	{
+		pthread_mutex_unlock(philo->dead_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->dead_lock);
+	pthread_mutex_lock(philo->meal_lock);
+	if (*(philo->meal_flag) == 1)
+	{
+		pthread_mutex_unlock(philo->meal_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->meal_lock);
+	return (0);
 }
