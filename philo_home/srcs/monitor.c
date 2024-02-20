@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 14:35:28 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 17:48:59 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	ft_dead(t_data *d, int i)
 {
 	pthread_mutex_lock(&d->dead_lock);
 	d->dead_flag = 1;
-	d->dead_philo_index = i;
 	pthread_mutex_unlock(&d->dead_lock);
+	d->dead_philo_index = i;
 }
 
 // Check if all philos have had enough meals
@@ -29,8 +29,13 @@ static int	enough_meals(t_data *d)
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
-		if (d->philo[i]->meals_eaten < d->eat_number)
+		pthread_mutex_lock(&d->philo[i]->meals_eaten.lock);
+		if (d->philo[i]->meals_eaten.value < (size_t)d->eat_number)
+		{
+			pthread_mutex_lock(&d->philo[i]->meals_eaten.lock);
 			return (0);
+		}
+		pthread_mutex_lock(&d->philo[i]->meals_eaten.lock);
 		i++;
 	}
 	return (1);
@@ -65,17 +70,64 @@ void	*monitor(void *data)
 	{
 		if (meal_monitor(d) == 1)
 			break ;
-		pthread_mutex_lock(&d->meal_lock);
-		if (get_time() - d->philo[i]->last_meal > d->philo[i]->time_to_die)
+		pthread_mutex_lock(&d->philo[i]->last_meal.lock);
+		if (get_time() - d->philo[i]->last_meal.value > d->philo[i]->time_to_die)
 		{
+			pthread_mutex_unlock(&d->philo[i]->last_meal.lock);
 			ft_dead(d, i);
-			pthread_mutex_unlock(&d->meal_lock);
 			break ;
 		}
-		pthread_mutex_unlock(&d->meal_lock);
+		else
+			pthread_mutex_unlock(&d->philo[i]->last_meal.lock);
 		i = (i + 1) % d->number_of_philosophers;
+		usleep(53);
 	}
 	return (NULL);
+}
+
+// Monitor thread that runs continuously and checks if the meal_flag is up
+void	*meal_stop_monitor(void *data)
+{
+	t_data	*d;
+
+	d = (t_data *)data;
+	while(1)
+	{
+		pthread_mutex_lock(&d->meal_lock);
+		if (d->meal_flag == 1)
+		{
+			pthread_mutex_unlock(&d->meal_lock);
+			terminate_all_threads(d);
+			break ;
+		}
+		else
+			pthread_mutex_unlock(&d->meal_lock);
+		usleep(50);
+	}
+	return (NULL);
+}
+
+// Monitor thread that runs continuously and checks if the dead_flag is up
+void	*dead_stop_monitor(void *data)
+{
+	t_data	*d;
+
+	d = (t_data *)data;
+	while(1)
+	{
+		pthread_mutex_lock(&d->dead_lock);
+		if (d->dead_flag == 1)
+		{
+			pthread_mutex_unlock(&d->dead_lock);
+			terminate_all_threads(d);
+			print_philo(d->philo[d->dead_philo_index], "is dead");
+			break ;
+		}
+		else
+			pthread_mutex_unlock(&d->dead_lock);
+		usleep(43);
+	}
+	return (NULL);	
 }
 
 /*

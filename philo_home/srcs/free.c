@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:05:48 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 11:01:59 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 17:19:11 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_all(t_data *d)
 		{
 			free(d->philo[i]->l_fork);
 			pthread_mutex_destroy(d->philo[i]->l_fork);
+			pthread_mutex_destroy(&d->philo[i]->meals_eaten.lock);
+			pthread_mutex_destroy(&d->philo[i]->last_meal.lock);
 		}
 		free(d->philo[i]);
 		i++;

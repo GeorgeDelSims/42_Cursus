@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:57:57 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 14:38:06 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 17:34:12 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,10 @@ void	print_philo(t_philo *philo, char *message)
 	char 	*colour;
 
 	colour_index = philo->id % 5;
-	colour = philo->colours[colour_index];
-	pthread_mutex_lock(philo->dead_lock);
-	if (*(philo->dead_flag) == 1)
-		colour = philo->colours[5];
-	pthread_mutex_unlock(philo->dead_lock);
+	colour = philo->d->colours[colour_index];
 	pthread_mutex_lock(philo->write_lock);
-	printf("%s%zu %d %s%s\n", colour, get_time_start(philo->start_time), philo->id, message, RESET_COLOUR);
+	printf("%s%zu %d %s%s\n", colour, get_time_start(&philo->d->start_time), 
+		philo->id, message, RESET_COLOUR);
 	pthread_mutex_unlock(philo->write_lock);
 }
 
@@ -74,14 +71,14 @@ void	print_philo(t_philo *philo, char *message)
 int	stop_threads(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
-	if (*(philo->dead_flag) == 1)
+	if (philo->d->dead_flag == 1)
 	{
 		pthread_mutex_unlock(philo->dead_lock);
 		return (1);
 	}
 	pthread_mutex_unlock(philo->dead_lock);
 	pthread_mutex_lock(philo->meal_lock);
-	if (*(philo->meal_flag) == 1)
+	if (philo->d->meal_flag == 1)
 	{
 		pthread_mutex_unlock(philo->meal_lock);
 		return (1);

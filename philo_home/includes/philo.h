@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 14:28:59 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 17:43:36 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@
 # define PURPLE "\033[35m"
 # define CYAN "\033[36m"
 
+typedef	struct s_shared
+{
+	size_t			value;
+	pthread_mutex_t	lock;
+}					t_shared;
+
 typedef struct s_philo
 {
-	char			**colours;
+	struct s_data	*d;
 	pthread_t		thread_id;
 	int				id;
-	int				meals_eaten;
-	int				*dead_flag;
-	int				*meal_flag;
-	size_t			last_meal;
+	t_shared		meals_eaten;
+	t_shared		last_meal;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	size_t			*start_time;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*write_lock;
@@ -66,21 +69,34 @@ typedef struct s_data
 	pthread_mutex_t	write_lock;
 	t_philo			**philo;
 	pthread_t		monitor_id;
+	pthread_t		meal_monitor_id;
+	pthread_t		dead_monitor_id;
 }					t_data;
 
+// input.c
 int					input_check(int ac, char *av[]);
+// utils.c
 int					ft_isdigit(char c);
 int					ft_atoi(const char *str);
-int					init_data(t_data *d, char *av[]);
-int					philosophers(t_data *d);
-int					ft_usleep(size_t milliseconds);
 int					stop_threads(t_philo *philo);
-void				*routine(void *arg);
-void				*monitor(void *data);
-void 				*dead_check(void *arg);
+void				print_philo(t_philo *philo, char *message);
+// init.c
+int					init_data(t_data *d, char *av[]);
+// philos.c
+void				terminate_all_threads(t_data *d);
+int					philosophers(t_data *d);
+// time.c
+int					ft_usleep(size_t milliseconds);
 size_t				get_time(void);
 size_t				get_time_start(size_t *pointer_to_start_time);
+// routine.c
+void				*routine(void *arg);
+// monitor.c
+void				*monitor(void *data);
+void				*meal_stop_monitor(void *data);
+void				*dead_stop_monitor(void *data);
+void 				*dead_check(void *arg);
+// free.c
 void				free_all(t_data *d);
-void				print_philo(t_philo *philo, char *message);
 
 #endif

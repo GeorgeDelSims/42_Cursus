@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 13:57:38 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 17:43:01 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ static void	init_right_fork(t_data *d)
 	}
 }
 
+// initialise philosopher-specific values that need mutexes
+static void	init_shared_values(t_philo *philo)
+{
+	philo->meals_eaten.value = 0;
+	pthread_mutex_init(&philo->meals_eaten.lock, NULL);
+	pthread_mutex_init(&philo->last_meal.lock, NULL);
+}
+
 // Initiate philosophers & Forks
 static void	init_philos(t_data *d)
 {
@@ -50,20 +58,17 @@ static void	init_philos(t_data *d)
 		d->philo[i]->l_fork = malloc(sizeof(pthread_mutex_t));
 		if (!d->philo[i] || !d->philo[i]->l_fork)
 			printf("malloc error -> init_philos\n");
+		d->philo[i]->d = d;
 		d->philo[i]->id = i + 1;
-		d->philo[i]->meals_eaten = 0;
-		d->philo[i]->colours = d->colours;
-		d->philo[i]->dead_flag = &d->dead_flag;
-		d->philo[i]->meal_flag = &d->meal_flag;
 		d->philo[i]->time_to_die = (size_t)d->time_to_die;
 		d->philo[i]->time_to_sleep = (size_t)d->time_to_sleep;
 		d->philo[i]->time_to_eat = (size_t)d->time_to_eat;
 		d->philo[i]->write_lock = &d->write_lock;
 		d->philo[i]->dead_lock = &d->dead_lock;
 		d->philo[i]->meal_lock = &d->meal_lock;
-		d->philo[i]->start_time = &d->start_time;
-		d->philo[i]->last_meal = d->start_time;
 		pthread_mutex_init(d->philo[i]->l_fork, NULL);
+		init_shared_values(d->philo[i]);
+		d->philo[i]->last_meal.value = d->start_time;
 		i++;
 	}
 }
@@ -84,8 +89,6 @@ int	init_data(t_data *d, char *av[])
 {
 	if (!av || !d)
 		return (0);
-	d->dead_flag = 0;
-	d->meal_flag = 0;
 	memset(d, 0, sizeof(t_data));
 	pthread_mutex_init(&d->write_lock, NULL);
 	pthread_mutex_init(&d->dead_lock, NULL);
