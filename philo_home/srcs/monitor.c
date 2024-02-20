@@ -6,12 +6,13 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 16:14:20 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 10:25:52 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+// Check dead flag and print out death message
 static void	ft_dead(t_data *d, int i)
 {
 	pthread_mutex_lock(&d->dead_lock);
@@ -23,6 +24,7 @@ static void	ft_dead(t_data *d, int i)
 	pthread_mutex_unlock(&d->write_lock);
 }
 
+// Check meal flag and print out meal message
 static void	ft_meal(t_data *d, int i)
 {
 	pthread_mutex_lock(&d->meal_lock);
@@ -34,8 +36,8 @@ static void	ft_meal(t_data *d, int i)
 	pthread_mutex_unlock(&d->meal_lock);
 }
 
-
-static int	enough_meals_yeah(t_data *d)
+// Check if all philos have had enough meals
+static int	enough_meals(t_data *d)
 {
 	int	i;
 
@@ -49,9 +51,49 @@ static int	enough_meals_yeah(t_data *d)
 	return (1);
 }
 
-// Clause for if the philos have spent too much time sleeping/thinking
-// if time since last meal > time_to_die && philo->state != EAT
-// Clause for if the max amount of meals per philosopher has been reached
+// Meal monitor function (just for shortening the monitor one)
+static int	meal_monitor(t_data *d, int i)
+{
+	if (d->eat_number)
+	{
+		pthread_mutex_lock(&d->meal_lock);
+		if (enough_meals(d) == 1)
+		{
+			pthread_mutex_unlock(&d->meal_lock);
+			ft_meal(d, i);
+			return (1);
+		}
+		pthread_mutex_unlock(&d->meal_lock);
+	}
+	return (0);
+}
+
+// Main Monitor Function
+void	*monitor(void *data)
+{
+	int		i;
+	t_data	*d;
+
+	d = (t_data *)data;
+	i = 0;
+	while (1)
+	{
+		if (meal_monitor(d, i) == 1)
+			break ;
+		pthread_mutex_lock(&d->meal_lock);
+		if (get_time() - d->philo[i]->last_meal > d->philo[i]->time_to_die)
+		{
+			ft_dead(d, i);
+			pthread_mutex_unlock(&d->meal_lock);
+			break ;
+		}
+		pthread_mutex_unlock(&d->meal_lock);
+		i = (i + 1) % d->number_of_philosophers;
+	}
+	return (NULL);
+}
+
+/*
 void	*monitor(void *data)
 {
 	int		i;
@@ -64,7 +106,7 @@ void	*monitor(void *data)
 		if (d->eat_number)
 		{
 			pthread_mutex_lock(&d->meal_lock);
-			if (enough_meals_yeah(d) == 1)
+			if (enough_meals(d) == 1)
 			{
 				pthread_mutex_unlock(&d->meal_lock);
 				ft_meal(d, i);
@@ -84,3 +126,4 @@ void	*monitor(void *data)
 	}
 	return (NULL);
 }
+*/

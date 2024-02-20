@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:57:57 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 10:53:43 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 11:33:55 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,12 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return (result * sign);
+}
+
+// Print function for philosophers
+void	print_philo(t_philo *philo, char *message)
+{
+	pthread_mutex_lock(philo->write_lock);
+	printf("%zu %d %s\n", get_time_start(philo->start_time), philo->id, message);
+	pthread_mutex_unlock(philo->write_lock);
 }

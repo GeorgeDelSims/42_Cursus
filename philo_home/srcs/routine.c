@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:53:04 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 16:37:45 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 11:46:17 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,36 @@ static int	stop_threads(t_philo *philo)
 
 static void	ft_think(t_philo *philo)
 {
-	size_t	time;
-
-	if (stop_threads(philo) == 1) 
+	if (stop_threads(philo) == 1)
 		return ;
-	pthread_mutex_lock(philo->write_lock);
-	time = get_time() - *(philo->start_time);
-	printf("%zu %d is thinking\n", time, (philo->id));
-	pthread_mutex_unlock(philo->write_lock);
+	print_philo(philo, "is thinking");	
+	if (stop_threads(philo) == 1)
+		return ;
+}
+
+// increment mmeals_eaten + get time for last meal
+static void	increment_meals(t_philo *philo)
+{
+	pthread_mutex_lock(philo->meal_lock);
+	philo->meals_eaten++;
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(philo->meal_lock);	
 }
 
 static void	ft_eat(t_philo *philo)
 {
-	size_t	time;
-
 	pthread_mutex_lock(philo->l_fork);
+	print_philo(philo, "has taken a fork");
 	pthread_mutex_lock(philo->r_fork);
-	time = get_time() - *(philo->start_time);
-	pthread_mutex_lock(philo->meal_lock);
-	philo->meals_eaten++;
-	philo->last_meal = get_time();
-	pthread_mutex_unlock(philo->meal_lock);
+	print_philo(philo, "has taken a fork");
+	print_philo(philo, "is eating");
+	increment_meals(philo);
 	if (stop_threads(philo) == 1)
 	{
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		return ;
 	}
-	pthread_mutex_lock(philo->write_lock);
-	printf("%zu %d is eating\n", time, philo->id);
-	pthread_mutex_unlock(philo->write_lock);
 	ft_usleep(philo->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
@@ -74,11 +74,11 @@ static void	ft_sleep(t_philo *philo)
 
 	if (stop_threads(philo) == 1)
 		return ;
-	pthread_mutex_lock(philo->write_lock);
 	time = get_time() - *(philo->start_time);
-	printf("%zu %d is sleeping\n", time, philo->id);
-	pthread_mutex_unlock(philo->write_lock);
+	print_philo(philo, "is sleeping");
 	ft_usleep(philo->time_to_sleep);
+	if (stop_threads(philo) == 1)
+		return ;
 }
 
 void	*routine(void *arg)

@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 10:52:20 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 10:31:40 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	init_philos(t_data *d)
 		d->philo[i]->l_fork = malloc(sizeof(pthread_mutex_t));
 		if (!d->philo[i] || !d->philo[i]->l_fork)
 			printf("malloc error -> init_philos\n");
-		d->philo[i]->id = i;
+		d->philo[i]->id = i + 1;
 		d->philo[i]->meals_eaten = 0;
 		d->philo[i]->dead_flag = &d->dead_flag;
 		d->philo[i]->meal_flag = &d->meal_flag;

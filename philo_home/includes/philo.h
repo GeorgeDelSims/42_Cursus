@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/19 11:02:25 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/20 11:34:07 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+# define RESET_COLOR "\033[0m"
+
+# define BLACK "\033[30m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define BLUE "\033[34m"
+# define PURPLE "\033[35m"
+# define CYAN "\033[36m"
+# define WHITE "\033[37m"
 
 typedef struct s_philo
 {
@@ -65,8 +76,9 @@ int					philosophers(t_data *d);
 int					ft_usleep(size_t milliseconds);
 void				*routine(void *arg);
 void				*monitor(void *data);
-size_t				get_current_time(void);
 size_t				get_time(void);
+size_t				get_time_start(size_t *pointer_to_start_time);
 void				free_all(t_data *d);
+void				print_philo(t_philo *philo, char *message);
 
 #endif
