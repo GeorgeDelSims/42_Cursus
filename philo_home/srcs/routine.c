@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:53:04 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/20 18:37:25 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/26 17:01:00 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,37 +30,35 @@ static void	update_last_meal(t_philo *philo)
 
 // eat state main function
 static void	ft_eat(t_philo *philo)
-{
-	int	even;
-	
-	even = philo->id % 2; 
-	if (even == 1)
+{	
+	pthread_mutex_t *first_fork;
+	pthread_mutex_t *second_fork;
+
+	if (philo->l_fork_id < philo->r_fork_id)
 	{
-		pthread_mutex_lock(philo->l_fork);
-		print_philo(philo, "has taken a fork");
-		pthread_mutex_lock(philo->r_fork);	
+		first_fork = philo->l_fork;
+		second_fork = philo->r_fork;
+	} 
+	else 
+	{
+		first_fork = philo->r_fork;
+		second_fork = philo->l_fork;
 	}
-	else
-	{	
-		pthread_mutex_lock(philo->r_fork);	
-		print_philo(philo, "has taken a fork");
-		pthread_mutex_lock(philo->l_fork);
-	}
+	pthread_mutex_lock(first_fork);
 	print_philo(philo, "has taken a fork");
+	pthread_mutex_lock(second_fork);	
+	print_philo(philo, "has taken a fork");
+	
 	print_philo(philo, "is eating");
 	update_last_meal(philo);
-	increment_meals(philo);
 	ft_usleep(philo->time_to_eat);
-	if (even == 1)
-	{
-		pthread_mutex_unlock(philo->l_fork);
-		pthread_mutex_unlock(philo->r_fork);	
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->r_fork);	
-		pthread_mutex_unlock(philo->l_fork);
-	}
+	increment_meals(philo);
+	//print_philo(philo, "has eaten");
+	
+	pthread_mutex_unlock(first_fork);
+	//print_philo(philo, "has unlocked the first fork");
+	pthread_mutex_unlock(second_fork);
+	//print_philo(philo, "has unlocked the second fork");
 }
 
 // sleep function for the routine
@@ -68,20 +66,29 @@ static void	ft_sleep(t_philo *philo)
 {
 	print_philo(philo, "is sleeping");
 	ft_usleep(philo->time_to_sleep);
+	print_philo(philo, "has finished sleeping");
 }
 
 // Routine function 
 void	*routine(void *arg)
 {
 	t_philo	*philo;
-
+	int		even;
+	
 	philo = (t_philo *)arg;
 	while (1)
 	{
+		even = philo->id % 2;
 		print_philo(philo, "is thinking");
-		ft_eat(philo);
+		if (even == 1)
+			ft_eat(philo);	
+		else 
+		{
+			usleep(200);
+			ft_eat(philo);
+		}
 		ft_sleep(philo);
-		usleep(100);
+		//usleep(100);
 		if (stop_threads(philo) == 1)
 			break ;
 	}
