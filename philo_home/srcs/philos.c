@@ -15,7 +15,7 @@
 void	join_all_threads(t_data *d)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{
@@ -56,6 +56,6 @@ void	case_one(t_data *d)
 {
 	d->threads = malloc(sizeof(int) * 1);
 	d->threads[0] = pthread_create(&d->philo[0]->thread_id, NULL, routine,
-		(void *)d->philo[0]);
+			(void *)d->philo[0]);
 	pthread_join(d->philo[0]->thread_id, NULL);
 }

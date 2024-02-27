@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 13:24:28 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 14:09:48 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,6 @@ static void	init_philos(t_data *d)
 		d->philo[i]->last_meal.value = d->start_time;
 		i++;
 	}
-}
-
-// initiate colour array
-void	init_colours(t_data *d)
-{
-	d->colours[0] = GREEN;
-	d->colours[1] = YELLOW;
-	d->colours[2] = BLUE;
-	d->colours[3] = PURPLE;
-	d->colours[4] = CYAN;
-	d->colours[5] = RED;
 }
 
 // initiate mutex locks + args

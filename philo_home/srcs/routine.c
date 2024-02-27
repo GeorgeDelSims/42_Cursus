@@ -16,7 +16,7 @@
 static void	increment_meals(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->meals_eaten.lock);
-	philo->meals_eaten.value++;	
+	philo->meals_eaten.value++;
 	pthread_mutex_unlock(&philo->meals_eaten.lock);
 }
 
@@ -25,15 +25,15 @@ static void	update_last_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->last_meal.lock);
 	philo->last_meal.value = get_time();
-	pthread_mutex_unlock(&philo->last_meal.lock);	
+	pthread_mutex_unlock(&philo->last_meal.lock);
 }
 
 // eat state main function
 static void	ft_eat(t_philo *philo)
-{	
+{
 	pthread_mutex_lock(philo->l_fork);
 	print_philo(philo, "has taken a fork");
-	pthread_mutex_lock(philo->r_fork);	
+	pthread_mutex_lock(philo->r_fork);
 	print_philo(philo, "has taken a fork");
 	print_philo(philo, "is eating");
 	update_last_meal(philo);
@@ -56,11 +56,11 @@ static void	ft_sleep(t_philo *philo)
 		ft_usleep(philo->time_to_die);
 }
 
-// Routine function 
+// Routine function
 void	*routine(void *arg)
 {
 	t_philo	*philo;
-	
+
 	philo = (t_philo *)arg;
 	while (stop_threads(philo) != 1)
 	{

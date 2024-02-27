@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 13:49:33 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 14:09:34 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define PURPLE "\033[35m"
 # define CYAN "\033[36m"
 
-typedef	struct s_shared
+typedef struct s_shared
 {
 	size_t			value;
 	pthread_mutex_t	lock;
@@ -84,9 +84,10 @@ int					ft_atoi(const char *str);
 int					stop_threads(t_philo *philo);
 void				print_philo(t_philo *philo, char *message);
 void				print_philo_dead(t_philo *philo, char *message);
-
 // init.c
 int					init_data(t_data *d, char *av[]);
+// init_colours.c
+void				init_colours(t_data *d);
 // philos.c
 void				join_all_threads(t_data *d);
 int					philosophers(t_data *d);
@@ -100,9 +101,10 @@ void				*routine(void *arg);
 void				*routine_one(void *arg);
 // monitor.c
 void				*monitor(void *data);
+void				*dead_check(void *arg);
+// stop_monitors.c
 void				*meal_stop_monitor(void *data);
 void				*dead_stop_monitor(void *data);
-void 				*dead_check(void *arg);
 // free.c
 void				free_all(t_data *d);
 

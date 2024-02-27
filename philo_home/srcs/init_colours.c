@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_colours.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 09:37:28 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 14:01:29 by gsims            ###   ########.fr       */
+/*   Created: 2024/02/27 14:09:58 by gsims             #+#    #+#             */
+/*   Updated: 2024/02/27 14:10:24 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-// Main function
-int	main(int ac, char *av[])
+// initiate colour array
+void	init_colours(t_data *d)
 {
-	t_data	*d;
-
-	if ((input_check(ac, av)) == 0)
-	{
-		printf("input incorrect\n");
-		return (0);
-	}
-	d = (t_data *)malloc(sizeof(t_data));
-	if (!d)
-		return (0);
-	if (init_data(d, av) == 0)
-		return (0);
-	if (d->number_of_philosophers != 1)
-		philosophers(d);
-	else
-		case_one(d);
-	free_all(d);
-	return (0);
+	d->colours[0] = GREEN;
+	d->colours[1] = YELLOW;
+	d->colours[2] = BLUE;
+	d->colours[3] = PURPLE;
+	d->colours[4] = CYAN;
+	d->colours[5] = RED;
 }
