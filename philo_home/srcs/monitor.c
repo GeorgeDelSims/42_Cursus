@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 11:48:47 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 14:01:46 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,38 +130,3 @@ void	*dead_stop_monitor(void *data)
 	}
 	return (NULL);	
 }
-
-/*
-void	*monitor(void *data)
-{
-	int		i;
-	t_data	*d;
-
-	d = (t_data *)data;
-	i = 0;
-	while (1)
-	{
-		if (d->eat_number)
-		{
-			pthread_mutex_lock(&d->meal_lock);
-			if (enough_meals(d) == 1)
-			{
-				pthread_mutex_unlock(&d->meal_lock);
-				ft_meal(d, i);
-				break ;
-			}
-			pthread_mutex_unlock(&d->meal_lock);
-		}
-		pthread_mutex_lock(&d->meal_lock);
-		if (get_time() - d->philo[i]->last_meal > d->philo[i]->time_to_die)
-		{
-			ft_dead(d, i);
-			pthread_mutex_unlock(&d->meal_lock);
-			break ;
-		}
-		pthread_mutex_unlock(&d->meal_lock);
-		i = (i + 1) % d->number_of_philosophers;
-	}
-	return (NULL);
-}
-*/

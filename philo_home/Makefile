@@ -6,7 +6,7 @@
 #    By: gsims <gsims@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 09:37:13 by gsims             #+#    #+#              #
-#    Updated: 2024/02/27 10:21:34 by gsims            ###   ########.fr        #
+#    Updated: 2024/02/27 13:51:29 by gsims            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SOURCES = ./srcs/main.c ./srcs/init.c ./srcs/input.c ./srcs/utils.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CC = gcc -fsanitize=address
+CC = gcc -g -fsanitize=address
 
 CFLAGS = -Wall -Wextra -Werror
 

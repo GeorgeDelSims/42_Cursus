@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 08:48:08 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 13:24:28 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	init_data(t_data *d, char *av[])
 	}
 	d->start_time = get_time();
 	init_philos(d);
-	init_right_fork(d);
+	if (d->number_of_philosophers > 1)
+		init_right_fork(d);
 	return (1);
 }

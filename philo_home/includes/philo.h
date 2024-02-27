@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 12:03:01 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 13:49:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef struct s_philo
 {
 	struct s_data	*d;
 	pthread_t		thread_id;
-	int				id;
 	t_shared		meals_eaten;
 	t_shared		last_meal;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
+	int				id;
 	int				l_fork_id;
 	int				r_fork_id;
 	pthread_mutex_t	*l_fork;
@@ -97,6 +97,7 @@ size_t				get_time(void);
 size_t				get_time_start(size_t *pointer_to_start_time);
 // routine.c
 void				*routine(void *arg);
+void				*routine_one(void *arg);
 // monitor.c
 void				*monitor(void *data);
 void				*meal_stop_monitor(void *data);

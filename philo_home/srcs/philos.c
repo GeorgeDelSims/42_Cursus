@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:02:30 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/27 12:57:02 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 14:01:12 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void	join_all_threads(t_data *d)
 			pthread_join(d->philo[i]->thread_id, NULL);
 		i++;
 	}
-	// pthread_join(d->monitor_id, NULL);
-	// pthread_join(d->dead_monitor_id, NULL);
-	// pthread_join(d->meal_monitor_id, NULL);
 }
 
 int	philosophers(t_data *d)
@@ -57,7 +54,8 @@ int	philosophers(t_data *d)
 
 void	case_one(t_data *d)
 {
+	d->threads = malloc(sizeof(int) * 1);
 	d->threads[0] = pthread_create(&d->philo[0]->thread_id, NULL, routine,
 		(void *)d->philo[0]);
-	pthread_detach(d->philo[0]->thread_id);
+	pthread_join(d->philo[0]->thread_id, NULL);
 }
