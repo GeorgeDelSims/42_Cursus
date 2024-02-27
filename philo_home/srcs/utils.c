@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:57:57 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/26 16:38:07 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 11:36:33 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,28 @@ void	print_philo(t_philo *philo, char *message)
 
 	colour_index = philo->id % 5;
 	colour = philo->d->colours[colour_index];
+	if (philo->d->end_flag == 0)
+	{
+		pthread_mutex_lock(philo->write_lock);
+		printf("%s%zu %d %s%s\n", colour, get_time_start(&philo->d->start_time), 
+			philo->id, message, RESET_COLOUR);
+		pthread_mutex_unlock(philo->write_lock);
+	}
+}
+
+// Print function for philosophers
+void	print_philo_dead(t_philo *philo, char *message)
+{
+	int		colour_index;
+	char 	*colour;
+
+	colour_index = philo->id % 5;
+	colour = philo->d->colours[colour_index];
 	pthread_mutex_lock(philo->write_lock);
 	printf("%s%zu %d %s%s\n", colour, get_time_start(&philo->d->start_time), 
 		philo->id, message, RESET_COLOUR);
 	pthread_mutex_unlock(philo->write_lock);
+	philo->d->end_flag = 1;
 }
 
 // test to see if threads should stop immediately (dead philo or meals eaten)

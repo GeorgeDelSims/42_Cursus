@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:06:46 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/26 15:06:35 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 08:48:08 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	init_philos(t_data *d)
 		d->philo[i]->d = d;
 		d->philo[i]->id = i + 1;
 		d->philo[i]->l_fork_id = i + 1;
-		d->philo[i]->l_fork_id = (i + 1) % d->number_of_philosophers;
+		d->philo[i]->r_fork_id = (i + 1) % d->number_of_philosophers;
 		d->philo[i]->time_to_die = (size_t)d->time_to_die;
 		d->philo[i]->time_to_sleep = (size_t)d->time_to_sleep;
 		d->philo[i]->time_to_eat = (size_t)d->time_to_eat;

@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:49:10 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/26 16:45:38 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 11:48:47 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	ft_dead(t_data *d, int i)
 {
 	pthread_mutex_lock(&d->dead_lock);
 	d->dead_flag = 1;
-	pthread_mutex_unlock(&d->dead_lock);
 	d->dead_philo_index = i;
+	pthread_mutex_unlock(&d->dead_lock);
 }
 
 // Check if all philos have had enough meals
@@ -32,10 +32,10 @@ static int	enough_meals(t_data *d)
 		pthread_mutex_lock(&d->philo[i]->meals_eaten.lock);
 		if (d->philo[i]->meals_eaten.value < (size_t)d->eat_number)
 		{
-			pthread_mutex_lock(&d->philo[i]->meals_eaten.lock);
+			pthread_mutex_unlock(&d->philo[i]->meals_eaten.lock);
 			return (0);
 		}
-		pthread_mutex_lock(&d->philo[i]->meals_eaten.lock);
+		pthread_mutex_unlock(&d->philo[i]->meals_eaten.lock);
 		i++;
 	}
 	return (1);
@@ -51,6 +51,7 @@ static int	meal_monitor(t_data *d)
 		{
 			d->meal_flag = 1;
 			pthread_mutex_unlock(&d->meal_lock);
+			d->end_flag = 1;
 			return (1);
 		}
 		pthread_mutex_unlock(&d->meal_lock);
@@ -97,7 +98,7 @@ void	*meal_stop_monitor(void *data)
 		if (d->meal_flag == 1)
 		{
 			pthread_mutex_unlock(&d->meal_lock);
-			terminate_all_threads(d);
+			join_all_threads(d);
 			break ;
 		}
 		else
@@ -118,14 +119,14 @@ void	*dead_stop_monitor(void *data)
 		pthread_mutex_lock(&d->dead_lock);
 		if (d->dead_flag == 1)
 		{
+			print_philo_dead(d->philo[d->dead_philo_index], "is dead");
 			pthread_mutex_unlock(&d->dead_lock);
-			terminate_all_threads(d);
-			print_philo(d->philo[d->dead_philo_index], "is dead");
+			join_all_threads(d);
 			break ;
 		}
 		else
 			pthread_mutex_unlock(&d->dead_lock);
-		usleep(43);
+		usleep(100);
 	}
 	return (NULL);	
 }

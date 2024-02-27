@@ -6,7 +6,7 @@
 /*   By: gsims <gsims@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 09:37:36 by gsims             #+#    #+#             */
-/*   Updated: 2024/02/26 15:04:27 by gsims            ###   ########.fr       */
+/*   Updated: 2024/02/27 12:03:01 by gsims            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				eat_number;
 	int				dead_flag;
+	int				end_flag;
 	int				dead_philo_index;
 	int				meal_flag;
 	int				*threads;
@@ -82,11 +83,14 @@ int					ft_isdigit(char c);
 int					ft_atoi(const char *str);
 int					stop_threads(t_philo *philo);
 void				print_philo(t_philo *philo, char *message);
+void				print_philo_dead(t_philo *philo, char *message);
+
 // init.c
 int					init_data(t_data *d, char *av[]);
 // philos.c
-void				terminate_all_threads(t_data *d);
+void				join_all_threads(t_data *d);
 int					philosophers(t_data *d);
+void				case_one(t_data *d);
 // time.c
 int					ft_usleep(size_t milliseconds);
 size_t				get_time(void);
