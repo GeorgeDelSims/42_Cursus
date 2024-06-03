@@ -1,13 +1,20 @@
 #include "HumanA.hpp"
 
-HumanA::HumanA() 
+HumanA::HumanA(const std::string  name, Weapon& weapon) : _name(name), _weapon(weapon) {}
+
+HumanA::~HumanA() {}
+
+void    HumanA::setWeapon(Weapon& weapon)
 {
-    // Constructor implementation
+    this->_weapon = weapon;
 }
 
-HumanA::~HumanA() 
+Weapon&  HumanA::getWeapon() const
 {
-    // Destructor implementation
+    return (this->_weapon);
 }
 
-// Add methods implementation here
+void    HumanA::attack() const
+{
+    std::cout << this->_name << " attacks with their " << this->_weapon.getType() << std::endl;
+}

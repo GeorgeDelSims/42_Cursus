@@ -1,13 +1,20 @@
 #include "Weapon.hpp"
 
-Weapon::Weapon() 
+Weapon::Weapon(std::string  type) 
 {
-    // Constructor implementation
+    this->_type = type;
 }
 
 Weapon::~Weapon() 
 {
-    // Destructor implementation
 }
 
-// Add methods implementation here
+std::string     Weapon::getType()
+{
+    return this->_type;
+}
+
+void    Weapon::setType(std::string     type)
+{
+    this->_type = type;
+}

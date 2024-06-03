@@ -9,19 +9,22 @@ CLASS_NAME=$1
 HEADER_FILE="${CLASS_NAME}.hpp"
 SOURCE_FILE="${CLASS_NAME}.cpp"
 
+CLASS_NAME_UPPER=$(echo "${CLASS_NAME}" | tr '[:lower:]' '[:upper:]')
+
 cat <<EOL > ${HEADER_FILE}
-#ifndef ${CLASS_NAME}_HPP
-# define ${CLASS_NAME}_HPP
+#ifndef ${CLASS_NAME_UPPER}_HPP
+# define ${CLASS_NAME_UPPER}_HPP
 
-class ${CLASS_NAME} {
-public:
-    ${CLASS_NAME}();
-    ~${CLASS_NAME}();
+class ${CLASS_NAME} 
+{
+    public:
+        ${CLASS_NAME}();
+        ~${CLASS_NAME}();
 
-    // Add methods here
+        // Add methods here
 
-private:
-    // Add member variables here
+    private:
+        // Add member variables here
 };
 
 #endif // ${CLASS_NAME}_HPP
@@ -30,11 +33,13 @@ EOL
 cat <<EOL > ${SOURCE_FILE}
 #include "${HEADER_FILE}"
 
-${CLASS_NAME}::${CLASS_NAME}() {
+${CLASS_NAME}::${CLASS_NAME}() 
+{
     // Constructor implementation
 }
 
-${CLASS_NAME}::~${CLASS_NAME}() {
+${CLASS_NAME}::~${CLASS_NAME}() 
+{
     // Destructor implementation
 }
 
