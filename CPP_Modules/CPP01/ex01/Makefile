@@ -2,7 +2,7 @@
 NAME = Zombie
 
 # Sources and objects.
-SRCS = newZombie.cpp randomChump.cpp Zombie.cpp main.cpp
+SRCS = zombieHorde.cpp Zombie.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Define all the compiling flags.

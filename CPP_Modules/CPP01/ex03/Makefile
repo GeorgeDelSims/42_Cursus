@@ -1,8 +1,8 @@
 # Name
-NAME = Zombie
+NAME = Unnecessary_violence
 
 # Sources and objects.
-SRCS = newZombie.cpp randomChump.cpp Zombie.cpp main.cpp
+SRCS = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Define all the compiling flags.

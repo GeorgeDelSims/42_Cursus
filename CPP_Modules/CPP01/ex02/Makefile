@@ -1,8 +1,8 @@
 # Name
-NAME = Zombie
+NAME = BRAIN
 
 # Sources and objects.
-SRCS = newZombie.cpp randomChump.cpp Zombie.cpp main.cpp
+SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Define all the compiling flags.
@@ -14,19 +14,19 @@ all: $(NAME)
 
 # Compile the program with the objects.
 $(NAME): $(OBJS)
-	@$(CXX) $(OBJS) -o $@
+	$(CXX) $(OBJS) -o $@
 
 # Won't run if the source files don't exist or are not modified.
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 clean:
-	@rm -f $(OBJS)
-	@echo "[INFO] Objects removed."
+	rm -f $(OBJS)
+	echo "[INFO] Objects removed."
 
 fclean: clean
-	@rm -f $(NAME)
-	@echo "[INFO] $(NAME) removed."
+	rm -f $(NAME)
+	echo "[INFO] $(NAME) removed."
 
 re: fclean all
 
