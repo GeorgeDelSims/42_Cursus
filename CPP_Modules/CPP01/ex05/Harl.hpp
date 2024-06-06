@@ -4,6 +4,11 @@
 #include <string>
 #include <iostream>
 
+#define DEBUG 0
+#define INFO 1
+#define WARNING 2
+#define ERROR 4
+
 class Harl 
 {
     public:
@@ -11,14 +16,18 @@ class Harl
         ~Harl();
 
         // Methods: 
-        void    complain(std::string level);
+        void                        complain(std::string level);
 
     private:
         // Member variables & utils functions:
-        void    debug(void);
-        void    info(void);
-        void    warning(void);
-        void    error(void);
+        void                        debug(void);
+        void                        info(void);
+        void                        warning(void);
+        void                        error(void);
+
+        typedef void                (Harl::*HarlMemFn)();
+        static const std::string    levels[4];
+        static const HarlMemFn      functions[4];
 };
 
 #endif // Harl_HPP

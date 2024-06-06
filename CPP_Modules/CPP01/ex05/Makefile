@@ -2,7 +2,7 @@
 NAME = Harl
 
 # Sources and objects.
-SRCS = Harl.cpp Harl.hpp
+SRCS = Harl.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Define all the compiling flags.
